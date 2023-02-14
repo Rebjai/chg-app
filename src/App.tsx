@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
+import chgLogo from './assets/chg-app.svg'
 import LoginForm from './Pages/Auth/LoginForm'
 // import './App.css'
 
@@ -8,16 +8,18 @@ function App() {
 
   return (
     <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <div className="flex flex-col text-center items-center">
+
+        <div className='flex justify-center'>
+          <a href="https://vitejs.dev" className='flex flex-col items-center' target="_blank">
+            <img src={chgLogo} className="max-w-xs w-8/12" alt="CHG APP logo" />
+            <h1 className='text-2xl font-bold text-purple-700'>CHG<br /> App</h1>
+          </a>
+        </div>
+        <div className="max-w-4xl w-10/12">
+        <LoginForm />
+        </div>
       </div>
-      <h1>CHG App</h1>
-      <LoginForm/>
     </div>
   )
 }
