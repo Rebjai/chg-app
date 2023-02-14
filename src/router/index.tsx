@@ -1,21 +1,36 @@
 import { createBrowserRouter } from "react-router-dom";
+import AppLayout from "../Layouts/AppLayout";
 import Login from "../Pages/Auth/Login";
 import ResetPassword from "../Pages/Auth/ResetPassword";
 import ErrorPage from "../Pages/error-page";
+import RoomRouter from "./rooms.router";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Login />,
+    element: <AppLayout />,
     errorElement: <ErrorPage />,
-    // children: [{
-    //   path: 'reset-password',
-    //   element: <ResetPassword/>
-    // }]
+    children: [
+      { path: 'rooms', children: [RoomRouter] }
+    ]
   },
   {
-      path: '/reset-password',
-      element: <ResetPassword />
-    }
+    path: 'auth',
+    children: [
+      {
+        path: 'login',
+        element: <Login />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: 'reset-password',
+        element: <ResetPassword />
+      },
+    ]
+  },
+
+
+
+
 ]);
 export default router
