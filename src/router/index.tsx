@@ -4,6 +4,7 @@ import Login from "../Pages/Auth/Login";
 import ResetPassword from "../Pages/Auth/ResetPassword";
 import ErrorPage from "../Pages/error-page";
 import IndexPage from "../Pages/index-page";
+import PatientRouter from "./patients.router";
 import RoomRouter from "./rooms.router";
 
 const router = createBrowserRouter([
@@ -13,7 +14,8 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       { path: '', element: <IndexPage />},
-      { path: 'rooms', children: [RoomRouter] }
+      { path: 'rooms', children: [RoomRouter] },
+      { path: 'patients', children: [PatientRouter] },
     ]
   },
   {
