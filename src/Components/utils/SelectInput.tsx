@@ -6,7 +6,7 @@ interface SelectInputProps {
 }
 function SelectInput(props: SelectInputProps) {
     return (
-        <select value={props.value} onChange={props.onChange} className="border border-gray-400 p-2">
+        <select value={props.value} onChange={props.onChange} className="border border-gray-400 p-2" name={props.name}>
             {props.options.map((option) => (
                 <option key={option.value} value={option.value}>
                     {option.label}
