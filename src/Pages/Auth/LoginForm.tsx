@@ -1,33 +1,36 @@
 import { FormEvent, useState } from 'react';
+import { Form } from 'react-router-dom';
 
 const LoginForm = () => {
-  const [username, setUsername] = useState('');
+  const [email, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+    // e.preventDefault();
     console.log(e);
-    console.log('Username:', username);
+    console.log('Username:', email);
     console.log('Password:', password);
   };
 
   return (
-    <form
+    <Form
       className="bg-white p-6 rounded-lg shadow-xl"
+      method='post'
       onSubmit={handleSubmit}
     >
       <div className="mb-4">
         <label
           className="block text-gray-700 font-medium mb-2"
-          htmlFor="username"
+          htmlFor="email"
         >
           Username:
         </label>
         <input
           className="w-full border border-gray-400 p-2"
-          type="text"
-          id="username"
-          value={username}
+          type="email"
+          id="email"
+          name="email"
+          value={email}
           onChange={(e) => setUsername(e.target.value)}
         />
       </div>
@@ -43,6 +46,7 @@ const LoginForm = () => {
           type="password"
           id="password"
           value={password}
+          name="password"
           onChange={(e) => setPassword(e.target.value)}
         />
       </div>
@@ -52,7 +56,7 @@ const LoginForm = () => {
       >
         Login
       </button>
-    </form>
+    </Form>
   );
 };
 
