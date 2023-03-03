@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { Form, useParams } from "react-router-dom";
 import Patient from "../../Interfaces/patient.interface";
 import PrimaryButton from "../utils/PrimaryButton";
 import SelectInput from "../utils/SelectInput";
@@ -7,7 +7,6 @@ interface PatientFormProps {
     patient?: Patient
 }
 function PatientForm(props?: PatientFormProps) {
-    const { id } = useParams()
     const typeOptions = [
         { value: '', label: 'Selecciona un elemento de la lista' },
         { value: 1, label: 'Normal' },
@@ -20,12 +19,11 @@ function PatientForm(props?: PatientFormProps) {
         { value: 2, label: 'Inactive' },
         { value: 3, label: 'n/a' },
     ]
-    const createPatient = id == 'create'
-    if (id == 'create') {
-        console.log({ id });
-    }
+    const createPatient = !!!props?.patient?.id
 
-    const [newPatient, setNewPatient] = useState<Patient>({
+    console.log({createPatient});
+    
+    const [newPatient, setNewPatient] = useState<Patient>(props?.patient? props.patient:{
         id: 0,
         name: '',
         first_surname: '',
@@ -48,14 +46,14 @@ function PatientForm(props?: PatientFormProps) {
     };
 
     const handleCreatePatient = (event: React.FormEvent) => {
-        event.preventDefault();
+        // event.preventDefault();
         console.log('New patient:', newPatient);
     };
 
     return (
         <div className="container mx-auto">
             <h1 className="text-2xl font-bold mb-4">{createPatient ? 'Create a new patient' : 'Edit patient'}</h1>
-            <form onSubmit={handleCreatePatient}>
+            <Form onSubmit={handleCreatePatient} method={createPatient?'post':'put'}>
                 <div className="flex flex-col mb-4">
                     <label htmlFor="name" className="mb-2 font-bold">
                         Name
@@ -121,7 +119,7 @@ function PatientForm(props?: PatientFormProps) {
                 <PrimaryButton type="submit" onClick={() => console.log('submit')}>
                     {createPatient ? 'Create Patient' : 'Edit Patient'}
                 </ PrimaryButton>
-            </form>
+            </Form>
         </div>
     );
 }

@@ -7,7 +7,6 @@ interface RoomFormProps {
     room?: Room
 }
 function RoomForm(props: RoomFormProps) {
-    const { id } = useParams()
     const typeOptions = [
         { value: '', label: 'Selecciona un elemento de la lista' },
         { value: 1, label: 'Normal' },
