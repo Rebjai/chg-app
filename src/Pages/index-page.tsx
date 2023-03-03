@@ -18,6 +18,13 @@ function IndexPage() {
                         </button>
                     </Link>
                 </li>
+                <li>
+                    <Link to={'products'}>
+                        <button className="bg-cyan-400 rounded p-3 drop-shadow-md text-slate-600 font-bold tracking-widest">
+                            Products
+                        </button>
+                    </Link>
+                </li>
             </ul>
         </>
 

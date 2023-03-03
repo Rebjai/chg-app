@@ -6,6 +6,7 @@ import ErrorPage from "../Pages/error-page";
 import IndexPage from "../Pages/index-page";
 import AuthRouter from "./auth.router";
 import PatientRouter from "./patients.router";
+import ProductRouter from "./products.router";
 import RoomRouter from "./rooms.router";
 
 const router = createBrowserRouter([
@@ -17,6 +18,7 @@ const router = createBrowserRouter([
       { path: '', element: <IndexPage />},
       { path: 'rooms', children: [RoomRouter] },
       { path: 'patients', children: [PatientRouter] },
+      { path: 'products', children: [ProductRouter] },
     ]
   },
   {
