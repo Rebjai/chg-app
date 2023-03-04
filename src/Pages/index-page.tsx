@@ -25,6 +25,13 @@ function IndexPage() {
                         </button>
                     </Link>
                 </li>
+                <li>
+                    <Link to={'staff'}>
+                        <button className="bg-cyan-400 rounded p-3 drop-shadow-md text-slate-600 font-bold tracking-widest">
+                            Staff
+                        </button>
+                    </Link>
+                </li>
             </ul>
         </>
 

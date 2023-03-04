@@ -8,6 +8,7 @@ import AuthRouter from "./auth.router";
 import PatientRouter from "./patients.router";
 import ProductRouter from "./products.router";
 import RoomRouter from "./rooms.router";
+import StaffRouter from "./staff.router";
 
 const router = createBrowserRouter([
   {
@@ -19,6 +20,7 @@ const router = createBrowserRouter([
       { path: 'rooms', children: [RoomRouter] },
       { path: 'patients', children: [PatientRouter] },
       { path: 'products', children: [ProductRouter] },
+      { path: 'staff', children: [StaffRouter] },
     ]
   },
   {
