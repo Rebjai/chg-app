@@ -12,6 +12,13 @@ function IndexPage() {
                     </Link>
                 </li>
                 <li>
+                    <Link to={'consumption-sheet-details'}>
+                        <button className="bg-cyan-400 rounded p-3 drop-shadow-md text-slate-600 font-bold tracking-widest">
+                            Detalles de Hojas de Consumo
+                        </button>
+                    </Link>
+                </li>
+                <li>
                     <Link to={'rooms'}>
                         <button className="bg-cyan-400 rounded p-3 drop-shadow-md text-slate-600 font-bold tracking-widest">
                             Cuartos
