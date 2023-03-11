@@ -4,7 +4,8 @@ import ConsumptionSheetDetail from "../../Interfaces/consumptionSheetDetail.inte
 import PrimaryButton from "../utils/PrimaryButton";
 import SelectInput from "../utils/SelectInput";
 interface ConsumptionSheetDetailFormProps {
-    consumptionSheetDetail?: ConsumptionSheetDetail
+    consumptionSheetDetail?: ConsumptionSheetDetail,
+    consumptionSheetId?: number
 }
 function ConsumptionSheetDetailForm(props?: ConsumptionSheetDetailFormProps) {
     const consumptionSheetOptions = [
@@ -28,6 +29,7 @@ function ConsumptionSheetDetailForm(props?: ConsumptionSheetDetailFormProps) {
     const createConsumptionSheetDetail = !!!props?.consumptionSheetDetail?.id
 
     console.log({createConsumptionSheetDetail});
+    console.log({val : !!props?.consumptionSheetId});
     
     const [newConsumptionSheetDetail, setNewConsumptionSheetDetail] = useState<ConsumptionSheetDetail>(props?.consumptionSheetDetail? props.consumptionSheetDetail:{
         id: 0,
@@ -59,12 +61,11 @@ function ConsumptionSheetDetailForm(props?: ConsumptionSheetDetailFormProps) {
         <div className="container mx-auto">
             <h1 className="text-2xl font-bold mb-4">{createConsumptionSheetDetail ? 'Create a new consumptionSheetDetail' : 'Edit consumptionSheetDetail'}</h1>
             <Form onSubmit={handleCreateConsumptionSheetDetail} method={createConsumptionSheetDetail?'post':'put'}>
-                
-                <div className="flex flex-col mb-4">
+                <div className={"flex flex-col mb-4"+ props?.consumptionSheetId? " hidden":''}>
                     <label htmlFor="consumption_sheet_id" className="mb-2 font-bold">
                         Consumption Sheet
                     </label>
-                    <SelectInput options={consumptionSheetOptions} onChange={handleTypeInputChange} value={newConsumptionSheetDetail.consumption_sheet_id.toString()} name='consumption_sheet_id' />
+                    <SelectInput options={consumptionSheetOptions}  hidden={!!props?.consumptionSheetId} onChange={handleTypeInputChange} value={newConsumptionSheetDetail.consumption_sheet_id.toString()} name='consumption_sheet_id' />
                 </div>
                 <div className="flex flex-col mb-4">
                     <label htmlFor="staff_id" className="mb-2 font-bold">

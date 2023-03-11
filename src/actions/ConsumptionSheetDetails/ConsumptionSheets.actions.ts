@@ -19,6 +19,22 @@ const ConsumptionSheetDetailsActions = {
         return created
 
     },
+    createConsumptionDetail: async ({ request, params }: ActionFunctionArgs) => {
+        const data = await request.formData()
+        const {consumptionSheetId}=params
+        const sumbitData: ConsumptionSheetDetail = {
+            // total: parseFloat(data.get('total')!.toString()),
+            quantity: parseFloat(data.get('quantity')!.toString()),
+            product_id: parseInt(data.get('product_id')!.toString()),
+            staff_id: parseInt(data.get('staff_id')!.toString()),
+            consumption_sheet_id: parseInt(data.get('consumption_sheet_id')!.toString())
+        }
+        console.log({sumbitData});
+        const created = await fetch.post('/api/consumption-sheets/'+consumptionSheetId+'/consumption-details', sumbitData)
+
+        return created
+
+    },
     update: async ({ request, params }: ActionFunctionArgs) => {
         const data = await request.formData()
 
@@ -57,6 +73,24 @@ const ConsumptionSheetDetailsActions = {
             throw response;
         }
         const consumptionSheetDetail:ConsumptionSheetDetail = response.data
+        // consumptionSheetDetail.created_at = consumptionSheetDetail.created_at.split('T')[0]
+        return consumptionSheetDetail
+    },
+    getByConsumptionSheetId: async ({params}:LoaderFunctionArgs) => {
+        const response = await fetch.get('/api/consumption-sheets/'+params.ConsumptionSheetId+'/consumption-details')
+        console.log({response});
+        
+        if (response.status !== 200) {
+            throw response;
+        }
+        response.data.map( (detail: any) => {
+            console.log({created:detail.created_at});
+            detail.created_at = new Date(Date.parse(detail.created_at))
+            console.log({detail});
+            
+            return detail
+        })
+        const consumptionSheetDetail:ConsumptionSheetDetail[] = response.data
         // consumptionSheetDetail.created_at = consumptionSheetDetail.created_at.split('T')[0]
         return consumptionSheetDetail
     }

@@ -2,6 +2,7 @@ import { Route, RouteObject, } from "react-router-dom";
 import IndexConsumptionSheetDetail from "../Pages/ConsumptionSheetDetails/index";
 import EditConsumptionSheetDetail from "../Pages/ConsumptionSheetDetails/edit";
 import ConsumptionSheetDetailsActions from "../actions/ConsumptionSheetDetails/ConsumptionSheets.actions";
+import ConsumptionSheetDetailsPage from "../Pages/ConsumptionSheetDetails/consumptionSheet";
 
 const ConsumptionSheetDetailRouter: RouteObject = {
     path: '',
@@ -29,6 +30,12 @@ const ConsumptionSheetDetailRouter: RouteObject = {
             element: <EditConsumptionSheetDetail />,
             loader: ConsumptionSheetDetailsActions.getById,
             action: ConsumptionSheetDetailsActions.update
+        },
+        {
+            path: ':consumptionSheetId/consumption-details',
+            element: <ConsumptionSheetDetailsPage/>,
+            loader: ConsumptionSheetDetailsActions.getByConsumptionSheetId,
+            action: ConsumptionSheetDetailsActions.createConsumptionDetail
         }
     ]
 };
