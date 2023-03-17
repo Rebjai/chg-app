@@ -1,4 +1,5 @@
-import { ActionFunctionArgs, LoaderFunctionArgs } from "react-router-dom"
+import { ActionFunctionArgs, LoaderFunctionArgs, redirect } from "react-router-dom"
+import { toast } from "react-toastify"
 import Staff from "../../Interfaces/staff.interface"
 import { useFetch } from "../../Utils/useFecth"
 
@@ -17,7 +18,8 @@ const StaffActions = {
         console.log('asdasd');
         const created = await fetch.post('/api/staff', sumbitData)
 
-        return created
+        toast.success('Staff member created')
+        return redirect('/staff')
 
     },
     update: async ({ request, params }: ActionFunctionArgs) => {
@@ -38,7 +40,8 @@ const StaffActions = {
         console.log({response});
         
 
-        return sumbitData
+        toast.success('Staff member updated')
+        return redirect('/staff')
     },
     getAll: async () => {
         const response = await fetch.get('/api/staff')

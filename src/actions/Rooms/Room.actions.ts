@@ -1,4 +1,5 @@
-import { ActionFunctionArgs, LoaderFunctionArgs } from "react-router-dom"
+import { ActionFunctionArgs, LoaderFunctionArgs, redirect } from "react-router-dom"
+import { toast } from "react-toastify"
 import Room from "../../Interfaces/room.interface"
 import { useFetch } from "../../Utils/useFecth"
 
@@ -23,8 +24,10 @@ const RoomsActions = {
         // if (created.status !== 200) {
         //     throw created
         // }
+        toast.success('Room created')
 
-        return created
+        created
+        return redirect('/rooms')
 
     },
     update: async ({ request, params }: ActionFunctionArgs) => {
@@ -41,8 +44,9 @@ const RoomsActions = {
         }
         console.log({response});
         
-
-        return sumbitData
+        toast.success('Room updated!')
+        sumbitData
+        return redirect('/rooms')
     },
     getAll: async () => {
         const response = await fetch.get('/api/rooms')

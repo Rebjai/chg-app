@@ -1,4 +1,5 @@
 import { ActionFunctionArgs, redirect } from 'react-router-dom';
+import { toast } from 'react-toastify';
 const AuthActions = {
     login : async ({request}: ActionFunctionArgs)=>{
         const data = await request.formData()
@@ -18,6 +19,7 @@ const AuthActions = {
         
         localStorage.setItem('token', userCreds.access_token);
         //store creds
+        toast('Welcome!', {autoClose:1000})
         return redirect('/')
 
         

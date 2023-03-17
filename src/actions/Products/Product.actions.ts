@@ -1,4 +1,5 @@
-import { ActionFunctionArgs, LoaderFunctionArgs } from "react-router-dom"
+import { ActionFunctionArgs, LoaderFunctionArgs, redirect } from "react-router-dom"
+import { toast } from "react-toastify"
 import Product from "../../Interfaces/product.interface"
 import { useFetch } from "../../Utils/useFecth"
 
@@ -23,7 +24,8 @@ const ProductsActions = {
         //     throw created
         // }
 
-        return created
+        toast.success('Product created!')
+        return redirect('/products')
 
     },
     update: async ({ request, params }: ActionFunctionArgs) => {
@@ -37,10 +39,8 @@ const ProductsActions = {
         if (response.status !== 200) {
             throw response
         }
-        console.log({response});
-        
-
-        return sumbitData
+        toast.success('Product updated!')
+        return redirect('/products')
     },
     getAll: async () => {
         const response = await fetch.get('/api/products')

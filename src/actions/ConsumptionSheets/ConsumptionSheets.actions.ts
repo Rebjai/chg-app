@@ -1,4 +1,5 @@
-import { ActionFunctionArgs, LoaderFunctionArgs } from "react-router-dom"
+import { ActionFunctionArgs, LoaderFunctionArgs, redirect } from "react-router-dom"
+import { toast } from "react-toastify"
 import ConsumptionSheet from "../../Interfaces/consumptionSheet.interface"
 import { useFetch } from "../../Utils/useFecth"
 
@@ -16,7 +17,8 @@ const ConsumptionSheetsActions = {
         console.log({sumbitData});
         const created = await fetch.post('/api/consumption-sheets', sumbitData)
 
-        return created
+        toast.success('Consumption sheet created')
+        return redirect('/consumption-sheets')
 
     },
     update: async ({ request, params }: ActionFunctionArgs) => {
@@ -37,7 +39,8 @@ const ConsumptionSheetsActions = {
         console.log({response});
         
 
-        return sumbitData
+        toast.success('Consumption sheet updated')
+        return redirect('/consumption-sheets')
     },
     getAll: async () => {
         console.log('getall');

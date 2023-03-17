@@ -1,4 +1,5 @@
-import { ActionFunctionArgs, LoaderFunctionArgs } from "react-router-dom"
+import { ActionFunctionArgs, LoaderFunctionArgs, redirect } from "react-router-dom"
+import { toast } from "react-toastify"
 import ConsumptionSheetDetail from "../../Interfaces/consumptionSheetDetail.interface"
 import { useFetch } from "../../Utils/useFecth"
 
@@ -16,7 +17,8 @@ const ConsumptionSheetDetailsActions = {
         console.log({sumbitData});
         const created = await fetch.post('/api/consumption-details', sumbitData)
 
-        return created
+        toast.success('Consumption sheet detail created')
+        return redirect('/consumption-sheets-detail')
 
     },
     createConsumptionDetail: async ({ request, params }: ActionFunctionArgs) => {
@@ -31,7 +33,7 @@ const ConsumptionSheetDetailsActions = {
         }
         console.log({sumbitData});
         const created = await fetch.post('/api/consumption-sheets/'+consumptionSheetId+'/consumption-details', sumbitData)
-
+        toast.success('Consumption sheet detail created')
         return created
 
     },
@@ -53,7 +55,8 @@ const ConsumptionSheetDetailsActions = {
         console.log({response});
         
 
-        return sumbitData
+        toast.success('Consumption sheet detail updated')
+        return redirect('/consumption-sheets-detail')
     },
     getAll: async () => {
         console.log('getall');

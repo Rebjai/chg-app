@@ -1,4 +1,5 @@
-import { ActionFunctionArgs, LoaderFunctionArgs } from "react-router-dom"
+import { ActionFunctionArgs, LoaderFunctionArgs, redirect } from "react-router-dom"
+import { toast } from "react-toastify"
 import Patient from "../../Interfaces/patient.interface"
 import { useFetch } from "../../Utils/useFecth"
 
@@ -26,7 +27,8 @@ const PatientsActions = {
         //     throw created
         // }
 
-        return created
+        toast.success('Patient created')
+        return redirect('/patients')
 
     },
     update: async ({ request, params }: ActionFunctionArgs) => {
@@ -46,7 +48,8 @@ const PatientsActions = {
         console.log({response});
         
 
-        return sumbitData
+        toast.success('Patient updated')
+        return redirect('/patients')
     },
     getAll: async () => {
         const response = await fetch.get('/api/patients')
