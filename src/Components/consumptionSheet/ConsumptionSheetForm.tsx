@@ -1,29 +1,40 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Form, useParams } from "react-router-dom";
 import ConsumptionSheet from "../../Interfaces/consumptionSheet.interface";
+import Patient from "../../Interfaces/patient.interface";
+import Room from "../../Interfaces/room.interface";
+import { useFetch } from "../../Utils/useFecth";
 import PrimaryButton from "../utils/PrimaryButton";
 import SelectInput from "../utils/SelectInput";
 interface ConsumptionSheetFormProps {
-    consumptionSheet?: ConsumptionSheet
+    consumptionSheet?: ConsumptionSheet,
+    roomOptions?: { value: any, label: string }[],
+    patientOptions?: { value: any, label: string }[],
 }
 function ConsumptionSheetForm(props?: ConsumptionSheetFormProps) {
-    const patientOptions = [
+    const fetch = useFetch()
+    useEffect(() => {
+        fetch.get('/api/patients').then(res => setPatientOptions(res.data.map((el: Patient) => ({ value: el.id, label: `${el.name} ${el.first_surname} ${el.second_surname}` }))))
+        fetch.get('/api/rooms').then(res => setRoomOptions(res.data.map((el: Room) => ({ value: el.id, label: el.name }))))
+    }, [])
+    console.log({ rooms: props?.roomOptions });
+    const [patientOptions, setPatientOptions] = useState(props?.roomOptions ?? [
         { value: '', label: 'Selecciona un elemento de la lista' },
         { value: 1, label: 'Jesus Rebollar' },
-        { value: 2, label: 'ICU' },
+        { value: 2, label: 'Fulano Detal' },
         { value: 3, label: 'n/a' },
-    ]
-    const roomOptions = [
+    ])
+    const [roomOptions, setRoomOptions] = useState(props?.roomOptions ?? [
         { value: '', label: 'Selecciona un elemento de la lista' },
         { value: 1, label: '201' },
-        { value: 2, label: 'Inactive' },
+        { value: 2, label: 'ER' },
         { value: 3, label: 'n/a' },
-    ]
+    ])
     const createConsumptionSheet = !!!props?.consumptionSheet?.id
 
-    console.log({createConsumptionSheet});
-    
-    const [newConsumptionSheet, setNewConsumptionSheet] = useState<ConsumptionSheet>(props?.consumptionSheet? props.consumptionSheet:{
+    console.log({ createConsumptionSheet });
+
+    const [newConsumptionSheet, setNewConsumptionSheet] = useState<ConsumptionSheet>(props?.consumptionSheet ? props.consumptionSheet : {
         id: 0,
         patient_id: 1,
         room_id: 0,
@@ -34,8 +45,8 @@ function ConsumptionSheetForm(props?: ConsumptionSheetFormProps) {
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = event.target;
-        console.log({name, value});
-        
+        console.log({ name, value });
+
         setNewConsumptionSheet((prevNewConsumptionSheet) => ({ ...prevNewConsumptionSheet, [name]: value }));
     };
     const handleTypeInputChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -53,7 +64,7 @@ function ConsumptionSheetForm(props?: ConsumptionSheetFormProps) {
     return (
         <div className="container mx-auto">
             <h1 className="text-2xl font-bold mb-4">{createConsumptionSheet ? 'Create a new consumptionSheet' : 'Edit consumptionSheet'}</h1>
-            <Form onSubmit={handleCreateConsumptionSheet} method={createConsumptionSheet?'post':'put'}>
+            <Form onSubmit={handleCreateConsumptionSheet} method={createConsumptionSheet ? 'post' : 'put'}>
                 <div className="flex flex-col mb-4">
                     <label htmlFor="name" className="mb-2 font-bold">
                         Doctor
