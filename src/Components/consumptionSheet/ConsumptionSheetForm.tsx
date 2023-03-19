@@ -15,7 +15,7 @@ function ConsumptionSheetForm(props?: ConsumptionSheetFormProps) {
     const fetch = useFetch()
     useEffect(() => {
         fetch.get('/api/patients').then(res => setPatientOptions(res.data.map((el: Patient) => ({ value: el.id, label: `${el.name} ${el.first_surname} ${el.second_surname}` }))))
-        fetch.get('/api/rooms').then(res => setRoomOptions(res.data.map((el: Room) => ({ value: el.id, label: el.name }))))
+        fetch.get('/api/rooms?status=1').then(res => setRoomOptions(res.data.map((el: Room) => ({ value: el.id, label: el.name }))))
     }, [])
     console.log({ rooms: props?.roomOptions });
     const [patientOptions, setPatientOptions] = useState(props?.roomOptions ?? [

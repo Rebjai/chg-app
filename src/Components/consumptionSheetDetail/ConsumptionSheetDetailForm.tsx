@@ -89,6 +89,7 @@ function ConsumptionSheetDetailForm(props?: ConsumptionSheetDetailFormProps) {
                         id="quantity"
                         value={newConsumptionSheetDetail.quantity}
                         onChange={handleInputChange}
+                        min='0'
                         className="border border-gray-400 p-2"
                         required
                     />
