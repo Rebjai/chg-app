@@ -35,7 +35,7 @@ const RoomsActions = {
         const sumbitData: Room = {
             name: data.get('name')!.toString(),
             status: parseInt(data.get('status')!.toString()),
-            type: parseInt(data.get('status')!.toString()),
+            type: parseInt(data.get('type')!.toString()),
         }
         console.log({sumbitData});
         const response = await fetch.put('/api/rooms/'+params.id, sumbitData)
