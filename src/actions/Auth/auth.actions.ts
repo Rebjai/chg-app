@@ -17,10 +17,12 @@ const AuthActions = {
         
         console.log({userCreds});
         
-        localStorage.setItem('token', userCreds.access_token);
         //store creds
+        localStorage.setItem('token', userCreds.access_token);
+        localStorage.setItem('user', JSON.stringify({user:userCreds.user}));
         toast('Welcome!', {autoClose:1000})
-        return redirect('/')
+        // return redirect('/')
+        return userCreds
 
         
     }

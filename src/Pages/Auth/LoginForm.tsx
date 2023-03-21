@@ -1,9 +1,25 @@
-import { FormEvent, useState } from 'react';
-import { Form } from 'react-router-dom';
+import { FormEvent, useEffect, useState } from 'react';
+import { Form, useActionData, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../Utils/UseAuth';
 
 const LoginForm = () => {
+  const navigate = useNavigate()
   const [email, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  let actionData = useActionData() as any;
+  const { auth, login } = useAuth()
+  // console.log({actionData});
+
+  useEffect(() => {
+    if (actionData?.user?.id) {
+      console.log({ actionData });
+      login!(actionData.user).then(() => {
+        navigate('/')
+
+      })
+
+    }
+  }, [actionData])
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     // e.preventDefault();

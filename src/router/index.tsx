@@ -1,5 +1,8 @@
 import { createBrowserRouter } from "react-router-dom";
+import AuthGuard from "../Guards/AuthGuard";
+import PublicGuard from "../Guards/PublicGuard";
 import AppLayout from "../Layouts/AppLayout";
+import AuthProvider from "../Pages/Auth/AuthProvider";
 import Login from "../Pages/Auth/Login";
 import ResetPassword from "../Pages/Auth/ResetPassword";
 import ErrorPage from "../Pages/error-page";
@@ -12,28 +15,38 @@ import ProductRouter from "./products.router";
 import RoomRouter from "./rooms.router";
 import StaffRouter from "./staff.router";
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <AppLayout />,
-    errorElement: <ErrorPage />,
+const router = createBrowserRouter(
+  [{
+    element: <AuthProvider />,
     children: [
-      { path: '', element: <IndexPage />},
-      { path: 'rooms', children: [RoomRouter] },
-      { path: 'patients', children: [PatientRouter] },
-      { path: 'products', children: [ProductRouter] },
-      { path: 'staff', children: [StaffRouter] },
-      { path: 'consumption-sheets', children: [ConsumptionSheetRouter] },
-      { path: 'consumption-sheet-details', children: [ConsumptionSheetDetailRouter] },
+      {
+        element: <AuthGuard />, children: [
+          {
+            path: "/",
+            element: <AppLayout />,
+            errorElement: <ErrorPage />,
+            children: [
+              { path: '', element: <IndexPage /> },
+              { path: 'rooms', children: [RoomRouter] },
+              { path: 'patients', children: [PatientRouter] },
+              { path: 'products', children: [ProductRouter] },
+              { path: 'staff', children: [StaffRouter] },
+              { path: 'consumption-sheets', children: [ConsumptionSheetRouter] },
+              { path: 'consumption-sheet-details', children: [ConsumptionSheetDetailRouter] },
+            ]
+          }
+        ]
+      }
+      ,
+      {
+        element: <PublicGuard />, children: [{
+          path: 'auth',
+          children: [AuthRouter]
+        },]
+      }
     ]
-  },
-  {
-    path: 'auth',
-    children: [AuthRouter]
-  },
+  }
 
-
-
-
-]);
+  ]
+);
 export default router
