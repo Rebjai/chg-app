@@ -17,6 +17,7 @@ function AuthProvider({ children }: any) {
     // call this function to sign out logged in user
     const logout = () => {
         setAuth(null);
+        localStorage.removeItem('token')
         navigate("/", { replace: true });
     };
     const value = useMemo(() => ({ auth, login, logout }), [auth, login, logout])

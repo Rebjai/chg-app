@@ -1,14 +1,16 @@
 import { useEffect } from "react";
 import { useNavigate, useRouteError } from "react-router-dom";
+import { useAuth } from "../Utils/UseAuth";
 
 export default function ErrorPage() {
   const navigate = useNavigate()
   const error = useRouteError() as any;
   console.error({error});
+  const {auth, logout} = useAuth()
   useEffect(()=>{
     if ([401,403].includes(error.statusCode)) {
-      localStorage.removeItem('token')
-      setTimeout(()=>{navigate('/auth/login')},1000)
+      
+      setTimeout(()=>logout!(),1000)
       
     }
   })
