@@ -1,12 +1,20 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Form, useParams } from "react-router-dom";
 import ConsumptionSheetDetail from "../../Interfaces/consumptionSheetDetail.interface";
+import { useAuth } from "../../Utils/UseAuth";
+import { useFetch } from "../../Utils/useFecth";
 import PrimaryButton from "../utils/PrimaryButton";
 import SelectInput from "../utils/SelectInput";
 interface ConsumptionSheetDetailFormProps {
     consumptionSheetDetail?: ConsumptionSheetDetail,
     consumptionSheetId?: number
 }
+interface SelectOption {
+    value: string | number,
+    label: string,
+
+}
+
 function ConsumptionSheetDetailForm(props?: ConsumptionSheetDetailFormProps) {
     const consumptionSheetOptions = [
         { value: '', label: 'Selecciona un elemento de la lista' },
@@ -14,12 +22,13 @@ function ConsumptionSheetDetailForm(props?: ConsumptionSheetDetailFormProps) {
         { value: 2, label: '2' },
         { value: 3, label: '3' },
     ]
-    const staffOptions = [
+    const { auth } = useAuth()
+    const [staffOptions, setStaffOptions] = useState<SelectOption[]>(auth?.user?.profile ? [{ value: auth.user.profile.id!, label: `${auth.user.profile.name} ${auth.user.profile.first_surname} ${auth.user.profile.second_surname}` }] : [
         { value: '', label: 'Selecciona un elemento de la lista' },
         { value: 1, label: 'Ocanita lavala Tinaco' },
         { value: 2, label: 'Inactive' },
         { value: 3, label: 'n/a' },
-    ]
+    ])
     const productOptions = [
         { value: '', label: 'Selecciona un elemento de la lista' },
         { value: 1, label: 'CS 500' },
@@ -27,13 +36,13 @@ function ConsumptionSheetDetailForm(props?: ConsumptionSheetDetailFormProps) {
         { value: 3, label: 'n/a' },
     ]
     const createConsumptionSheetDetail = !!!props?.consumptionSheetDetail?.id
+    const fetch = useFetch()
+    console.log({ createConsumptionSheetDetail });
+    console.log({ val: !!props?.consumptionSheetId });
 
-    console.log({createConsumptionSheetDetail});
-    console.log({val : !!props?.consumptionSheetId});
-    
-    const [newConsumptionSheetDetail, setNewConsumptionSheetDetail] = useState<ConsumptionSheetDetail>(props?.consumptionSheetDetail? props.consumptionSheetDetail:{
+    const [newConsumptionSheetDetail, setNewConsumptionSheetDetail] = useState<ConsumptionSheetDetail>(props?.consumptionSheetDetail ? props.consumptionSheetDetail : {
         id: 0,
-        consumption_sheet_id: 1,
+        consumption_sheet_id: auth.user.profile?.id ?? 0,
         staff_id: 1,
         product_id: 1,
         quantity: 0,
@@ -41,8 +50,8 @@ function ConsumptionSheetDetailForm(props?: ConsumptionSheetDetailFormProps) {
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = event.target;
-        console.log({name, value});
-        
+        console.log({ name, value });
+
         setNewConsumptionSheetDetail((prevNewConsumptionSheetDetail) => ({ ...prevNewConsumptionSheetDetail, [name]: value }));
     };
     const handleTypeInputChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -56,22 +65,27 @@ function ConsumptionSheetDetailForm(props?: ConsumptionSheetDetailFormProps) {
         // event.preventDefault();
         console.log('New consumptionSheetDetail:', newConsumptionSheetDetail);
     };
+    useEffect(() => {
+        fetch.get('/api/staff').then(v => {
+            setStaffOptions(v.data.map((el: any) => ({value: el.id, label: `${el.name} ${el.first_surname} ${el.second_surname}`})))
+        })
+    }, [null])
 
     return (
         <div className="container mx-auto">
             <h1 className="text-2xl font-bold mb-4">{createConsumptionSheetDetail ? 'Create a new consumptionSheetDetail' : 'Edit consumptionSheetDetail'}</h1>
-            <Form onSubmit={handleCreateConsumptionSheetDetail} method={createConsumptionSheetDetail?'post':'put'}>
-                <div className={"flex flex-col mb-4"+ props?.consumptionSheetId? " hidden":''}>
+            <Form onSubmit={handleCreateConsumptionSheetDetail} method={createConsumptionSheetDetail ? 'post' : 'put'}>
+                <div className={"flex flex-col mb-4" + props?.consumptionSheetId ? " hidden" : ''}>
                     <label htmlFor="consumption_sheet_id" className="mb-2 font-bold">
                         Consumption Sheet
                     </label>
-                    <SelectInput options={consumptionSheetOptions}  hidden={!!props?.consumptionSheetId} onChange={handleTypeInputChange} value={newConsumptionSheetDetail.consumption_sheet_id.toString()} name='consumption_sheet_id' />
+                    <SelectInput options={consumptionSheetOptions} hidden={!!props?.consumptionSheetId} onChange={handleTypeInputChange} value={newConsumptionSheetDetail.consumption_sheet_id.toString()} name='consumption_sheet_id' />
                 </div>
-                <div className="flex flex-col mb-4">
+                <div className="flex flex-col mb-4" hidden={auth.user.role == 'Staff'}>
                     <label htmlFor="staff_id" className="mb-2 font-bold">
                         staff
                     </label>
-                    <SelectInput options={staffOptions} onChange={handleTypeInputChange} value={newConsumptionSheetDetail.staff_id.toString()} name='staff_id' />
+                    <SelectInput options={staffOptions} hidden={auth.user.role == 'Staff'} onChange={handleTypeInputChange} value={newConsumptionSheetDetail.staff_id.toString()} name='staff_id' />
                 </div>
                 <div className="flex flex-col mb-4">
                     <label htmlFor="product_id" className="mb-2 font-bold">

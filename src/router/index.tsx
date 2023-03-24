@@ -14,6 +14,7 @@ import PatientRouter from "./patients.router";
 import ProductRouter from "./products.router";
 import RoomRouter from "./rooms.router";
 import StaffRouter from "./staff.router";
+import UsersRouter from "./users.router";
 
 const router = createBrowserRouter(
   [{
@@ -33,6 +34,7 @@ const router = createBrowserRouter(
               { path: 'staff', children: [StaffRouter] },
               { path: 'consumption-sheets', children: [ConsumptionSheetRouter] },
               { path: 'consumption-sheet-details', children: [ConsumptionSheetDetailRouter] },
+              { path: 'users', children: [UsersRouter] },
             ]
           }
         ]
