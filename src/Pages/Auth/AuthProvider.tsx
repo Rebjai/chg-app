@@ -8,10 +8,11 @@ function AuthProvider({ children }: any) {
     const navigate = useNavigate();
     const login = async (user: any) => {
 
-        console.log('setting user');
+        console.log('setting user', {user});
         setAuth({user});
+        console.log({auth});
+        navigate("/", { replace: true });
         
-        navigate("/profile");
     };
 
     // call this function to sign out logged in user

@@ -62,7 +62,16 @@ function IndexPage() {
                         </Link>
                     </li>
                 </>
-                }
+                }{auth.user.role != '1' ? null : (
+                    <li>
+                        <Link to={'/auth/profile'}>
+                            <button className="bg-cyan-400 rounded p-3 drop-shadow-md text-slate-600 font-bold tracking-widest">
+                                Profile
+                            </button>
+                        </Link>
+                    </li>
+                )}
+
 
                 <li>
                     <button className="bg-red-500 rounded p-3 drop-shadow-md text-slate-200 font-bold tracking-widest" onClick={handleLogout}>

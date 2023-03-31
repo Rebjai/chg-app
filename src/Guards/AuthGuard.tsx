@@ -9,6 +9,10 @@ function AuthGuard() {
         console.log({ auth });
 
     }, [auth])
+
+    if (auth && auth.user.role =='1' && !auth.user.profile  ) {
+        return <Navigate to={'/auth/profile'} />
+    }
     return (auth?.user?.id ? <Outlet></Outlet> : <Navigate to={'/auth/login'}></Navigate>);
 }
 

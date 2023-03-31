@@ -1,6 +1,7 @@
 import { RouteObject } from "react-router-dom";
 import AuthActions from "../actions/Auth/auth.actions";
 import Login from "../Pages/Auth/Login";
+import Profile from "../Pages/Auth/Profile";
 import ResetPassword from "../Pages/Auth/ResetPassword";
 import ErrorPage from "../Pages/error-page";
 
@@ -11,7 +12,7 @@ const AuthRouter: RouteObject = {
         {
             path: '',
             element: <Login />,
-            action: AuthActions.login
+            action: AuthActions.login,
         },
         {
             path: 'login',
@@ -22,6 +23,12 @@ const AuthRouter: RouteObject = {
         {
             path: 'reset-password',
             element: <ResetPassword />
+        },
+        {
+            path: 'profile',
+            element: <Profile />,
+            action: AuthActions.updateProfile,
+            loader: AuthActions.getProfile
         },
     ]
 };

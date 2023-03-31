@@ -14,7 +14,7 @@ const LoginForm = () => {
     if (actionData?.user?.id) {
       console.log({ actionData });
       login!(actionData.user).then(() => {
-        navigate('/')
+        // navigate('/')
 
       })
 

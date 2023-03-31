@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { useAuth } from "../Utils/UseAuth";
 import { useFetch } from "../Utils/useFecth";
 function PublicGuard() {
@@ -9,6 +9,24 @@ function PublicGuard() {
         console.log({ auth });
 
     }, [auth])
+    const location = useLocation()
+    console.log({ location });
+
+    if (auth && auth.user.role == '1' && !auth.user.profile && location.pathname !== '/auth/profile') {
+        console.log('to profile');
+        return <Navigate to={'/auth/profile'}></Navigate>
+    }
+    // this good
+    if (auth && auth.user.role == '1' && location.pathname == '/auth/profile') {
+        console.log('profile');
+
+        return <Outlet></Outlet>
+    }
+    if (!auth && location.pathname == '/auth/profile'){
+        console.log('no account');
+        
+        return <Navigate to={'/'}></Navigate>
+    }
     return (!auth?.user?.id ? <Outlet></Outlet> : <Navigate to={'/'}></Navigate>);
 }
 
