@@ -18,6 +18,13 @@ function IndexPage() {
                         </button>
                     </Link>
                 </li>
+                <li>
+                    <Link to={'patients'}>
+                        <button className="bg-cyan-400 rounded p-3 drop-shadow-md text-slate-600 font-bold tracking-widest">
+                            Patients
+                        </button>
+                    </Link>
+                </li>
                 {auth.user.role == '1' ? null : <>
                     <li>
                         <Link to={'consumption-sheet-details'}>
@@ -30,13 +37,6 @@ function IndexPage() {
                         <Link to={'rooms'}>
                             <button className="bg-cyan-400 rounded p-3 drop-shadow-md text-slate-600 font-bold tracking-widest">
                                 Cuartos
-                            </button>
-                        </Link>
-                    </li>
-                    <li>
-                        <Link to={'patients'}>
-                            <button className="bg-cyan-400 rounded p-3 drop-shadow-md text-slate-600 font-bold tracking-widest">
-                                Patients
                             </button>
                         </Link>
                     </li>

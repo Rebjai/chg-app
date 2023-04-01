@@ -21,9 +21,8 @@ function PatientForm(props?: PatientFormProps) {
     ]
     const createPatient = !!!props?.patient?.id
 
-    console.log({createPatient});
-    
-    const [newPatient, setNewPatient] = useState<Patient>(props?.patient? props.patient:{
+
+    const [newPatient, setNewPatient] = useState<Patient>(props?.patient ? props.patient : {
         id: 0,
         name: '',
         first_surname: '',
@@ -34,8 +33,8 @@ function PatientForm(props?: PatientFormProps) {
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = event.target;
-        console.log({name, value});
-        
+        console.log({ name, value });
+
         setNewPatient((prevNewPatient) => ({ ...prevNewPatient, [name]: value }));
     };
     const handleTypeInputChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -53,7 +52,7 @@ function PatientForm(props?: PatientFormProps) {
     return (
         <div className="container mx-auto">
             <h1 className="text-2xl font-bold mb-4">{createPatient ? 'Create a new patient' : 'Edit patient'}</h1>
-            <Form onSubmit={handleCreatePatient} method={createPatient?'post':'put'}>
+            <Form onSubmit={handleCreatePatient} method={createPatient ? 'post' : 'put'}>
                 <div className="flex flex-col mb-4">
                     <label htmlFor="name" className="mb-2 font-bold">
                         Name
@@ -110,11 +109,11 @@ function PatientForm(props?: PatientFormProps) {
                         required
                     />
                 </div>
-                <div className="flex flex-col mb-4">
-                    <label htmlFor="type" className="mb-2 font-bold">
+                <div className={(!newPatient.id ? 'hidden ' : '') + "flex flex-col mb-4"}  >
+                    <label htmlFor="type" className="mb-2 font-bold" hidden={!newPatient.id}>
                         Status
                     </label>
-                    <SelectInput options={statusOptions} onChange={handleTypeInputChange} value='1' name='status' />
+                    <SelectInput options={statusOptions} onChange={handleTypeInputChange} value='1' name='status' hidden={!newPatient.id} />
                 </div>
                 <PrimaryButton type="submit" onClick={() => console.log('submit')}>
                     {createPatient ? 'Create Patient' : 'Edit Patient'}
