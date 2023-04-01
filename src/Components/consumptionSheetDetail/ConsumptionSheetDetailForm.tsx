@@ -29,12 +29,12 @@ function ConsumptionSheetDetailForm(props?: ConsumptionSheetDetailFormProps) {
         { value: 2, label: 'Inactive' },
         { value: 3, label: 'n/a' },
     ])
-    const productOptions = [
+    const [productOptions, setProductOptions] = useState<SelectOption[]>([
         { value: '', label: 'Selecciona un elemento de la lista' },
         { value: 1, label: 'CS 500' },
         { value: 2, label: 'Inactive' },
         { value: 3, label: 'n/a' },
-    ]
+    ])
     const createConsumptionSheetDetail = !!!props?.consumptionSheetDetail?.id
     const fetch = useFetch()
     console.log({ createConsumptionSheetDetail });
@@ -42,8 +42,8 @@ function ConsumptionSheetDetailForm(props?: ConsumptionSheetDetailFormProps) {
 
     const [newConsumptionSheetDetail, setNewConsumptionSheetDetail] = useState<ConsumptionSheetDetail>(props?.consumptionSheetDetail ? props.consumptionSheetDetail : {
         id: 0,
-        consumption_sheet_id: auth.user.profile?.id ?? 0,
-        staff_id: 1,
+        consumption_sheet_id: props?.consumptionSheetId ?? 0,
+        staff_id: auth.user.profile?.id??0,
         product_id: 1,
         quantity: 0,
     });
@@ -67,7 +67,12 @@ function ConsumptionSheetDetailForm(props?: ConsumptionSheetDetailFormProps) {
     };
     useEffect(() => {
         fetch.get('/api/staff').then(v => {
-            setStaffOptions(v.data.map((el: any) => ({value: el.id, label: `${el.name} ${el.first_surname} ${el.second_surname}`})))
+            setStaffOptions(v.data.map((el: any) => ({ value: el.id, label: `${el.name} ${el.first_surname} ${el.second_surname}` })))
+        })
+    }, [null])
+    useEffect(() => {
+        fetch.get('/api/products').then(v => {
+            setProductOptions(v.data.map((el: any) => ({ value: el.id, label: `${el.name}` })))
         })
     }, [null])
 
@@ -81,11 +86,11 @@ function ConsumptionSheetDetailForm(props?: ConsumptionSheetDetailFormProps) {
                     </label>
                     <SelectInput options={consumptionSheetOptions} hidden={!!props?.consumptionSheetId} onChange={handleTypeInputChange} value={newConsumptionSheetDetail.consumption_sheet_id.toString()} name='consumption_sheet_id' />
                 </div>
-                <div className="flex flex-col mb-4" hidden={auth.user.role == 'Staff'}>
-                    <label htmlFor="staff_id" className="mb-2 font-bold">
+                <div className={(auth.user.role == '1' ? 'hidden ' : '') + "flex flex-col mb-4"}>
+                    <label htmlFor="staff_id" className="mb-2 font-bold" hidden={auth.user.role == '1'}>
                         staff
                     </label>
-                    <SelectInput options={staffOptions} hidden={auth.user.role == 'Staff'} onChange={handleTypeInputChange} value={newConsumptionSheetDetail.staff_id.toString()} name='staff_id' />
+                    <SelectInput options={staffOptions} hidden={auth.user.role == '1'} onChange={handleTypeInputChange} value={newConsumptionSheetDetail.staff_id.toString()} name='staff_id' />
                 </div>
                 <div className="flex flex-col mb-4">
                     <label htmlFor="product_id" className="mb-2 font-bold">

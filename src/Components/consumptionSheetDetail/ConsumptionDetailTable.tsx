@@ -1,10 +1,12 @@
 import ConsumptionSheetDetail from "../../Interfaces/consumptionSheetDetail.interface";
+import { useAuth } from "../../Utils/UseAuth";
 
 interface ConsumptionDetailTableProps {
     consumptionDetails: ConsumptionSheetDetail[]
 }
 
 function ConsumptionDetailTable({ consumptionDetails }: ConsumptionDetailTableProps) {
+    const { auth } = useAuth()
     return (
 
         <div className="bg-green-100 rounded p-5">
@@ -14,7 +16,7 @@ function ConsumptionDetailTable({ consumptionDetails }: ConsumptionDetailTablePr
                         <th>Date</th>
                         <th>Product</th>
                         <th>quantity</th>
-                        <th>price</th>
+                        {auth.user.role == '1' ? null : <th>price</th>}
                     </tr>
                 </thead>
                 <tbody>
@@ -24,7 +26,7 @@ function ConsumptionDetailTable({ consumptionDetails }: ConsumptionDetailTablePr
                             <td>{detail.created_at?.toLocaleDateString()}</td>
                             <td>{detail.product?.name}</td>
                             <td>{detail.quantity}</td>
-                            <td>{detail.total}</td>
+                            {auth.user.role == '1' ? null : <td>{detail.total}</td>}
                         </tr>)
                     ) : (<tr>
                         <td colSpan={4} className="text-center">No data found</td>
