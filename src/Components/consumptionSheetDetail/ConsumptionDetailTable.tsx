@@ -7,7 +7,7 @@ interface ConsumptionDetailTableProps {
 function ConsumptionDetailTable({ consumptionDetails }: ConsumptionDetailTableProps) {
     return (
 
-        <div className="bg-green-100 rounded">
+        <div className="bg-green-100 rounded p-5">
             <table className="min-w-full">
                 <thead>
                     <tr>
@@ -27,10 +27,7 @@ function ConsumptionDetailTable({ consumptionDetails }: ConsumptionDetailTablePr
                             <td>{detail.total}</td>
                         </tr>)
                     ) : (<tr>
-                        <td>date</td>
-                        <td>prod1</td>
-                        <td>qt1</td>
-                        <td>price</td>
+                        <td colSpan={4} className="text-center">No data found</td>
                     </tr>)}
                 </tbody>
             </table>
