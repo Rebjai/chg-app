@@ -1,6 +1,9 @@
 import { useLoaderData, useNavigate } from "react-router-dom";
 import PrimaryButton from "../../Components/utils/PrimaryButton";
 import RoomCard from "../../Components/rooms/RoomCard";
+import PaginatedResponse from "../../Interfaces/paginatedResponse.interface";
+import Room from "../../Interfaces/room.interface";
+import PaginationComponent from "../../Components/utils/PaginationComponent";
 
 function indexRoom() {
     let navigate= useNavigate()
@@ -24,7 +27,7 @@ function indexRoom() {
     //         status: 1
     //     },
     // ]
-    const rooms = useLoaderData()
+    const {items:rooms, meta, links} = useLoaderData() as PaginatedResponse<Room>
     return (<>
         <PrimaryButton onClick={() => {
             navigate('create')
@@ -33,6 +36,7 @@ function indexRoom() {
         </PrimaryButton>
         lista de cuartos
         {rooms.map(room => <RoomCard room={room} key={room.id}></RoomCard>)}
+        <PaginationComponent links={links} meta={meta!} />
     </>);
 }
 

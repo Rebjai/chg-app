@@ -4,7 +4,7 @@ import deleteIcon from "../../assets/delete-icon.svg";
 import editIcon from "../../assets/edit-icon.svg";
 interface RoomCardProps {
     room: {
-        id: number,
+        id?: number,
         name: string,
         type: number,
         status: number,

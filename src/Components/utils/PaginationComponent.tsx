@@ -3,10 +3,16 @@ import { LinksInfoPaginated, MetaInfoPaginated } from "../../Interfaces/paginate
 
 interface PaginationComponentProps {
     meta: MetaInfoPaginated,
-    links: LinksInfoPaginated
+    links?: LinksInfoPaginated
 }
 
 const PaginationComponent = ({ meta, links }: PaginationComponentProps) => {
+    if (!meta || !links) {
+        return ( 
+        <div className="flex justify-center mt-8">
+            No data
+            </div>)
+    }
     const { currentPage, totalPages } = meta;
     const { first, previous, next, last } = links;
     
