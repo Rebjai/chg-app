@@ -1,12 +1,16 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Form, useParams } from "react-router-dom";
 import Product from "../../Interfaces/product.interface";
 import PrimaryButton from "../utils/PrimaryButton";
+import AsyncSelect from 'react-select/async';
 import SelectInput from "../utils/SelectInput";
+import { useFetch } from "../../Utils/useFecth";
+import ProductSatCategory from "../../Interfaces/product-sat-category.interface";
 interface ProductFormProps {
     product?: Product
 }
 function ProductForm(props?: ProductFormProps) {
+    const fetch = useFetch()
     const typeOptions = [
         { value: '', label: 'Selecciona un elemento de la lista' },
         { value: 1, label: 'Normal' },
@@ -19,11 +23,34 @@ function ProductForm(props?: ProductFormProps) {
         { value: 2, label: 'Inactive' },
         { value: 3, label: 'n/a' },
     ]
+    const [productSatCategoryOptions, setProductSatCategoryOptions] = useState([]);
+
+    useEffect(() => {
+        loadOptions('')
+    }, [null])
+    const loadOptions = async (inputValue: string = '') => {
+        console.log({ inputValue });
+
+        const response = await fetch.get(`/api/product-sat-category?q=${inputValue}`);
+        console.log({ response });
+
+        const options = response.data.items.map((result: ProductSatCategory) => {
+            console.log({ result });
+            return ({
+
+                value: result.id,
+                label: result.code + ' - ' + result.name
+            })
+        });
+        console.log({ options });
+        setProductSatCategoryOptions(options);
+        return options
+    };
     const createProduct = !!!props?.product?.id
 
-    console.log({createProduct});
-    
-    const [newProduct, setNewProduct] = useState<Product>(props?.product? props.product:{
+    console.log({ createProduct });
+
+    const [newProduct, setNewProduct] = useState<Product>(props?.product ? props.product : {
         id: 0,
         name: '',
         price: 1,
@@ -31,8 +58,8 @@ function ProductForm(props?: ProductFormProps) {
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = event.target;
-        console.log({name, value});
-        
+        console.log({ name, value });
+
         setNewProduct((prevNewProduct) => ({ ...prevNewProduct, [name]: value }));
     };
     const handleTypeInputChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -50,7 +77,7 @@ function ProductForm(props?: ProductFormProps) {
     return (
         <div className="container mx-auto">
             <h1 className="text-2xl font-bold mb-4">{createProduct ? 'Create a new product' : 'Edit product'}</h1>
-            <Form onSubmit={handleCreateProduct} method={createProduct?'post':'put'}>
+            <Form onSubmit={handleCreateProduct} method={createProduct ? 'post' : 'put'}>
                 <div className="flex flex-col mb-4">
                     <label htmlFor="name" className="mb-2 font-bold">
                         Name
@@ -79,7 +106,18 @@ function ProductForm(props?: ProductFormProps) {
                         required
                     />
                 </div>
-                
+                <div className="flex flex-col mb-4">
+                    <label htmlFor="Category_id" className="mb-2 font-bold">
+                        Category
+                    </label>
+                    <AsyncSelect
+                        id="category_id"
+                        name="category_id"
+                        cacheOptions defaultOptions
+                        loadOptions={loadOptions}
+                        placeholder="Search..."
+                    />
+                </div>
                 {/* <div className="flex flex-col mb-4">
                     <label htmlFor="type" className="mb-2 font-bold">
                         Status
