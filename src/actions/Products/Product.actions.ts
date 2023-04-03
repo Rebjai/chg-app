@@ -9,7 +9,8 @@ const ProductsActions = {
         const data = await request.formData()
         const sumbitData: Product = {
             name: data.get('name')!.toString(),
-            price: parseFloat(data.get('price')!.toString())
+            price: parseFloat(data.get('price')!.toString()),
+            category_id: parseInt(data.get('category_id')!.toString())
         }
         console.log('asdasd');
         const created = await fetch.post('/api/products', sumbitData)
@@ -32,7 +33,8 @@ const ProductsActions = {
         const data = await request.formData()
         const sumbitData: Product = {
             name: data.get('name')!.toString(),
-            price: parseFloat(data.get('price')!.toString())
+            price: parseFloat(data.get('price')!.toString()),
+            category_id: parseInt(data.get('category_id')!.toString())
         }
         console.log({ sumbitData });
         const response = await fetch.put('/api/products/' + params.id, sumbitData)
@@ -46,9 +48,9 @@ const ProductsActions = {
         console.log({ params });
         const url = new URL(request.url);
         const search = url.search;
-        console.log({url});
-        
-        const response = await fetch.get('/api/products'+search)
+        console.log({ url });
+
+        const response = await fetch.get('/api/products' + search)
         if (response.status !== 200) {
             throw response;
         }
