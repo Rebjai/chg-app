@@ -20,17 +20,18 @@ function ProductCard({ product }: ProductCardProps) {
         }
         return 'n/a'
     }
-    
+
     return (
         <div className="card rounded min-w-[200px] bg-cyan-200 my-2 p-3 drop-shadow-lg w-10/12">
             <h1 className="font-bold text-lg tracking-wider">{`${product.name}`}</h1>
+            <h2 className="font-bold text-medium tracking-wider">{`${product.category_id ? `${product.category?.code} -  ${product.category?.name!}` : 'n/a'}`}</h2>
             <p className="italic">${product.price}</p>
             <div className="actions flex justify-end w-full ">
-                <Link className="max-w-[100px] w-1/12 mx-3" to={''+product.id} >
-                    <img src={editIcon} alt=""  />
+                <Link className="max-w-[100px] w-1/12 mx-3" to={'' + product.id} >
+                    <img src={editIcon} alt="" />
                 </Link>
                 <button className="max-w-[100px] w-1/12 mx-3">
-                    <img src={deleteIcon} alt=""  />
+                    <img src={deleteIcon} alt="" />
                 </button>
             </div>
 
