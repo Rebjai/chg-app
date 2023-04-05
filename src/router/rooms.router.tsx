@@ -1,7 +1,9 @@
+import { lazy } from "react";
 import { ActionFunction, Route, RouteObject, } from "react-router-dom";
 import RoomsActions from "../actions/Rooms/Room.actions";
-import IndexRoom from "../Pages/Rooms";
-import EditRoom from "../Pages/Rooms/edit";
+
+const IndexRoom = lazy(() => import("../Pages/Rooms"));
+const EditRoom = lazy(() => import("../Pages/Rooms/edit"));
 
 const RoomRouter: RouteObject = {
     path: '',

@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { Link, Outlet } from "react-router-dom";
 import chgLogo from '../assets/chg-app.svg'
 
@@ -11,9 +12,11 @@ function AppLayout() {
 
                 <h2 className="text-2xl font-bold text-purple-700 ml-4">{pageTitle}</h2>
             </header>
-            <div className="flex flex-col text-center items-center">
-                <Outlet />
-            </div>
+            <Suspense fallback={<h1 className="text-center font-bold my-5">loading...</h1>}>
+                <div className="flex flex-col text-center items-center">
+                    <Outlet />
+                </div>
+            </Suspense>
         </div>
     )
 }

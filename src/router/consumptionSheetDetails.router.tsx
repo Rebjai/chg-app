@@ -1,8 +1,10 @@
+import { lazy } from "react";
 import { Route, RouteObject, } from "react-router-dom";
-import IndexConsumptionSheetDetail from "../Pages/ConsumptionSheetDetails/index";
-import EditConsumptionSheetDetail from "../Pages/ConsumptionSheetDetails/edit";
 import ConsumptionSheetDetailsActions from "../actions/ConsumptionSheetDetails/ConsumptionSheets.actions";
 import ConsumptionSheetDetailsPage from "../Pages/ConsumptionSheetDetails/consumptionSheet";
+
+const IndexConsumptionSheetDetail = lazy(() => import("../Pages/ConsumptionSheetDetails/index"));
+const EditConsumptionSheetDetail = lazy(() => import("../Pages/ConsumptionSheetDetails/edit"));
 
 const ConsumptionSheetDetailRouter: RouteObject = {
     path: '',

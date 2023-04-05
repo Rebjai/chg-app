@@ -1,7 +1,9 @@
+import { lazy } from "react";
 import { Route, RouteObject, } from "react-router-dom";
-import IndexUser from "../Pages/Users/index";
-import EditUser from "../Pages/Users/edit";
 import UsersActions from "../actions/Users/User.actions";
+
+const IndexUser = lazy(() => import("../Pages/Users/index"));
+const EditUser = lazy(() => import("../Pages/Users/edit"));
 
 const UsersRouter: RouteObject = {
     path: '',

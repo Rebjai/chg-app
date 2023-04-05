@@ -1,7 +1,10 @@
+import { lazy } from "react";
 import { RouteObject } from "react-router-dom";
 import ProductsActions from "../actions/Products/Product.actions";
-import IndexProduct from "../Pages/Products";
-import EditProduct from "../Pages/Products/edit";
+
+const IndexProduct = lazy(() => import("../Pages/Products"));
+const EditProduct = lazy(() => import("../Pages/Products/edit"));
+
 const ProductRouter: RouteObject = {
     path: '',
     children: [
