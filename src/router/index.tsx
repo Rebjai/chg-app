@@ -3,8 +3,6 @@ import AuthGuard from "../Guards/AuthGuard";
 import PublicGuard from "../Guards/PublicGuard";
 import AppLayout from "../Layouts/AppLayout";
 import AuthProvider from "../Pages/Auth/AuthProvider";
-import Login from "../Pages/Auth/Login";
-import ResetPassword from "../Pages/Auth/ResetPassword";
 import ErrorPage from "../Pages/error-page";
 import IndexPage from "../Pages/index-page";
 import AuthRouter from "./auth.router";
