@@ -26,7 +26,10 @@ const ProductsActions = {
         // }
 
         toast.success('Product created!')
-        return redirect('/products')
+        const prevRoute = data.get('prev-route')?.toString()
+        console.log({prevRoute});
+
+        return prevRoute?redirect(prevRoute):redirect('/products')
 
     },
     update: async ({ request, params }: ActionFunctionArgs) => {
@@ -42,7 +45,10 @@ const ProductsActions = {
             throw response
         }
         toast.success('Product updated!')
-        return redirect('/products')
+        const prevRoute = data.get('prev-route')?.toString()
+        console.log({prevRoute});
+
+        return prevRoute?redirect(prevRoute):redirect('/products')
     },
     getAll: async ({ params, request }: ActionFunctionArgs) => {
         console.log({ params });

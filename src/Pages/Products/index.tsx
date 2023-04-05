@@ -1,4 +1,4 @@
-import { useLoaderData, useNavigate, useSearchParams } from "react-router-dom";
+import { useLoaderData, useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import PrimaryButton from "../../Components/utils/PrimaryButton";
 import ProductCard from "../../Components/products/ProductCard";
 import Product from "../../Interfaces/product.interface";
@@ -9,9 +9,10 @@ import { useDebounce } from "../../Utils/UseDebounce";
 
 function indexProduct() {
     let navigate = useNavigate()
+    const location = useLocation()
     const [searchparams, setSearchParams] = useSearchParams({name:''})
     const [searchTerm, setSearchTerm] = useState(searchparams.get('name')??'');
-    console.log({searchparams});
+    console.log({searchparams, location});
     
     const { items: products, links, meta } = useLoaderData() as PaginatedResponse<Product>
     const filterProducts = (value: string) => {
@@ -30,7 +31,7 @@ function indexProduct() {
             agregar producto
         </PrimaryButton>
         <input className="m-5 p-3 text-center" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} type="text"name="seach" id="search" placeholder="Buscar" />
-        {products.map(product => <ProductCard product={product} key={product.id}></ProductCard>)}
+        {products.map(product => <ProductCard product={product} prev={location.pathname+location.search} key={product.id}></ProductCard>)}
         <PaginationComponent links={links!} meta={meta!} />
     </>);
 }

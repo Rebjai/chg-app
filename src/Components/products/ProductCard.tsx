@@ -4,10 +4,11 @@ import deleteIcon from "../../assets/delete-icon.svg";
 import editIcon from "../../assets/edit-icon.svg";
 import Product from "../../Interfaces/product.interface";
 interface ProductCardProps {
-    product: Product
+    product: Product,
+    prev?: string
 }
 
-function ProductCard({ product }: ProductCardProps) {
+function ProductCard({ product, prev = '' }: ProductCardProps) {
     const getStatusText = (status: number): string => {
         if (status == 0) {
             return 'Occupied'
@@ -27,7 +28,7 @@ function ProductCard({ product }: ProductCardProps) {
             <h2 className="font-bold text-medium tracking-wider">{`${product.category_id ? `${product.category?.code} -  ${product.category?.name!}` : 'n/a'}`}</h2>
             <p className="italic">${product.price}</p>
             <div className="actions flex justify-end w-full ">
-                <Link className="max-w-[100px] w-1/12 mx-3" to={'' + product.id} >
+                <Link className="max-w-[100px] w-1/12 mx-3" to={'' + product.id} state={prev} >
                     <img src={editIcon} alt="" />
                 </Link>
                 <button className="max-w-[100px] w-1/12 mx-3">
