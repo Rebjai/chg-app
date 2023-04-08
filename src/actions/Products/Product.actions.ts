@@ -14,26 +14,23 @@ const ProductsActions = {
         }
         console.log('asdasd');
         const created = await fetch.post('/api/products', sumbitData)
-        // const created = await fetch('/api/product',
-        //     {
-        //         method: 'POST', body: JSON.stringify(sumbitData), headers: {
-        //             'Content-Type': 'application/json',
-        //             'Authorization': 'Bearer ' + localStorage.getItem('token')!
-        //         }
-        //     })
-        // if (created.status !== 200) {
-        //     throw created
-        // }
-
         toast.success('Product created!')
         const prevRoute = data.get('prev-route')?.toString()
-        console.log({prevRoute});
+        console.log({ prevRoute });
 
-        return prevRoute?redirect(prevRoute):redirect('/products')
+        return prevRoute ? redirect(prevRoute) : redirect('/products')
 
     },
     update: async ({ request, params }: ActionFunctionArgs) => {
         const data = await request.formData()
+        console.log({ request });
+        if (request.method == 'DELETE') {
+            if (!confirm('¿Eliminar Producto?'))
+                return null
+            const response = await fetch.delete('/api/products/' + params.id)
+            return response
+        }
+
         const sumbitData: Product = {
             name: data.get('name')!.toString(),
             price: parseFloat(data.get('price')!.toString()),
@@ -46,9 +43,9 @@ const ProductsActions = {
         }
         toast.success('Product updated!')
         const prevRoute = data.get('prev-route')?.toString()
-        console.log({prevRoute});
+        console.log({ prevRoute });
 
-        return prevRoute?redirect(prevRoute):redirect('/products')
+        return prevRoute ? redirect(prevRoute) : redirect('/products')
     },
     getAll: async ({ params, request }: ActionFunctionArgs) => {
         console.log({ params });

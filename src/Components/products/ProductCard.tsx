@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useFetcher, useNavigate } from "react-router-dom";
 import deleteIcon from "../../assets/delete-icon.svg";
 import editIcon from "../../assets/edit-icon.svg";
 import Product from "../../Interfaces/product.interface";
@@ -9,6 +9,7 @@ interface ProductCardProps {
 }
 
 function ProductCard({ product, prev = '' }: ProductCardProps) {
+    const fetcher = useFetcher()
     const getStatusText = (status: number): string => {
         if (status == 0) {
             return 'Occupied'
@@ -31,9 +32,11 @@ function ProductCard({ product, prev = '' }: ProductCardProps) {
                 <Link className="max-w-[100px] w-1/12 mx-3" to={'' + product.id} state={prev} >
                     <img src={editIcon} alt="" />
                 </Link>
-                <button className="max-w-[100px] w-1/12 mx-3">
-                    <img src={deleteIcon} alt="" />
-                </button>
+                <fetcher.Form method="delete" action={"/products/"+product.id} className="max-w-[100px] w-1/12 mx-3">
+                    <button type="submit" className="inline-block max-w-[100px] w-full mx-3">
+                        <img src={deleteIcon} alt="" />
+                    </button>
+                </fetcher.Form>
             </div>
 
         </div>);
