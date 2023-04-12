@@ -5,7 +5,7 @@ import { useState } from 'react';
 export { useFetch };
 
 function useFetch() {
-    
+
     const navigate = redirect
 
     return {
@@ -41,8 +41,6 @@ function useFetch() {
         const isLoggedIn = !!token;
         const isApiUrl = url.startsWith('/api') || url.startsWith('/auth');
         const authHeader = { Authorization: `Bearer ${token}` }
-        console.log({authHeader});
-        
         if (isLoggedIn && isApiUrl) {
             return authHeader;
         } else {
@@ -52,14 +50,17 @@ function useFetch() {
 
     function handleResponse(response: Response) {
         const auth = localStorage.getItem('token')!;
+        if (response.headers.get('Content-Type')?.startsWith('text/csv')) {
+            return response.text()
+        }
         return response.text().then(text => {
             const data = text && JSON.parse(text);
 
             if (!response.ok) {
-                console.log({response});
+                console.log({ response });
                 console.log([401, 403].includes(response.status) && auth);
                 console.log(auth);
-                
+
                 if ([401, 403].includes(response.status) && auth) {
                     // auto logout if 401 Unauthorized or 403 Forbidden response returned from api
                     localStorage.removeItem('user');
@@ -69,7 +70,7 @@ function useFetch() {
 
                 const error = (data && data.message) || response.statusText;
                 console.log(error);
-                
+
                 // alertActions.error(error);
                 return Promise.reject(data);
             }

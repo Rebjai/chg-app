@@ -10,7 +10,7 @@ const PrimaryButton: React.FC<PrimaryButtonProps> = ({ onClick = ()=>console.log
   return (
     <button
     type={type}
-      className={"text-white font-bold py-2 px-4 rounded "+ (type == 'button' ||
+      className={"capitalize text-white font-bold py-2 px-4 rounded "+ (type == 'button' ||
       type == undefined?'bg-purple-700 hover:bg-purple-600': 
       type =='reset'?'bg-red-500 hover:bg-red-400':
       'bg-green-600 hover:bg-green-500')}
