@@ -42,5 +42,6 @@
     "telephone": "Telephone",
     "role": "Role",
     "export_list": "Export List",
+    "quantity": "Quantity",
     "logout": "Logout"
 }

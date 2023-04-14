@@ -24,7 +24,7 @@
      "date_of_admission": "Fecha De Admisión",
      "room": "Cuarto",
      "rooms": "Cuartos",
-     "consumption_detail": "Hoja De Consumo",
+     "consumption_detail": "Detalle De Consumo",
      "consumption_details": "Detalle de Hojas De Consumo",
      "consumption_sheet": "Hoja De Consumo",
      "consumption_sheets": "Hojas De Consumo",
@@ -42,5 +42,6 @@
      "telephone": "Teléfono",
      "role": "Rol",
      "export_list": "Exportar Lista",
+     "quantity": "Cantidad",
      "logout": "Salir"
 }

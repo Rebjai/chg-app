@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Form, useParams } from "react-router-dom";
 import ConsumptionSheetDetail from "../../Interfaces/consumptionSheetDetail.interface";
 import { useAuth } from "../../Utils/UseAuth";
@@ -16,6 +17,7 @@ interface SelectOption {
 }
 
 function ConsumptionSheetDetailForm(props?: ConsumptionSheetDetailFormProps) {
+    const {t} = useTranslation()
     const consumptionSheetOptions = [
         { value: '', label: 'Selecciona un elemento de la lista' },
         { value: 1, label: '1' },
@@ -43,7 +45,7 @@ function ConsumptionSheetDetailForm(props?: ConsumptionSheetDetailFormProps) {
     const [newConsumptionSheetDetail, setNewConsumptionSheetDetail] = useState<ConsumptionSheetDetail>(props?.consumptionSheetDetail ? props.consumptionSheetDetail : {
         id: 0,
         consumption_sheet_id: props?.consumptionSheetId ?? 0,
-        staff_id: auth.user.profile?.id??0,
+        staff_id: auth.user.profile?.id ?? 0,
         product_id: 1,
         quantity: 0,
     });
@@ -78,29 +80,29 @@ function ConsumptionSheetDetailForm(props?: ConsumptionSheetDetailFormProps) {
 
     return (
         <div className="container mx-auto">
-            <h1 className="text-2xl font-bold mb-4">{createConsumptionSheetDetail ? 'Create a new consumptionSheetDetail' : 'Edit consumptionSheetDetail'}</h1>
+            <h1 className="text-2xl font-bold mb-4">{createConsumptionSheetDetail ? t('create_new'): t('edit')} {t('consumption_detail')}</h1>
             <Form onSubmit={handleCreateConsumptionSheetDetail} method={createConsumptionSheetDetail ? 'post' : 'put'}>
                 <div className={"flex flex-col mb-4" + props?.consumptionSheetId ? " hidden" : ''}>
                     <label htmlFor="consumption_sheet_id" className="mb-2 font-bold">
-                        Consumption Sheet
+                        {t('Consumption Sheet')}
                     </label>
                     <SelectInput options={consumptionSheetOptions} hidden={!!props?.consumptionSheetId} onChange={handleTypeInputChange} value={newConsumptionSheetDetail.consumption_sheet_id.toString()} name='consumption_sheet_id' />
                 </div>
                 <div className={(auth.user.role == '1' ? 'hidden ' : '') + "flex flex-col mb-4"}>
                     <label htmlFor="staff_id" className="mb-2 font-bold" hidden={auth.user.role == '1'}>
-                        staff
+                        {t('staff')}
                     </label>
                     <SelectInput options={staffOptions} hidden={auth.user.role == '1'} onChange={handleTypeInputChange} value={newConsumptionSheetDetail.staff_id.toString()} name='staff_id' />
                 </div>
                 <div className="flex flex-col mb-4">
                     <label htmlFor="product_id" className="mb-2 font-bold">
-                        Product
+                        {t('product')}
                     </label>
                     <SelectInput options={productOptions} onChange={handleTypeInputChange} value={newConsumptionSheetDetail.product_id.toString()} name='product_id' />
                 </div>
                 <div className="flex flex-col mb-4">
                     <label htmlFor="quantity" className="mb-2 font-bold">
-                        Quantity
+                        {t('quantity')}
                     </label>
                     <input
                         type="number"
@@ -128,7 +130,7 @@ function ConsumptionSheetDetailForm(props?: ConsumptionSheetDetailFormProps) {
                     />
                 </div> */}
                 <PrimaryButton type="submit" onClick={() => console.log('submit')}>
-                    {createConsumptionSheetDetail ? 'Create ConsumptionSheetDetail' : 'Edit ConsumptionSheetDetail'}
+                    {createConsumptionSheetDetail ? t('create') : t('edit')} {t('consumption_detail')}
                 </ PrimaryButton>
             </Form>
         </div>
