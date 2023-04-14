@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Form, useParams } from "react-router-dom";
 import Patient from "../../Interfaces/patient.interface";
 import PrimaryButton from "../utils/PrimaryButton";
@@ -7,6 +8,7 @@ interface PatientFormProps {
     patient?: Patient
 }
 function PatientForm(props?: PatientFormProps) {
+    const {t} = useTranslation()
     const typeOptions = [
         { value: '', label: 'Selecciona un elemento de la lista' },
         { value: 1, label: 'Normal' },
@@ -51,11 +53,11 @@ function PatientForm(props?: PatientFormProps) {
 
     return (
         <div className="container mx-auto">
-            <h1 className="text-2xl font-bold mb-4">{createPatient ? 'Create a new patient' : 'Edit patient'}</h1>
+            <h1 className="text-2xl font-bold mb-4">{createPatient ? t('create_new') : t('edit')} {t('patient')}</h1>
             <Form onSubmit={handleCreatePatient} method={createPatient ? 'post' : 'put'}>
                 <div className="flex flex-col mb-4">
                     <label htmlFor="name" className="mb-2 font-bold">
-                        Name
+                        {t('name')}
                     </label>
                     <input
                         type="text"
@@ -69,7 +71,7 @@ function PatientForm(props?: PatientFormProps) {
                 </div>
                 <div className="flex flex-col mb-4">
                     <label htmlFor="first_surname" className="mb-2 font-bold">
-                        First surname
+                        {t('first_surname')}
                     </label>
                     <input
                         type="text"
@@ -83,7 +85,7 @@ function PatientForm(props?: PatientFormProps) {
                 </div>
                 <div className="flex flex-col mb-4">
                     <label htmlFor="second_surname" className="mb-2 font-bold">
-                        Second surname
+                        {t('second_surname')}
                     </label>
                     <input
                         type="text"
@@ -97,7 +99,7 @@ function PatientForm(props?: PatientFormProps) {
                 </div>
                 <div className="flex flex-col mb-4">
                     <label htmlFor="type" className="mb-2 font-bold">
-                        Date of birth
+                        {t('date_of_birth')}
                     </label>
                     <input
                         type="date"
@@ -111,12 +113,12 @@ function PatientForm(props?: PatientFormProps) {
                 </div>
                 <div className={(!newPatient.id ? 'hidden ' : '') + "flex flex-col mb-4"}  >
                     <label htmlFor="type" className="mb-2 font-bold" hidden={!newPatient.id}>
-                        Status
+                        {t('status')}
                     </label>
                     <SelectInput options={statusOptions} onChange={handleTypeInputChange} value='1' name='status' hidden={!newPatient.id} />
                 </div>
                 <PrimaryButton type="submit" onClick={() => console.log('submit')}>
-                    {createPatient ? 'Create Patient' : 'Edit Patient'}
+                    {createPatient ? t('create') : t('edit')}
                 </ PrimaryButton>
             </Form>
         </div>

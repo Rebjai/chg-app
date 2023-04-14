@@ -2,43 +2,19 @@ import { useLoaderData, useNavigate } from "react-router-dom";
 import PrimaryButton from "../../Components/utils/PrimaryButton";
 import PatientCard from "../../Components/patients/PatientCard";
 import Patient from "../../Interfaces/patient.interface";
+import { useTranslation } from "react-i18next";
 
 function IndexPatient() {
     let navigate = useNavigate()
     const patients: Patient[] = useLoaderData() as Patient[]
-    // const patients: Patient[] = [
-    //     {
-    //         id: 1,
-    //         name: 'fulano',
-    //         first_surname: 'lopez',
-    //         second_surname: 'pérez',
-    //         date_of_birth: new Date(),
-    //         status: 1
-    //     },
-    //     {
-    //         id: 2,
-    //         name: 'sutano',
-    //         first_surname: 'perez',
-    //         second_surname: 'perez',
-    //         date_of_birth: new Date(),
-    //         status: 1
-    //     },
-    //     {
-    //         id: 3,
-    //         name: 'perengano',
-    //         first_surname: 'mart',
-    //         second_surname: 'inez',
-    //         date_of_birth: new Date(),
-    //         status: 1
-    //     },
-    // ]
+    const {t} = useTranslation()
     return (<>
         <PrimaryButton onClick={() => {
             navigate('create')
         }}>
-            agregar paciente
+            {t("create_new")} {t('patient')}
         </PrimaryButton>
-        lista de pacientes
+        {t('list_of')} {t('patients')}
         {patients.map(patient => <PatientCard patient={patient} key={patient.id}></PatientCard>)}
     </>);
 }

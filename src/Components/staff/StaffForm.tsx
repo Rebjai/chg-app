@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Form, useParams } from "react-router-dom";
 import Staff from "../../Interfaces/staff.interface";
 import PrimaryButton from "../utils/PrimaryButton";
@@ -7,6 +8,7 @@ interface StaffFormProps {
     staff?: Staff
 }
 function StaffForm(props?: StaffFormProps) {
+    const {t} = useTranslation()
     const statusOptions = [
         { value: '', label: 'Selecciona un elemento de la lista' },
         { value: 1, label: 'Active' },
@@ -63,7 +65,7 @@ function StaffForm(props?: StaffFormProps) {
             <Form onSubmit={handleCreateStaff} method={createStaff?'post':'put'}>
                 <div className="flex flex-col mb-4">
                     <label htmlFor="name" className="mb-2 font-bold">
-                        Name
+                        {t('name')}
                     </label>
                     <input
                         type="text"
@@ -77,7 +79,7 @@ function StaffForm(props?: StaffFormProps) {
                 </div>
                 <div className="flex flex-col mb-4">
                     <label htmlFor="first_surname" className="mb-2 font-bold">
-                        First surname
+                    {t('first_surname')}
                     </label>
                     <input
                         type="text"
@@ -91,7 +93,7 @@ function StaffForm(props?: StaffFormProps) {
                 </div>
                 <div className="flex flex-col mb-4">
                     <label htmlFor="second_surname" className="mb-2 font-bold">
-                        Second surname
+                    {t('second_surname')}
                     </label>
                     <input
                         type="text"
@@ -105,7 +107,7 @@ function StaffForm(props?: StaffFormProps) {
                 </div>
                 <div className="flex flex-col mb-4">
                     <label htmlFor="type" className="mb-2 font-bold">
-                        Date of birth
+                    {t('date_of_birth')}
                     </label>
                     <input
                         type="date"
@@ -119,7 +121,7 @@ function StaffForm(props?: StaffFormProps) {
                 </div>
                 <div className="flex flex-col mb-4">
                     <label htmlFor="telephone_number" className="mb-2 font-bold">
-                        Telephone
+                    {t('telephone')}
                     </label>
                     <input
                         type="text"
@@ -134,12 +136,12 @@ function StaffForm(props?: StaffFormProps) {
                 </div>
                 <div className="flex flex-col mb-4">
                     <label htmlFor="job_title" className="mb-2 font-bold">
-                        Job title
+                    {t('job_title')}
                     </label>
                     <SelectInput options={jobTitleOptions} onChange={handleJobTitleInputChange} value={newStaff.job_title} name='job_title' />
                 </div>
                 <PrimaryButton type="submit" onClick={() => console.log('submit')}>
-                    {createStaff ? 'Create Staff' : 'Edit Staff'}
+                    {createStaff ? t('create') : t('edit')} {t('staff')}
                 </ PrimaryButton>
             </Form>
         </div>

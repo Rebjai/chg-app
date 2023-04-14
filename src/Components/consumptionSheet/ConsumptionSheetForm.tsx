@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Form, useParams } from "react-router-dom";
 import ConsumptionSheet from "../../Interfaces/consumptionSheet.interface";
 import Patient from "../../Interfaces/patient.interface";
@@ -12,6 +13,7 @@ interface ConsumptionSheetFormProps {
     patientOptions?: { value: any, label: string }[],
 }
 function ConsumptionSheetForm(props?: ConsumptionSheetFormProps) {
+    const {t} = useTranslation()
     const fetch = useFetch()
     useEffect(() => {
         fetch.get('/api/patients').then(res => setPatientOptions(res.data.map((el: Patient) => ({ value: el.id, label: `${el.name} ${el.first_surname} ${el.second_surname}` }))))
@@ -63,11 +65,11 @@ function ConsumptionSheetForm(props?: ConsumptionSheetFormProps) {
 
     return (
         <div className="container mx-auto">
-            <h1 className="text-2xl font-bold mb-4">{createConsumptionSheet ? 'Create a new consumptionSheet' : 'Edit consumptionSheet'}</h1>
+            <h1 className="text-2xl font-bold mb-4">{createConsumptionSheet ? t('create') : t('edit')} {t('consumption_sheet')}</h1>
             <Form onSubmit={handleCreateConsumptionSheet} method={createConsumptionSheet ? 'post' : 'put'}>
                 <div className="flex flex-col mb-4">
                     <label htmlFor="name" className="mb-2 font-bold">
-                        Doctor
+                        {t('doctor')}
                     </label>
                     <input
                         type="text"
@@ -81,7 +83,7 @@ function ConsumptionSheetForm(props?: ConsumptionSheetFormProps) {
                 </div>
                 <div className="flex flex-col mb-4">
                     <label htmlFor="first_surname" className="mb-2 font-bold">
-                        Diagnosis
+                        {t('diagnosis')}
                     </label>
                     <input
                         type="text"
@@ -95,7 +97,7 @@ function ConsumptionSheetForm(props?: ConsumptionSheetFormProps) {
                 </div>
                 <div className="flex flex-col mb-4">
                     <label htmlFor="type" className="mb-2 font-bold">
-                        Date of admission
+                        {t('date_of_admission')}
                     </label>
                     <input
                         type="date"
@@ -109,18 +111,18 @@ function ConsumptionSheetForm(props?: ConsumptionSheetFormProps) {
                 </div>
                 <div className="flex flex-col mb-4">
                     <label htmlFor="type" className="mb-2 font-bold">
-                        Patient
+                        {t('patient')}
                     </label>
                     <SelectInput options={patientOptions} onChange={handleTypeInputChange} value={newConsumptionSheet.patient_id.toString()} name='patient_id' />
                 </div>
                 <div className="flex flex-col mb-4">
                     <label htmlFor="type" className="mb-2 font-bold">
-                        Room
+                        {t('room')}
                     </label>
                     <SelectInput options={roomOptions} onChange={handleTypeInputChange} value={newConsumptionSheet.room_id.toString()} name='room_id' />
                 </div>
                 <PrimaryButton type="submit" onClick={() => console.log('submit')}>
-                    {createConsumptionSheet ? 'Create ConsumptionSheet' : 'Edit ConsumptionSheet'}
+                    {createConsumptionSheet ? t('create') : t('edit')} {t('consumption_sheet')}
                 </ PrimaryButton>
             </Form>
         </div>

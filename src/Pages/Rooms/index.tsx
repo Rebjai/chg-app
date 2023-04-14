@@ -4,8 +4,11 @@ import RoomCard from "../../Components/rooms/RoomCard";
 import PaginatedResponse from "../../Interfaces/paginatedResponse.interface";
 import Room from "../../Interfaces/room.interface";
 import PaginationComponent from "../../Components/utils/PaginationComponent";
+import { useTranslation } from "react-i18next";
 
 function indexRoom() {
+
+    const {t} = useTranslation()
     let navigate= useNavigate()
     // const rooms = [
     //     {
@@ -32,9 +35,9 @@ function indexRoom() {
         <PrimaryButton onClick={() => {
             navigate('create')
         }}>
-            agregar cuarto
+            {t('create')} {t('room')}
         </PrimaryButton>
-        lista de cuartos
+        {t('list_of')} {t('rooms')}
         {rooms.map(room => <RoomCard room={room} key={room.id}></RoomCard>)}
         <PaginationComponent links={links} meta={meta!} />
     </>);

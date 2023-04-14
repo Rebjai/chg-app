@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Form, useLocation, useParams } from "react-router-dom";
 import Room from "../../Interfaces/room.interface";
 import PrimaryButton from "../utils/PrimaryButton";
@@ -7,6 +8,7 @@ interface RoomFormProps {
     room?: Room
 }
 function RoomForm(props: RoomFormProps) {
+    const {t} = useTranslation()
     const typeOptions = [
         { value: '', label: 'Selecciona un elemento de la lista' },
         { value: 1, label: 'Normal' },
@@ -49,11 +51,11 @@ function RoomForm(props: RoomFormProps) {
 
     return (
         <div className="container mx-auto">
-            <h1 className="text-2xl font-bold mb-4">{!props.room ? 'Create a new room' : 'Edit room'}</h1>
+            <h1 className="text-2xl font-bold mb-4">{!props.room ? t('create_new') : t('edit')} {t('room')}</h1>
             <Form onSubmit={handleCreateRoom} method={!props.room ? 'post' : 'put'}>
                 <div className="flex flex-col mb-4">
                     <label htmlFor="name" className="mb-2 font-bold">
-                        Name
+                        {t('name')}
                     </label>
                     <input
                         type="text"
@@ -67,18 +69,18 @@ function RoomForm(props: RoomFormProps) {
                 </div>
                 <div className="flex flex-col mb-4">
                     <label htmlFor="type" className="mb-2 font-bold">
-                        Type
+                    {t('type')}
                     </label>
                     <SelectInput options={typeOptions} onChange={handleTypeInputChange} value={roomData.type as unknown as string} name='type' />
                 </div>
                 <div className="flex flex-col mb-4">
                     <label htmlFor="type" className="mb-2 font-bold">
-                        Status
+                    {t('status')}
                     </label>
                     <SelectInput options={statusOptions} onChange={handleTypeInputChange} value={roomData.status as unknown as string} name='status' />
                 </div>
                 <PrimaryButton type="submit" onClick={() => console.log('submit')}>
-                    {!props.room ? 'Create Room' : 'Edit Room'}
+                    {!props.room ? t('create') : t('edit')}
                 </ PrimaryButton>
             </Form>
         </div>

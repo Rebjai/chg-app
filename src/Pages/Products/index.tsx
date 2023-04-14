@@ -7,8 +7,10 @@ import PaginationComponent from "../../Components/utils/PaginationComponent";
 import { ChangeEvent, ChangeEventHandler, useState } from "react";
 import { useDebounce } from "../../Utils/UseDebounce";
 import { useFetch } from "../../Utils/useFecth";
+import { useTranslation } from "react-i18next";
 
 function indexProduct() {
+    const {t} = useTranslation()
     const fetch = useFetch()
     let navigate = useNavigate()
     const location = useLocation()
@@ -39,15 +41,15 @@ function indexProduct() {
     }
 
     return (<>
-        <h1 className="text-2xl font-bold m-5">lista de productos</h1>
+        <h1 className="text-2xl font-bold m-5">{t('list_of')} {t('productos')}</h1>
         <PrimaryButton onClick={() => {
             navigate('create')
         }}>
-            agregar producto
+            {t('agregar')} {t('producto')}
         </PrimaryButton>
         <button className="my-3 bg-blue-600 px-4 py-2 rounded text-white font-bold hover:bg-blue-500" onClick={handleDownload}>Exportar Lista</button>
 
-        <input className="m-5 p-3 text-center" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} type="text" name="seach" id="search" placeholder="Buscar" />
+        <input className="m-5 p-3 text-center" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} type="text" name="seach" id="search" placeholder={t('search')??'search'} />
         {products.map(product => <ProductCard product={product} prev={location.pathname + location.search} key={product.id}></ProductCard>)}
         <PaginationComponent links={links!} meta={meta!} />
     </>);

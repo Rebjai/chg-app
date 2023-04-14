@@ -1,9 +1,11 @@
+import { useTranslation } from "react-i18next";
 import { useLoaderData, useLocation, useNavigate, useParams } from "react-router-dom";
 import RoomForm from "../../Components/rooms/RoomForm";
 import PrimaryButton from "../../Components/utils/PrimaryButton";
 import Room from "../../Interfaces/room.interface";
 
 function EditRoom() {
+    const {t} = useTranslation()
     const navigate = useNavigate()
     const {id} = useParams()
     
@@ -18,11 +20,11 @@ function EditRoom() {
     // }
     return ( <>
 
-    <PrimaryButton type="reset" onClick={()=>{navigate('/rooms')}}>Back</PrimaryButton>
+    <PrimaryButton type="reset" onClick={()=>{navigate('/rooms')}}>{t('back')}</PrimaryButton>
     <h1 className="font-bold text-3xl m-2">
-    {createRoom? 'Crear': 'Editar'}
+    {createRoom? t('create'): t('edit')}
     </h1>
-    información del cuarto
+    {t('info_for')} {t('room')}
     {createRoom? <RoomForm />: <RoomForm room={room}/>} 
     </> );
 }

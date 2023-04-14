@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Form, useParams } from "react-router-dom";
 import User from "../../Interfaces/user.interface";
 import PrimaryButton from "../utils/PrimaryButton";
@@ -7,6 +8,7 @@ interface UserFormProps {
     user?: User
 }
 function UserForm(props?: UserFormProps) {
+    const {t} = useTranslation()
     const roleOptions = [
         { value: '', label: 'Selecciona un elemento de la lista' },
         { value: 1, label: 'User' },
@@ -15,8 +17,8 @@ function UserForm(props?: UserFormProps) {
     ]
     const createUser = !!!props?.user?.id
 
-    
-    const [newUser, setNewUser] = useState<User>(props?.user? props.user:{
+
+    const [newUser, setNewUser] = useState<User>(props?.user ? props.user : {
         id: 0,
         email: '',
         role: '',
@@ -24,8 +26,8 @@ function UserForm(props?: UserFormProps) {
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = event.target;
-        console.log({name, value});
-        
+        console.log({ name, value });
+
         setNewUser((prevNewUser) => ({ ...prevNewUser, [name]: value }));
     };
     const handleTypeInputChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -48,11 +50,11 @@ function UserForm(props?: UserFormProps) {
 
     return (
         <div className="container mx-auto">
-            <h1 className="text-2xl font-bold mb-4">{createUser ? 'Create a new user' : 'Edit user'}</h1>
-            <Form onSubmit={handleCreateUser} method={createUser?'post':'put'}>
+            <h1 className="text-2xl font-bold mb-4">{createUser ? t('create_new')  : t('edit')} {t('user')}</h1>
+            <Form onSubmit={handleCreateUser} method={createUser ? 'post' : 'put'}>
                 <div className="flex flex-col mb-4">
                     <label htmlFor="email" className="mb-2 font-bold">
-                        Name
+                        {t('name')}
                     </label>
                     <input
                         type="text"
@@ -80,12 +82,12 @@ function UserForm(props?: UserFormProps) {
                 </div> */}
                 <div className="flex flex-col mb-4">
                     <label htmlFor="role" className="mb-2 font-bold">
-                        Role
+                        {t('role')}
                     </label>
                     <SelectInput options={roleOptions} onChange={handleRoleInputChange} value={newUser.role} name='role' />
                 </div>
                 <PrimaryButton type="submit" onClick={() => console.log('submit')}>
-                    {createUser ? 'Create User' : 'Edit User'}
+                    {createUser ? t('create') : t('edit')} {t('user')}
                 </ PrimaryButton>
             </Form>
         </div>
