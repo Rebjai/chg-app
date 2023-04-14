@@ -32,11 +32,11 @@ function ProductCard({ product, prev = '' }: ProductCardProps) {
             <p className="italic">${product.price}</p>
             <div className="actions flex justify-end w-full ">
                 <Link className="max-w-[100px] w-1/12 mx-3" to={'' + product.id} state={prev} >
-                    <img src={editIcon} alt="" /> {t('edit')}
+                    <img src={editIcon} alt={t('edit')!} /> 
                 </Link>
                 <fetcher.Form method="delete" action={"/products/" + product.id} className="max-w-[100px] w-1/12 mx-3">
                     <button type="submit" className="inline-block max-w-[100px] w-full mx-3">
-                        <img src={deleteIcon} alt="" /> {t('delete')}
+                        <img src={deleteIcon} alt={t('delete')!} /> 
                     </button>
                 </fetcher.Form>
             </div>
