@@ -18,7 +18,7 @@ function EditProduct() {
     
     return ( <>
 
-    <PrimaryButton type="reset" onClick={()=>{navigate('/products')}}>{t('Back')}</PrimaryButton>
+    <PrimaryButton type="reset" onClick={()=>{navigate('/products')}}>{t('back')}</PrimaryButton>
     <h1 className="font-bold text-3xl m-2">
     {createProduct? t('create'): t('edit')}
     </h1>

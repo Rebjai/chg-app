@@ -15,7 +15,7 @@ function ConsumptionSheetDetailsPage() {
 
     return (<>
 
-        <PrimaryButton type="reset" onClick={() => { navigate('/consumption-sheets') }}>Back</PrimaryButton>
+        <PrimaryButton type="reset" onClick={() => { navigate('/consumption-sheets') }}>{t('back')}</PrimaryButton>
         <div className="my-5">
             <ConsumptionSheetDetailForm consumptionSheetId={parseInt(consumptionSheetId!)} />
         </div>

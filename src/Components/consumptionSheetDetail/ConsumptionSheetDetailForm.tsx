@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { Form, useParams } from "react-router-dom";
 import ConsumptionSheetDetail from "../../Interfaces/consumptionSheetDetail.interface";
 import { useAuth } from "../../Utils/UseAuth";
+import { useDebounce } from "../../Utils/UseDebounce";
 import { useFetch } from "../../Utils/useFecth";
 import PrimaryButton from "../utils/PrimaryButton";
 import SelectInput from "../utils/SelectInput";
@@ -17,7 +18,9 @@ interface SelectOption {
 }
 
 function ConsumptionSheetDetailForm(props?: ConsumptionSheetDetailFormProps) {
-    const {t} = useTranslation()
+    const { t } = useTranslation()
+    const [searchTerm, setSearchTerm] = useState('')
+
     const consumptionSheetOptions = [
         { value: '', label: 'Selecciona un elemento de la lista' },
         { value: 1, label: '1' },
@@ -67,6 +70,13 @@ function ConsumptionSheetDetailForm(props?: ConsumptionSheetDetailFormProps) {
         // event.preventDefault();
         console.log('New consumptionSheetDetail:', newConsumptionSheetDetail);
     };
+    const filterProducts = (value: string) => {
+        fetch.get('/api/products' + '?name=' + searchTerm).then(v => {
+            setProductOptions(v.data.items.map((el: any) => ({ value: el.id, label: `${el.name}` })))
+        })
+    }
+    const debouncedSearchTerm = useDebounce(searchTerm, 2000, filterProducts);
+
     useEffect(() => {
         fetch.get('/api/staff').then(v => {
             setStaffOptions(v.data.map((el: any) => ({ value: el.id, label: `${el.name} ${el.first_surname} ${el.second_surname}` })))
@@ -74,13 +84,13 @@ function ConsumptionSheetDetailForm(props?: ConsumptionSheetDetailFormProps) {
     }, [null])
     useEffect(() => {
         fetch.get('/api/products').then(v => {
-            setProductOptions(v.data.map((el: any) => ({ value: el.id, label: `${el.name}` })))
+            setProductOptions(v.data.items.map((el: any) => ({ value: el.id, label: `${el.name}` })))
         })
     }, [null])
 
     return (
         <div className="container mx-auto">
-            <h1 className="text-2xl font-bold mb-4">{createConsumptionSheetDetail ? t('create_new'): t('edit')} {t('consumption_detail')}</h1>
+            <h1 className="text-2xl font-bold mb-4">{createConsumptionSheetDetail ? t('create_new') : t('edit')} {t('consumption_detail')}</h1>
             <Form onSubmit={handleCreateConsumptionSheetDetail} method={createConsumptionSheetDetail ? 'post' : 'put'}>
                 <div className={"flex flex-col mb-4" + props?.consumptionSheetId ? " hidden" : ''}>
                     <label htmlFor="consumption_sheet_id" className="mb-2 font-bold">
@@ -98,6 +108,7 @@ function ConsumptionSheetDetailForm(props?: ConsumptionSheetDetailFormProps) {
                     <label htmlFor="product_id" className="mb-2 font-bold">
                         {t('product')}
                     </label>
+                    <input className="m-5 p-3 text-center" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} type="text" name="seach" id="search" placeholder={t('search') ?? 'search'} />
                     <SelectInput options={productOptions} onChange={handleTypeInputChange} value={newConsumptionSheetDetail.product_id.toString()} name='product_id' />
                 </div>
                 <div className="flex flex-col mb-4">
