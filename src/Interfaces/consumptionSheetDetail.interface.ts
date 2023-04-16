@@ -3,6 +3,7 @@ import Patient from "./patient.interface";
 import Product from "./product.interface";
 import Room from "./room.interface";
 import Staff from "./staff.interface";
+import User from "./user.interface";
 
 export default interface ConsumptionSheetDetail {
     id?: number,
@@ -10,8 +11,8 @@ export default interface ConsumptionSheetDetail {
     product?: Product,
     consumption_sheet_id: number,
     consumption_sheet?: ConsumptionSheet,
-    // created_by_id: number,
-    // created_by?: Staff,
+    user_id: number,
+    user?: User,
     staff_id: number,
     staff?: Staff,
     quantity:number,

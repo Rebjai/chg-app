@@ -12,6 +12,7 @@ const ConsumptionSheetDetailsActions = {
             quantity: parseFloat(data.get('quantity')!.toString()),
             product_id: parseInt(data.get('product_id')!.toString()),
             staff_id: parseInt(data.get('staff_id')!.toString()),
+            user_id: parseInt(data.get('user_id')?.toString()??'0'),
             consumption_sheet_id: parseInt(data.get('consumption_sheet_id')!.toString())
         }
         console.log({ sumbitData });
@@ -35,6 +36,7 @@ const ConsumptionSheetDetailsActions = {
             quantity: parseFloat(data.get('quantity')!.toString()),
             product_id: parseInt(data.get('product_id')!.toString()),
             staff_id: parseInt(data.get('staff_id')?.toString()??'0'),
+            user_id: parseInt(data.get('user_id')?.toString()??'0'),
             consumption_sheet_id: parseInt(data.get('consumption_sheet_id')!.toString())
         }
         console.log({ sumbitData });
@@ -52,6 +54,7 @@ const ConsumptionSheetDetailsActions = {
             quantity: parseFloat(data.get('quantity')!.toString()),
             product_id: parseInt(data.get('product_id')!.toString()),
             staff_id: parseInt(data.get('staff_id')!.toString()),
+            user_id: parseInt(data.get('user_id')?.toString()??'0'),
             consumption_sheet_id: parseInt(data.get('consumption_sheet_id')!.toString())
         }
         console.log({ sumbitData });

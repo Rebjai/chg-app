@@ -50,6 +50,7 @@ function ConsumptionSheetDetailForm(props?: ConsumptionSheetDetailFormProps) {
         consumption_sheet_id: props?.consumptionSheetId ?? 0,
         staff_id: auth.user.profile?.id ?? 0,
         product_id: 1,
+        user_id: auth.user.id ?? 0,
         quantity: 0,
     });
 
@@ -92,6 +93,7 @@ function ConsumptionSheetDetailForm(props?: ConsumptionSheetDetailFormProps) {
         <div className="container mx-auto">
             <h1 className="text-2xl font-bold mb-4">{createConsumptionSheetDetail ? t('create_new') : t('edit')} {t('consumption_detail')}</h1>
             <Form onSubmit={handleCreateConsumptionSheetDetail} method={createConsumptionSheetDetail ? 'post' : 'put'}>
+                <input type="hidden" name="user_id" value={newConsumptionSheetDetail.user_id} />
                 <div className={"flex flex-col mb-4" + props?.consumptionSheetId ? " hidden" : ''}>
                     <label htmlFor="consumption_sheet_id" className="mb-2 font-bold">
                         {t('Consumption Sheet')}
