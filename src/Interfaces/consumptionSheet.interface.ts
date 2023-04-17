@@ -1,3 +1,4 @@
+import ConsumptionSheetDetail from "./consumptionSheetDetail.interface";
 import Patient from "./patient.interface";
 import Room from "./room.interface";
 import Staff from "./staff.interface";
@@ -16,5 +17,6 @@ export default interface ConsumptionSheet {
     discharge_date?: Date,
     admission_date: string,
     created_at?: Date,
-    consumptions?:[]
+    deleted_at?: Date,
+    consumptions?:ConsumptionSheetDetail[]
 }

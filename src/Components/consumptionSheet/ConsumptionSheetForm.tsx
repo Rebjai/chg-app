@@ -85,6 +85,7 @@ function ConsumptionSheetForm(props?: ConsumptionSheetFormProps) {
                         onChange={handleInputChange}
                         className="border border-gray-400 p-2"
                         required
+                        disabled={!!newConsumptionSheet.deleted_at}
                     />
                 </div>
                 <div className="flex flex-col mb-4">
@@ -99,6 +100,7 @@ function ConsumptionSheetForm(props?: ConsumptionSheetFormProps) {
                         onChange={handleInputChange}
                         className="border border-gray-400 p-2"
                         required
+                        disabled={!!newConsumptionSheet.deleted_at}
                     />
                 </div>
                 <div className="flex flex-col mb-4">
@@ -113,24 +115,45 @@ function ConsumptionSheetForm(props?: ConsumptionSheetFormProps) {
                         onChange={handleInputChange}
                         className="border border-gray-400 p-2"
                         required
+                        disabled={!!newConsumptionSheet.id}
+
                     />
                 </div>
                 <div className="flex flex-col mb-4">
                     <label htmlFor="type" className="mb-2 font-bold">
                         {t('patient')}
                     </label>
-                    <SelectInput options={patientOptions} onChange={handleTypeInputChange} value={newConsumptionSheet.patient_id.toString()} name='patient_id' />
+                    <SelectInput options={patientOptions}
+                        disabled={!!newConsumptionSheet.deleted_at}
+                        onChange={handleTypeInputChange} value={newConsumptionSheet.patient_id.toString()} name='patient_id' />
                 </div>
                 <div className="flex flex-col mb-4">
                     <label htmlFor="type" className="mb-2 font-bold">
                         {t('room')}
                     </label>
-                    <SelectInput options={roomOptions} onChange={handleTypeInputChange} value={newConsumptionSheet.room_id.toString()} name='room_id' />
+                    <SelectInput options={roomOptions}
+                        disabled={!!newConsumptionSheet.deleted_at}
+                        onChange={handleTypeInputChange} value={newConsumptionSheet.room_id.toString()} name='room_id' />
                 </div>
+                {!!newConsumptionSheet.id && (<div className="flex flex-col mb-4">
+                    <label htmlFor="name" className="mb-2 font-bold capitalize">
+                        {t('total')}
+                    </label>
+                    <input
+                        type="text"
+                        name="total"
+                        id="total"
+                        value={newConsumptionSheet.total}
+                        onChange={handleInputChange}
+                        className="border border-gray-400 p-2 bg-green-100 font-bold"
+                        required
+                        disabled={!!newConsumptionSheet.deleted_at}
+                    />
+                </div>)}
                 <div className="flex flex-col items-center gap-5">
-                    <PrimaryButton type="submit" onClick={() => console.log('submit')}>
+                    {!newConsumptionSheet.deleted_at && <PrimaryButton type="submit" onClick={() => console.log('submit')}>
                         {createConsumptionSheet ? t('create') : t('edit')} {t('consumption_sheet')}
-                    </ PrimaryButton>
+                    </ PrimaryButton>}
 
                     <input hidden={auth.user.role != '10' || !newConsumptionSheet.id || !!newConsumptionSheet.total} name="_method" type="submit" className="rounded bg-orange-500 py-2 px-4 font-bold text-zinc-200 hover:cursor-pointer hover:bg-orange-400" onClick={() => console.log('finish')} value={t('finish')!} placeholder="Borrar" />
                 </div>

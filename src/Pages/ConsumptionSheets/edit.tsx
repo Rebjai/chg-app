@@ -1,6 +1,7 @@
 import { useTranslation } from "react-i18next";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import ConsumptionSheetForm from "../../Components/consumptionSheet/ConsumptionSheetForm";
+import ConsumptionDetailTable from "../../Components/consumptionSheetDetail/ConsumptionDetailTable";
 import PrimaryButton from "../../Components/utils/PrimaryButton";
 import ConsumptionSheet from "../../Interfaces/consumptionSheet.interface";
 
@@ -18,7 +19,7 @@ function EditConsumptionSheet() {
         </h1>
         {t('CONSUMPTION_SHEET.info')}
         <ConsumptionSheetForm consumptionSheet={consumptionSheet} />
-        
+        {consumptionSheet?.deleted_at && <ConsumptionDetailTable consumptionDetails={consumptionSheet.consumptions!}></ConsumptionDetailTable>}
     </>);
 }
 

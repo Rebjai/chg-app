@@ -14,7 +14,6 @@ const ConsumptionSheetsActions = {
             room_id: parseInt(data.get('room_id')!.toString()),
             admission_date: data.get('admission_date')!.toString()
         }
-        console.log({sumbitData});
         const created = await fetch.post('/api/consumption-sheets', sumbitData)
 
         toast.success('Consumption sheet created')
@@ -25,7 +24,7 @@ const ConsumptionSheetsActions = {
         const data = await request.formData()
         const method = data.get('_method')?.toString()
         if (method == 'Finalizar' || method == 'Terminate') {
-            const response = await fetch.delete('/api/consumption-sheets/'+params.id)
+            const response = await fetch.delete('/api/consumption-sheets/' + params.id)
             if (response.status !== 200) {
                 throw response
             }
@@ -40,24 +39,20 @@ const ConsumptionSheetsActions = {
             patient_id: parseInt(data.get('patient_id')!.toString()),
             admission_date: data.get('admission_date')!.toString()
         }
-        console.log({sumbitData});
-        const response = await fetch.put('/api/consumption-sheets/'+params.id, sumbitData)
+        const response = await fetch.put('/api/consumption-sheets/' + params.id, sumbitData)
         if (response.status !== 200) {
             throw response
         }
-        console.log({response});
-        
+
 
         toast.success('Consumption sheet updated')
         return redirect('/consumption-sheets')
     },
     getAll: async () => {
-        console.log('getall');
-        
+
         const response = await fetch.get('/api/consumption-sheets')
 
-        console.log({response});
-        
+
         const consumptionSheets = response.data
         return consumptionSheets
     },
@@ -71,15 +66,20 @@ const ConsumptionSheetsActions = {
         const consumptionSheetDetails = response.data
         return consumptionSheetDetails
     },
-    getById: async ({params}:LoaderFunctionArgs) => {
-        const response = await fetch.get('/api/consumption-sheets/'+params.id)
-        console.log({response});
-        
+    getById: async ({ params }: LoaderFunctionArgs) => {
+        const response = await fetch.get('/api/consumption-sheets/' + params.id)
         if (response.status !== 200) {
             throw response;
         }
-        const consumptionSheet:ConsumptionSheet = response.data
+        const consumptionSheet: ConsumptionSheet = response.data
         consumptionSheet.admission_date = consumptionSheet.admission_date.split('T')[0]
+        // Convert created_at string to Date object for each ConsumptionSheetDetail object
+        if (consumptionSheet.total && consumptionSheet.deleted_at) {
+            consumptionSheet.consumptions = consumptionSheet.consumptions!.map((detail) => {
+                detail.created_at = new Date(detail.created_at!);
+                return detail;
+            });
+        }
         return consumptionSheet
     }
 

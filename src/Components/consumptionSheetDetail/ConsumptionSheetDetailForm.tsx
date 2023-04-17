@@ -104,7 +104,7 @@ function ConsumptionSheetDetailForm(props?: ConsumptionSheetDetailFormProps) {
                     <label htmlFor="staff_id" className="mb-2 font-bold" hidden={auth.user.role == '1'}>
                         {t('staff')}
                     </label>
-                    <SelectInput options={staffOptions} hidden={auth.user.role == '1'} onChange={handleTypeInputChange} value={newConsumptionSheetDetail.staff_id.toString()} name='staff_id' />
+                    <SelectInput options={staffOptions} hidden={auth.user.role == '1'} onChange={handleTypeInputChange} value={newConsumptionSheetDetail.staff_id?.toString()} name='staff_id' />
                 </div>
                 <div className="flex flex-col mb-4">
                     <label htmlFor="product_id" className="mb-2 font-bold">
