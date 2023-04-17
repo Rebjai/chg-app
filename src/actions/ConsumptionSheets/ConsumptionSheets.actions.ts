@@ -23,6 +23,15 @@ const ConsumptionSheetsActions = {
     },
     update: async ({ request, params }: ActionFunctionArgs) => {
         const data = await request.formData()
+        const method = data.get('_method')?.toString()
+        if (method == 'Finalizar' || method == 'Terminate') {
+            const response = await fetch.delete('/api/consumption-sheets/'+params.id)
+            if (response.status !== 200) {
+                throw response
+            }
+            toast.success('Consumption sheet Terminated')
+            return redirect('/consumption-sheets')
+        }
 
         const sumbitData: ConsumptionSheet = {
             diagnosis: data.get('diagnosis')!.toString(),
@@ -51,6 +60,16 @@ const ConsumptionSheetsActions = {
         
         const consumptionSheets = response.data
         return consumptionSheets
+    },
+    getTerminated: async () => {
+        console.log('getTerminated');
+
+        const response = await fetch.get('/api/consumption-sheets?closed=true')
+
+        console.log({ response });
+
+        const consumptionSheetDetails = response.data
+        return consumptionSheetDetails
     },
     getById: async ({params}:LoaderFunctionArgs) => {
         const response = await fetch.get('/api/consumption-sheets/'+params.id)

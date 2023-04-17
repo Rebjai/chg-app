@@ -4,6 +4,7 @@ import Staff from "./staff.interface";
 
 export default interface ConsumptionSheet {
     id?: number,
+    total?: number,
     doctor: string,
     diagnosis: string,
     patient_id: number,

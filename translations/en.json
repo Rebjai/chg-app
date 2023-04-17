@@ -4,6 +4,8 @@
     "category": "Category",
     "search": "Search...",
     "create_new": "Create New",
+    "closed": "Closed",
+    "open": "open",
     "create": "Create",
     "delete": "Delete",
     "edit": "Edit",
@@ -43,5 +45,6 @@
     "role": "Role",
     "export_list": "Export List",
     "quantity": "Quantity",
+    "finish": "Terminate",
     "logout": "Logout"
 }

@@ -16,6 +16,19 @@ const ConsumptionSheetRouter: RouteObject = {
 
         },
         {
+            path: 'closed',
+            element: <IndexConsumptionSheet />,
+            index: true,
+            loader: ConsumptionSheetsActions.getTerminated,
+
+        },
+        {
+            path: 'closed/:id',
+            element: <EditConsumptionSheet />,
+            loader: ConsumptionSheetsActions.getById,
+            action: ConsumptionSheetsActions.update
+        },
+        {
             path: 'create',
             element: <EditConsumptionSheet />,
             action: ConsumptionSheetsActions.create

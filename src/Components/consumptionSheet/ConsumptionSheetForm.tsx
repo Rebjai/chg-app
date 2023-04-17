@@ -4,6 +4,7 @@ import { Form, useParams } from "react-router-dom";
 import ConsumptionSheet from "../../Interfaces/consumptionSheet.interface";
 import Patient from "../../Interfaces/patient.interface";
 import Room from "../../Interfaces/room.interface";
+import { useAuth } from "../../Utils/UseAuth";
 import { useFetch } from "../../Utils/useFecth";
 import PrimaryButton from "../utils/PrimaryButton";
 import SelectInput from "../utils/SelectInput";
@@ -13,6 +14,7 @@ interface ConsumptionSheetFormProps {
     patientOptions?: { value: any, label: string }[],
 }
 function ConsumptionSheetForm(props?: ConsumptionSheetFormProps) {
+    const { auth } = useAuth()
     const { t } = useTranslation()
     const fetch = useFetch()
     useEffect(() => {
@@ -125,9 +127,13 @@ function ConsumptionSheetForm(props?: ConsumptionSheetFormProps) {
                     </label>
                     <SelectInput options={roomOptions} onChange={handleTypeInputChange} value={newConsumptionSheet.room_id.toString()} name='room_id' />
                 </div>
-                <PrimaryButton type="submit" onClick={() => console.log('submit')}>
-                    {createConsumptionSheet ? t('create') : t('edit')} {t('consumption_sheet')}
-                </ PrimaryButton>
+                <div className="flex flex-col items-center gap-5">
+                    <PrimaryButton type="submit" onClick={() => console.log('submit')}>
+                        {createConsumptionSheet ? t('create') : t('edit')} {t('consumption_sheet')}
+                    </ PrimaryButton>
+
+                    <input hidden={auth.user.role != '10' || !newConsumptionSheet.id || !!newConsumptionSheet.total} name="_method" type="submit" className="rounded bg-orange-500 py-2 px-4 font-bold text-zinc-200 hover:cursor-pointer hover:bg-orange-400" onClick={() => console.log('finish')} value={t('finish')!} placeholder="Borrar" />
+                </div>
             </Form>
         </div>
     );

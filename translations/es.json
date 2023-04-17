@@ -4,6 +4,8 @@
     "category": "Categoría",
     "search": "Buscar...",
     "create_new": "Crear Nuevo",
+    "closed": "Cerrados",
+    "open": "Abiertos",
     "create": "Crear",
     "delete": "Eliminar",
     "edit": "Editar",
@@ -43,5 +45,6 @@
      "role": "Rol",
      "export_list": "Exportar Lista",
      "quantity": "Cantidad",
+     "finish": "Finalizar",
      "logout": "Salir"
 }
