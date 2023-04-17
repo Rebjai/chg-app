@@ -17,9 +17,9 @@ function ConsumptionSheetCard({ consumptionSheet }: ConsumptionSheetCardProps) {
             <p className="italic">{consumptionSheet.doctor}</p>
             <p className="italic text-sm">{consumptionSheet.admission_date.split('T')[0]}</p>
             <div className="actions flex justify-end w-full ">
-                <Link className="max-w-[100px] w-1/12 mx-3" to={'/consumption-sheet-details/' + consumptionSheet.id+'/consumption-details'} >
+                {!consumptionSheet.total && <Link className="max-w-[100px] w-1/12 mx-3" to={'/consumption-sheet-details/' + consumptionSheet.id+'/consumption-details'} >
                     <img src={medicinesIcon} alt="" />
-                </Link>
+                </Link>}
                 <Link className="max-w-[100px] w-1/12 mx-3" to={'' + consumptionSheet.id} >
                     <img src={editIcon} alt="" />
                 </Link>
