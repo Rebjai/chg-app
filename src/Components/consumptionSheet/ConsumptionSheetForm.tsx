@@ -115,7 +115,7 @@ function ConsumptionSheetForm(props?: ConsumptionSheetFormProps) {
                         onChange={handleInputChange}
                         className="border border-gray-400 p-2"
                         required
-                        disabled={!!newConsumptionSheet.id}
+                        disabled={!!newConsumptionSheet.deleted_at}
 
                     />
                 </div>
@@ -135,19 +135,19 @@ function ConsumptionSheetForm(props?: ConsumptionSheetFormProps) {
                         disabled={!!newConsumptionSheet.deleted_at}
                         onChange={handleTypeInputChange} value={newConsumptionSheet.room_id.toString()} name='room_id' />
                 </div>
-                {!!newConsumptionSheet.id && (<div className="flex flex-col mb-4">
-                    <label htmlFor="name" className="mb-2 font-bold capitalize">
+                {!!newConsumptionSheet.id  && !newConsumptionSheet.consumptions && (<div className="flex flex-col mb-4">
+                    <label htmlFor="name" className="mb-2 font-bold capitalize text-gray-500">
                         {t('total')}
                     </label>
                     <input
                         type="text"
                         name="total"
                         id="total"
-                        value={newConsumptionSheet.total}
+                        value={newConsumptionSheet.total??0}
                         onChange={handleInputChange}
-                        className="border border-gray-400 p-2 bg-green-100 font-bold"
+                        className="border border-gray-400 p-2 text-gray-500 bg-green-100 font-bold"
                         required
-                        disabled={!!newConsumptionSheet.deleted_at}
+                        disabled={true}
                     />
                 </div>)}
                 <div className="flex flex-col items-center gap-5">

@@ -10,7 +10,7 @@ const ConsumptionSheetsActions = {
         const sumbitData: ConsumptionSheet = {
             diagnosis: data.get('diagnosis')!.toString(),
             doctor: data.get('doctor')!.toString(),
-            patient_id: parseInt(data.get('patient_id')!.toString()),
+            patient_id: parseInt(data.get('patient_id')?.toString() ?? ''),
             room_id: parseInt(data.get('room_id')!.toString()),
             admission_date: data.get('admission_date')!.toString()
         }
@@ -21,9 +21,14 @@ const ConsumptionSheetsActions = {
 
     },
     update: async ({ request, params }: ActionFunctionArgs) => {
+        console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaadsdfsfd');
+        
         const data = await request.formData()
         const method = data.get('_method')?.toString()
-        if (method == 'Finalizar' || method == 'Terminate') {
+        if (!!method && method == 'Finalizar' || method == 'Terminate') {
+            if (!confirm('Cerrar hoja de consumo?')) {
+                return {}
+            }
             const response = await fetch.delete('/api/consumption-sheets/' + params.id)
             if (response.status !== 200) {
                 throw response
@@ -31,7 +36,7 @@ const ConsumptionSheetsActions = {
             toast.success('Consumption sheet Terminated')
             return redirect('/consumption-sheets')
         }
-
+        
         const sumbitData: ConsumptionSheet = {
             diagnosis: data.get('diagnosis')!.toString(),
             doctor: data.get('doctor')!.toString(),
