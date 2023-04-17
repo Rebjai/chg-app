@@ -28,7 +28,7 @@ function StaffForm(props?: StaffFormProps) {
         id: 0,
         name: '',
         telephone_number: '',
-        job_title: '',
+        job_title: '1',
         first_surname: '',
         second_surname: '',
         date_of_birth: '',
@@ -134,12 +134,12 @@ function StaffForm(props?: StaffFormProps) {
                         required
                     />
                 </div>
-                <div className="flex flex-col mb-4">
+                {/* <div className="flex flex-col mb-4">
                     <label htmlFor="job_title" className="mb-2 font-bold">
                     {t('job_title')}
                     </label>
                     <SelectInput options={jobTitleOptions} onChange={handleJobTitleInputChange} value={newStaff.job_title} name='job_title' />
-                </div>
+                </div> */}
                 <PrimaryButton type="submit" onClick={() => console.log('submit')}>
                     {createStaff ? t('create') : t('edit')} {t('staff')}
                 </ PrimaryButton>
