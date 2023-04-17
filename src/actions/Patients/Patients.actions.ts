@@ -33,6 +33,12 @@ const PatientsActions = {
     },
     update: async ({ request, params }: ActionFunctionArgs) => {
         const data = await request.formData()
+        if (request.method == 'DELETE') {
+            if (!confirm('¿Eliminar Paciente?'))
+                return null
+            const response = await fetch.delete('/api/patients/' + params.id)
+            return response
+        }
         const sumbitData: Patient = {
             name: data.get('name')!.toString(),
             status: parseInt(data.get('status')!.toString()),
