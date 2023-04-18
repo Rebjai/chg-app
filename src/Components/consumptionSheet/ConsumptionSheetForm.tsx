@@ -20,7 +20,7 @@ function ConsumptionSheetForm(props?: ConsumptionSheetFormProps) {
     const fetch = useFetch()
     const navigate = useNavigate()
     useEffect(() => {
-        fetch.get('/api/patients').then(res => setPatientOptions(res.data.map((el: Patient) => ({ value: el.id, label: `${el.name} ${el.first_surname} ${el.second_surname}` }))))
+        fetch.get('/api/patients?with_consumption=false').then(res => setPatientOptions(!res.data.length? [{value: '', label: 'No se encontraron pacientes sin hoja de consumo'}]:res.data.map((el: Patient) => ({ value: el.id, label: `${el.name} ${el.first_surname} ${el.second_surname}` }))))
         fetch.get('/api/rooms?status=1').then(res => {
             console.log({ res });
             return setRoomOptions(
@@ -30,9 +30,7 @@ function ConsumptionSheetForm(props?: ConsumptionSheetFormProps) {
     console.log({ rooms: props?.roomOptions });
     const [patientOptions, setPatientOptions] = useState(props?.roomOptions ?? [
         { value: '', label: 'Selecciona un elemento de la lista' },
-        { value: 1, label: 'Jesus Rebollar' },
-        { value: 2, label: 'Fulano Detal' },
-        { value: 3, label: 'n/a' },
+        { value: 0, label: 'Espera mientras se obtienen los resultados' },
     ])
     const [roomOptions, setRoomOptions] = useState(props?.roomOptions ?? [
         { value: '', label: 'Selecciona un elemento de la lista' },
