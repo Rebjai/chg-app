@@ -1,5 +1,6 @@
 import { useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import { Link, useFetcher, useNavigate } from "react-router-dom";
 import deleteIcon from "../../assets/delete-icon.svg";
 import editIcon from "../../assets/edit-icon.svg";
 import medicinesIcon from "../../assets/medicines-icon.svg";
@@ -9,6 +10,8 @@ interface ConsumptionSheetCardProps {
 }
 
 function ConsumptionSheetCard({ consumptionSheet }: ConsumptionSheetCardProps) {
+    const fetcher = useFetcher()
+    const {t} = useTranslation()
 
     return (
         <div className="card rounded min-w-[200px] bg-cyan-200 my-2 p-3 drop-shadow-lg w-10/12">
@@ -23,9 +26,11 @@ function ConsumptionSheetCard({ consumptionSheet }: ConsumptionSheetCardProps) {
                 <Link className="max-w-[100px] w-1/12 mx-3" to={'' + consumptionSheet.id} >
                     <img src={editIcon} alt="" />
                 </Link>
-                <button className="max-w-[100px] w-1/12 mx-3">
-                    <img src={deleteIcon} alt="" />
-                </button>
+                <fetcher.Form method="delete" action={"/consumption-sheets/" + consumptionSheet.id} className="max-w-[100px] w-1/12 mx-3">
+                    <button type="submit" className="inline-block max-w-[100px] w-full">
+                        <img src={deleteIcon} alt={t('delete')!} /> 
+                    </button>
+                </fetcher.Form>
             </div>
 
         </div>);

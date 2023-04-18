@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Form, useParams } from "react-router-dom";
+import { Form, Link, useFetcher, useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import ConsumptionSheet from "../../Interfaces/consumptionSheet.interface";
 import Patient from "../../Interfaces/patient.interface";
 import Room from "../../Interfaces/room.interface";
@@ -17,6 +18,7 @@ function ConsumptionSheetForm(props?: ConsumptionSheetFormProps) {
     const { auth } = useAuth()
     const { t } = useTranslation()
     const fetch = useFetch()
+    const navigate = useNavigate()
     useEffect(() => {
         fetch.get('/api/patients').then(res => setPatientOptions(res.data.map((el: Patient) => ({ value: el.id, label: `${el.name} ${el.first_surname} ${el.second_surname}` }))))
         fetch.get('/api/rooms?status=1').then(res => {
@@ -68,6 +70,14 @@ function ConsumptionSheetForm(props?: ConsumptionSheetFormProps) {
         // event.preventDefault();
         console.log('New consumptionSheet:', newConsumptionSheet);
     };
+    const closeConsumptionSheet = async () => {
+        const response = await fetch.delete("/api/consumption-sheets/" + newConsumptionSheet.id + '/close')
+        if (response.status != 200)
+            throw response
+        toast.success('Hoja Finalizada Correctamente')
+        navigate('/consumption-sheets/closed')
+
+    }
 
     return (
         <div className="container mx-auto">
@@ -135,7 +145,7 @@ function ConsumptionSheetForm(props?: ConsumptionSheetFormProps) {
                         disabled={!!newConsumptionSheet.deleted_at}
                         onChange={handleTypeInputChange} value={newConsumptionSheet.room_id.toString()} name='room_id' />
                 </div>
-                {!!newConsumptionSheet.id  && !newConsumptionSheet.consumptions && (<div className="flex flex-col mb-4">
+                {!!newConsumptionSheet.id && !newConsumptionSheet.consumptions && (<div className="flex flex-col mb-4">
                     <label htmlFor="name" className="mb-2 font-bold capitalize text-gray-500">
                         {t('total')}
                     </label>
@@ -143,7 +153,7 @@ function ConsumptionSheetForm(props?: ConsumptionSheetFormProps) {
                         type="text"
                         name="total"
                         id="total"
-                        value={newConsumptionSheet.total??0}
+                        value={newConsumptionSheet.total ?? 0}
                         onChange={handleInputChange}
                         className="border border-gray-400 p-2 text-gray-500 bg-green-100 font-bold"
                         required
@@ -155,7 +165,14 @@ function ConsumptionSheetForm(props?: ConsumptionSheetFormProps) {
                         {createConsumptionSheet ? t('create') : t('edit')} {t('consumption_sheet')}
                     </ PrimaryButton>}
 
-                    <input hidden={auth.user.role != '10' || !newConsumptionSheet.id || !!newConsumptionSheet.total} name="_method" type="submit" className="rounded bg-orange-500 py-2 px-4 font-bold text-zinc-200 hover:cursor-pointer hover:bg-orange-400" onClick={() => console.log('finish')} value={t('finish')!} placeholder="Borrar" />
+                    <button hidden={auth.user.role != '10' || !newConsumptionSheet.id || !!newConsumptionSheet.total}
+                        type="button"
+                        onClick={closeConsumptionSheet}
+                        className="rounded bg-orange-500 py-2 px-4 font-bold text-zinc-200 hover:cursor-pointer hover:bg-orange-400">
+                        <p >
+                            {t('finish')!}
+                        </p>
+                    </button>
                 </div>
             </Form>
         </div>

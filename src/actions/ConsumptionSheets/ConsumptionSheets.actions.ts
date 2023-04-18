@@ -21,22 +21,15 @@ const ConsumptionSheetsActions = {
 
     },
     update: async ({ request, params }: ActionFunctionArgs) => {
-        console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaadsdfsfd');
-        
         const data = await request.formData()
         const method = data.get('_method')?.toString()
-        if (!!method && method == 'Finalizar' || method == 'Terminate') {
-            if (!confirm('Cerrar hoja de consumo?')) {
-                return {}
-            }
+        if (request.method == 'DELETE') {
+            if (!confirm('¿Eliminar PERMANENTEMENTE la hoja de consumo?'))
+                return null
             const response = await fetch.delete('/api/consumption-sheets/' + params.id)
-            if (response.status !== 200) {
-                throw response
-            }
-            toast.success('Consumption sheet Terminated')
-            return redirect('/consumption-sheets')
+            toast.success('Consumption sheet deleted')
+            return response
         }
-        
         const sumbitData: ConsumptionSheet = {
             diagnosis: data.get('diagnosis')!.toString(),
             doctor: data.get('doctor')!.toString(),
@@ -48,8 +41,6 @@ const ConsumptionSheetsActions = {
         if (response.status !== 200) {
             throw response
         }
-
-
         toast.success('Consumption sheet updated')
         return redirect('/consumption-sheets')
     },
@@ -62,12 +53,7 @@ const ConsumptionSheetsActions = {
         return consumptionSheets
     },
     getTerminated: async () => {
-        console.log('getTerminated');
-
         const response = await fetch.get('/api/consumption-sheets?closed=true')
-
-        console.log({ response });
-
         const consumptionSheetDetails = response.data
         return consumptionSheetDetails
     },
@@ -86,7 +72,18 @@ const ConsumptionSheetsActions = {
             });
         }
         return consumptionSheet
-    }
+    },
+    close: async ({ params }: ActionFunctionArgs) => {
+        if (!confirm('Finalizar hoja de consumo?')) {
+            return {}
+        }
+        const response = await fetch.delete('/api/consumption-sheets/' + params.id + '/close')
+        if (response.status !== 200) {
+            throw response
+        }
+        toast.success('Consumption sheet Terminated')
+        return redirect('/consumption-sheets')
+    },
 
 
 
