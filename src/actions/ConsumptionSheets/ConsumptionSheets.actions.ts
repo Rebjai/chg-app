@@ -34,7 +34,7 @@ const ConsumptionSheetsActions = {
             diagnosis: data.get('diagnosis')!.toString(),
             doctor: data.get('doctor')!.toString(),
             room_id: parseInt(data.get('room_id')!.toString()),
-            patient_id: parseInt(data.get('patient_id')!.toString()),
+            patient_id: parseInt(data.get('patient_id')?.toString()!),
             admission_date: data.get('admission_date')!.toString()
         }
         const response = await fetch.put('/api/consumption-sheets/' + params.id, sumbitData)

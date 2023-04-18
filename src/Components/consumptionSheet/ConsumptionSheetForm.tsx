@@ -20,12 +20,15 @@ function ConsumptionSheetForm(props?: ConsumptionSheetFormProps) {
     const fetch = useFetch()
     const navigate = useNavigate()
     useEffect(() => {
-        fetch.get('/api/patients?with_consumption=false').then(res => setPatientOptions(!res.data.length? [{value: '', label: 'No se encontraron pacientes sin hoja de consumo'}]:res.data.map((el: Patient) => ({ value: el.id, label: `${el.name} ${el.first_surname} ${el.second_surname}` }))))
         fetch.get('/api/rooms?status=1').then(res => {
-            console.log({ res });
             return setRoomOptions(
                 res.data.items.map((el: Room) => ({ value: el.id, label: el.name })))
         })
+        if (props?.consumptionSheet?.id) {
+            return setPatientOptions([{value: props.consumptionSheet.patient_id, label: `${props.consumptionSheet.patient?.name!} ${props.consumptionSheet.patient?.first_surname!} ${props.consumptionSheet.patient?.second_surname!}`}])
+        }
+        fetch.get('/api/patients?with_consumption=false').then(res => setPatientOptions(!res.data.length? [{value: '', label: 'No se encontraron pacientes sin hoja de consumo'}]:res.data.map((el: Patient) => ({ value: el.id, label: `${el.name} ${el.first_surname} ${el.second_surname}` }))))
+        
     }, [])
     console.log({ rooms: props?.roomOptions });
     const [patientOptions, setPatientOptions] = useState(props?.roomOptions ?? [
@@ -132,7 +135,7 @@ function ConsumptionSheetForm(props?: ConsumptionSheetFormProps) {
                         {t('patient')}
                     </label>
                     <SelectInput options={patientOptions}
-                        disabled={!!newConsumptionSheet.deleted_at}
+                        disabled={!!newConsumptionSheet.id}
                         onChange={handleTypeInputChange} value={newConsumptionSheet.patient_id.toString()} name='patient_id' />
                 </div>
                 <div className="flex flex-col mb-4">
