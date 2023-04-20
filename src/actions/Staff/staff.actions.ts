@@ -9,7 +9,7 @@ const StaffActions = {
         const data = await request.formData()
         const sumbitData: Staff = {
             telephone_number: data.get('telephone_number')!.toString(),
-            job_title: data.get('job_title')!.toString(),
+            job_title: data.get('job_title')?.toString()!??'',
             name: data.get('name')!.toString(),
             first_surname: data.get('first_surname')!.toString(),
             second_surname: data.get('second_surname')!.toString(),
@@ -26,7 +26,7 @@ const StaffActions = {
         const data = await request.formData()
         const sumbitData: Staff = {
             telephone_number: data.get('telephone_number')!.toString(),
-            job_title: data.get('job_title')!.toString(),
+            job_title: data.get('job_title')?.toString()!??'',
             name: data.get('name')!.toString(),
             first_surname: data.get('first_surname')!.toString(),
             second_surname: data.get('second_surname')!.toString(),
