@@ -7,9 +7,11 @@ const fetch = useFetch()
 const UsersActions = {
     create: async ({ request }: ActionFunctionArgs) => {
         const data = await request.formData()
-        const sumbitData: User = {
+
+        const sumbitData: User& {user_id? : string} = {
             email: data.get('email')!.toString(),
             role: data.get('role')!.toString(),
+            user_id: data.get('staff_id')?.toString()
         }
         console.log('asdasd');
         const created = await fetch.post('/api/auth/register-by-admin', sumbitData)
