@@ -56,20 +56,21 @@ function UserForm(props?: UserFormProps) {
     };
 
     const handleCreateUser = (event: React.FormEvent) => {
-        // event.preventDefault();
         console.log('New user:', newUser);
     };
     useEffect(() => {
-        if (props?.user?.profile?.id) {
-            return
-        }
         fetch.get('/api/staff?unassigned=true').then(r => {
             console.log({ r });
             return r.data
         }).then(staff => {
-            if (!staff.length)
+            let newOptions = []
+            if (!staff.length && !props?.user?.profile?.id)
                 return setStaffOptions([{ value: '', label: 'No se encontraron elementos.' }])
-            const newOptions = staff.map((e: Staff) => ({ value: e.id, label: `${e.name} ${e.first_surname} ${e.second_surname}` }))
+            newOptions = staff.map((e: Staff) => ({ value: e.id, label: `${e.name} ${e.first_surname} ${e.second_surname}` }))
+            if (props?.user?.profile?.id) {
+                newOptions.push({ value: props?.user?.profile?.id?.toString()!, label: `${props?.user?.profile?.name} ${props?.user?.profile?.first_surname} ${props?.user?.profile?.second_surname}` })
+                // newOptions{ value: props?.user?.profile?.id?.toString()!, label: `${props?.user?.profile?.name} ${props?.user?.profile?.first_surname} ${props?.user?.profile?.second_surname}` }
+            }
             setStaffOptions(newOptions)
         })
     }, [])
