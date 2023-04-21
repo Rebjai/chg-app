@@ -8,32 +8,28 @@ const UsersActions = {
     create: async ({ request }: ActionFunctionArgs) => {
         const data = await request.formData()
 
-        const sumbitData: User& {user_id? : string} = {
+        const sumbitData: User & { staff_id?: number } = {
             email: data.get('email')!.toString(),
             role: data.get('role')!.toString(),
-            user_id: data.get('staff_id')?.toString()
+            staff_id: parseInt(data.get('staff_id')?.toString()!)
         }
-        console.log('asdasd');
         const created = await fetch.post('/api/auth/register-by-admin', sumbitData)
         toast.success('User created')
-
         created
         return redirect('/users')
 
     },
     update: async ({ request, params }: ActionFunctionArgs) => {
         const data = await request.formData()
-        const sumbitData: User = {
+        const sumbitData: User & { staff_id?: string } = {
             email: data.get('email')!.toString(),
             role: data.get('role')!.toString(),
+            staff_id: data.get('staff_id')?.toString()
         }
-        console.log({sumbitData});
-        const response = await fetch.put('/api/users/'+params.id, sumbitData)
+        const response = await fetch.put('/api/users/' + params.id, sumbitData)
         if (response.status !== 200) {
             throw response
         }
-        console.log({response});
-        
         toast.success('User updated!')
         sumbitData
         return redirect('/users')
@@ -46,10 +42,8 @@ const UsersActions = {
         const users = response.data
         return users
     },
-    getById: async ({params}:LoaderFunctionArgs) => {
-        const response = await fetch.get('/api/users/'+params.id)
-        console.log({response});
-        
+    getById: async ({ params }: LoaderFunctionArgs) => {
+        const response = await fetch.get('/api/users/' + params.id)
         if (response.status !== 200) {
             throw response;
         }

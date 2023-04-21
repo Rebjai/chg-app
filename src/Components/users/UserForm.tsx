@@ -18,10 +18,10 @@ function UserForm(props?: UserFormProps) {
         { value: 2, label: 'Supervisor' },
         { value: 10, label: 'Admin' },
     ]
-    const [staffOptions, setStaffOptions] = useState([
+    const [staffOptions, setStaffOptions] = useState(!props?.user?.id ? [
         { value: '', label: 'Espera mientras se obtienen los elementos' },
-    ])
-    const [createAccount, setCreateAccount] = useState(true)
+    ] : [{ value: props?.user?.profile?.id?.toString()!, label: `${props?.user?.profile?.name} ${props?.user?.profile?.first_surname} ${props?.user?.profile?.second_surname}` }])
+    const [createAccount, setCreateAccount] = useState(!props?.user?.id ?? true)
     const createUser = !!!props?.user?.id
 
 
@@ -60,13 +60,16 @@ function UserForm(props?: UserFormProps) {
         console.log('New user:', newUser);
     };
     useEffect(() => {
-        fetch.get('/api/staff?unasigned=true').then(r => {
+        if (props?.user?.profile?.id) {
+            return
+        }
+        fetch.get('/api/staff?unassigned=true').then(r => {
             console.log({ r });
             return r.data
         }).then(staff => {
             if (!staff.length)
                 return setStaffOptions([{ value: '', label: 'No se encontraron elementos.' }])
-            const newOptions = staff.map((e: Staff) => ({ value: e.id, label: e.name }))
+            const newOptions = staff.map((e: Staff) => ({ value: e.id, label: `${e.name} ${e.first_surname} ${e.second_surname}` }))
             setStaffOptions(newOptions)
         })
     }, [])
@@ -110,14 +113,14 @@ function UserForm(props?: UserFormProps) {
                     <SelectInput options={roleOptions} onChange={handleRoleInputChange} value={newUser.role} name='role' />
                 </div>
 
-                <div className="flex flex-col mb-4">
+                {newUser.role == '1' && <div className="flex flex-col mb-4">
                     <label htmlFor="new-account" className="mb-2 font-bold">
                         {t('new-profile')}
                     </label>
                     <input type="checkbox" name="new-account" id="new-account" checked={createAccount} onChange={() => setCreateAccount(!createAccount)} />
-                </div>
+                </div>}
 
-                {!createAccount && <div className="flex flex-col mb-4">
+                {newUser.role == '1' && !createAccount && <div className="flex flex-col mb-4">
                     <label htmlFor="staff_id" className="mb-2 font-bold">
                         {t('staff_id')}
                     </label>
