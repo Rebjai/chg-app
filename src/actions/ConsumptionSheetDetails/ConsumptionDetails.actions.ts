@@ -48,6 +48,13 @@ const ConsumptionSheetDetailsActions = {
     },
     update: async ({ request, params }: ActionFunctionArgs) => {
         const data = await request.formData()
+        if (request.method == "DELETE") {
+            if (!confirm('Desea Borrar el detalle de consumo?')) {
+                return {}
+            }
+            const response = await fetch.delete('/api/consumption-details/' + params.id)
+            return response
+        }
 
         const sumbitData: ConsumptionSheetDetail = {
             // total: parseFloat(data.get('total')!.toString()),
