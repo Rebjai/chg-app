@@ -8,14 +8,14 @@ interface PaginationComponentProps {
 
 const PaginationComponent = ({ meta, links }: PaginationComponentProps) => {
     if (!meta || !links) {
-        return ( 
-        <div className="flex justify-center mt-8">
-            No data
+        return (
+            <div className="flex justify-center mt-8">
+                -
             </div>)
     }
-    const { currentPage, totalPages } = meta;
     const { first, previous, next, last } = links;
-    
+    const { currentPage, totalPages } = meta;
+
     // Calculate the range of pages to display
     const range = [];
     for (let i = currentPage - 2; i <= currentPage + 2; i++) {
@@ -57,8 +57,8 @@ const PaginationComponent = ({ meta, links }: PaginationComponentProps) => {
                         <Link
                             to={`${last.split("=")[0]}=${page}`}
                             className={`px-3 py-1 ${currentPage === page
-                                    ? "bg-blue-500 text-white"
-                                    : "bg-gray-200 border-gray-400 border-r hover:bg-gray-300"
+                                ? "bg-blue-500 text-white"
+                                : "bg-gray-200 border-gray-400 border-r hover:bg-gray-300"
                                 }`}
                         >
                             {page}
