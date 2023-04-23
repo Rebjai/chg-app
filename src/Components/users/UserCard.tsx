@@ -1,5 +1,6 @@
 import { useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import { Link, useFetcher, useNavigate } from "react-router-dom";
 import deleteIcon from "../../assets/delete-icon.svg";
 import editIcon from "../../assets/edit-icon.svg";
 import User from "../../Interfaces/user.interface";
@@ -8,6 +9,8 @@ interface UserCardProps {
 }
 
 function UserCard({ user }: UserCardProps) {
+    const {t} = useTranslation()
+    const fetcher = useFetcher()
     const getStatusText = (status: string): string => {
         if (status == '1') {
             return 'user'
@@ -33,9 +36,11 @@ function UserCard({ user }: UserCardProps) {
                 <Link className="max-w-[100px] w-1/12 mx-3" to={'' + user.id} >
                     <img src={editIcon} alt="" />
                 </Link>
-                <button className="max-w-[100px] w-1/12 mx-3">
-                    <img src={deleteIcon} alt="" />
-                </button>
+                <fetcher.Form method="delete" action={"/users/" + user.id} className="max-w-[100px] w-1/12 mx-3">
+                    <button type="submit" className="inline-block max-w-[100px] w-full">
+                        <img src={deleteIcon} alt={t('delete')!} /> 
+                    </button>
+                </fetcher.Form>
             </div>
 
         </div>);

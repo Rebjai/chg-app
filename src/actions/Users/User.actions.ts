@@ -20,6 +20,17 @@ const UsersActions = {
 
     },
     update: async ({ request, params }: ActionFunctionArgs) => {
+        if (request.method == 'DELETE') {
+            if (!confirm('Eliminar Usuario?')) {
+                return {}
+            }
+            const response = await fetch.delete('/api/users/' + params.id)
+            if (response.status !== 200) {
+                throw response
+            }
+            toast.success('User deleted!')
+            return response
+        }
         const data = await request.formData()
         const sumbitData: User & { staff_id?: string } = {
             email: data.get('email')!.toString(),
