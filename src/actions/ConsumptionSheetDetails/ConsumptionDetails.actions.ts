@@ -30,6 +30,8 @@ const ConsumptionSheetDetailsActions = {
             console.log(`${name}: ${value}`);
         }
         const { consumptionSheetId } = params
+        console.log({params});
+        
 
         const sumbitData: ConsumptionSheetDetail = {
             // total: parseFloat(data.get('total')!.toString()),
@@ -97,7 +99,9 @@ const ConsumptionSheetDetailsActions = {
         return consumptionSheetDetail
     },
     getByConsumptionSheetId: async ({ params }: LoaderFunctionArgs) => {
-        const response = await fetch.get('/api/consumption-sheets/' + params.ConsumptionSheetId + '/consumption-details')
+        console.log({params});
+        const {consumptionSheetId} = params
+        const response = await fetch.get('/api/consumption-sheets/' + consumptionSheetId + '/consumption-details')
         console.log({ response });
 
         if (response.status !== 200) {

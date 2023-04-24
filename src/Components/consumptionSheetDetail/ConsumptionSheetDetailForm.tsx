@@ -22,7 +22,7 @@ function ConsumptionSheetDetailForm(props?: ConsumptionSheetDetailFormProps) {
     const { t } = useTranslation()
     const [searchTerm, setSearchTerm] = useState('')
 
-    
+
     const { auth } = useAuth()
     const [consumptionSheetOptions, setConsumptionSheetOptions] = useState<SelectOption[]>(auth?.user?.profile ? [{ value: auth.user.profile.id!, label: `${auth.user.profile.name} ${auth.user.profile.first_surname} ${auth.user.profile.second_surname}` }] : [
         { value: '', label: 'Obteniendo elementos' },
@@ -81,9 +81,10 @@ function ConsumptionSheetDetailForm(props?: ConsumptionSheetDetailFormProps) {
         fetch.get('/api/staff').then(v => {
             setStaffOptions(v.data.map((el: any) => ({ value: el.id, label: `${el.name} ${el.first_surname} ${el.second_surname}` })))
         })
-        fetch.get('/api/consumption-sheets').then(v => {
-            setConsumptionSheetOptions(v.data.map((el: ConsumptionSheet) => ({ value: el.id, label: `${el.admission_date} - ${el.id}` })))
-        })
+        if (!props?.consumptionSheetId)
+            fetch.get('/api/consumption-sheets').then(v => {
+                setConsumptionSheetOptions(v.data.map((el: ConsumptionSheet) => ({ value: el.id, label: `${el.admission_date} - ${el.id}` })))
+            })
     }, [null])
     useEffect(() => {
         fetch.get('/api/products').then(v => {
@@ -98,7 +99,7 @@ function ConsumptionSheetDetailForm(props?: ConsumptionSheetDetailFormProps) {
             <Form onSubmit={handleCreateConsumptionSheetDetail} method={createConsumptionSheetDetail ? 'post' : 'put'}>
                 <input type="hidden" name="user_id" value={newConsumptionSheetDetail.user_id} />
                 <div className={"flex flex-col mb-4" + (props?.consumptionSheetId ? " hidden" : '')}>
-                    
+
                     <label htmlFor="consumption_sheet_id" className="mb-2 font-bold">
                         {t('Consumption Sheet')}
                     </label>
