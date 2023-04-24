@@ -146,7 +146,7 @@ function ConsumptionSheetForm(props?: ConsumptionSheetFormProps) {
                         disabled={!!newConsumptionSheet.deleted_at}
                         onChange={handleTypeInputChange} value={newConsumptionSheet.room_id.toString()} name='room_id' />
                 </div>
-                {!!newConsumptionSheet.id && !newConsumptionSheet.consumptions && (<div className="flex flex-col mb-4">
+                {!!newConsumptionSheet.id && !!newConsumptionSheet.consumptions?.length && (<div className="flex flex-col mb-4">
                     <label htmlFor="name" className="mb-2 font-bold capitalize text-gray-500">
                         {t('total')}
                     </label>
