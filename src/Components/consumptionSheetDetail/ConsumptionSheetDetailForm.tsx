@@ -85,6 +85,7 @@ function ConsumptionSheetDetailForm(props?: ConsumptionSheetDetailFormProps) {
             fetch.get('/api/consumption-sheets').then(v => {
                 setConsumptionSheetOptions(v.data.map((el: ConsumptionSheet) => ({ value: el.id, label: `${el.admission_date} - ${el.id}` })))
             })
+            setConsumptionSheetOptions([{value: props?.consumptionSheetId!, label: ''}])
     }, [null])
     useEffect(() => {
         fetch.get('/api/products').then(v => {
