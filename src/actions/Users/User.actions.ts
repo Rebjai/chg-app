@@ -13,9 +13,11 @@ const UsersActions = {
             role: data.get('role')!.toString(),
             staff_id: parseInt(data.get('staff_id')?.toString()!)
         }
-        const created = await fetch.post('/api/auth/register-by-admin', sumbitData)
+        const response = await fetch.post('/api/auth/register-by-admin', sumbitData)
+        if (response.status == 422) {
+            return response
+        }
         toast.success('User created')
-        created
         return redirect('/users')
 
     },
@@ -38,6 +40,9 @@ const UsersActions = {
             staff_id: data.get('staff_id')?.toString()
         }
         const response = await fetch.put('/api/users/' + params.id, sumbitData)
+        if (response.status == 422) {
+            return response
+        }
         if (response.status !== 200) {
             throw response
         }

@@ -14,18 +14,11 @@ const PatientsActions = {
             second_surname: data.get('second_surname')!.toString(),
             date_of_birth: (new Date(data.get('date_of_birth')!.toString())).toISOString()
         }
-        console.log('asdasd');
-        const created = await fetch.post('/api/patients', sumbitData)
-        // const created = await fetch('/api/patients',
-        //     {
-        //         method: 'POST', body: JSON.stringify(sumbitData), headers: {
-        //             'Content-Type': 'application/json',
-        //             'Authorization': 'Bearer ' + localStorage.getItem('token')!
-        //         }
-        //     })
-        // if (created.status !== 200) {
-        //     throw created
-        // }
+
+        const response = await fetch.post('/api/patients', sumbitData)
+        if (response.status == 422) {
+            return response
+        }
 
         toast.success('Patient created')
         return redirect('/patients')
@@ -46,13 +39,16 @@ const PatientsActions = {
             second_surname: data.get('second_surname')!.toString(),
             date_of_birth: data.get('date_of_birth')!.toString()
         }
-        console.log({sumbitData});
-        const response = await fetch.put('/api/patients/'+params.id, sumbitData)
+        console.log({ sumbitData });
+        const response = await fetch.put('/api/patients/' + params.id, sumbitData)
+        if (response.status == 422) {
+            return response
+        }
         if (response.status !== 200) {
             throw response
         }
-        console.log({response});
-        
+        console.log({ response });
+
 
         toast.success('Patient updated')
         return redirect('/patients')
@@ -63,15 +59,15 @@ const PatientsActions = {
         // if (response.status !== 200) {
         //     throw response;
         // }
-        console.log({response});
-        
+        console.log({ response });
+
         const patients = response.data
         return patients
     },
-    getById: async ({params}:LoaderFunctionArgs) => {
-        const response = await fetch.get('/api/patients/'+params.id)
-        console.log({response});
-        
+    getById: async ({ params }: LoaderFunctionArgs) => {
+        const response = await fetch.get('/api/patients/' + params.id)
+        console.log({ response });
+
         if (response.status !== 200) {
             throw response;
         }

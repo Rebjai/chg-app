@@ -12,21 +12,11 @@ const RoomsActions = {
             status: parseInt(data.get('status')!.toString()),
             type: parseInt(data.get('status')!.toString()),
         }
-        console.log('asdasd');
-        const created = await fetch.post('/api/rooms', sumbitData)
-        // const created = await fetch('/api/rooms',
-        //     {
-        //         method: 'POST', body: JSON.stringify(sumbitData), headers: {
-        //             'Content-Type': 'application/json',
-        //             'Authorization': 'Bearer ' + localStorage.getItem('token')!
-        //         }
-        //     })
-        // if (created.status !== 200) {
-        //     throw created
-        // }
+        const response = await fetch.post('/api/rooms', sumbitData)
+        if (response.status == 422) {
+            return response
+        }
         toast.success('Room created')
-
-        created
         return redirect('/rooms')
 
     },
@@ -39,13 +29,13 @@ const RoomsActions = {
         }
         console.log({sumbitData});
         const response = await fetch.put('/api/rooms/'+params.id, sumbitData)
+        if (response.status == 422) {
+            return response
+        }
         if (response.status !== 200) {
             throw response
         }
-        console.log({response});
-        
         toast.success('Room updated!')
-        sumbitData
         return redirect('/rooms')
     },
     getAll: async () => {

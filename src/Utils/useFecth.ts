@@ -1,3 +1,4 @@
+import { toast } from 'react-toastify';
 import { redirect, useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import { useState } from 'react';
@@ -57,9 +58,13 @@ function useFetch() {
             const data = text && JSON.parse(text);
 
             if (!response.ok) {
-                console.log({ response });
                 console.log([401, 403].includes(response.status) && auth);
-                console.log(auth);
+
+                if ([422].includes(response.status)) {
+                    const errors: [] = data.message
+                    errors.forEach(e => toast.error(e))
+                    return {status: response.status, errors}
+                }
 
                 if ([401, 403].includes(response.status) && auth) {
                     // auto logout if 401 Unauthorized or 403 Forbidden response returned from api

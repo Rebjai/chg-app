@@ -16,8 +16,10 @@ const ConsumptionSheetDetailsActions = {
             consumption_sheet_id: parseInt(data.get('consumption_sheet_id')!.toString())
         }
         console.log({ sumbitData });
-        const created = await fetch.post('/api/consumption-details', sumbitData)
-
+        const response = await fetch.post('/api/consumption-details', sumbitData)
+        if (response.status == 422) {
+            return response
+        }
         toast.success('Consumption sheet detail created')
         return redirect('/consumption-sheets-detail')
 
@@ -42,10 +44,12 @@ const ConsumptionSheetDetailsActions = {
             consumption_sheet_id: parseInt(data.get('consumption_sheet_id')!.toString())
         }
         console.log({ sumbitData });
-        console.log({ sumbitData });
-        const created = await fetch.post('/api/consumption-sheets/' + consumptionSheetId + '/consumption-details', sumbitData)
+        const response = await fetch.post('/api/consumption-sheets/' + consumptionSheetId + '/consumption-details', sumbitData)
+        if (response.status == 422) {
+            return response
+        }
         toast.success('Consumption sheet detail created')
-        return created
+        return response
 
     },
     update: async ({ request, params }: ActionFunctionArgs) => {
@@ -68,12 +72,12 @@ const ConsumptionSheetDetailsActions = {
         }
         console.log({ sumbitData });
         const response = await fetch.put('/api/consumption-details/' + params.id, sumbitData)
+        if (response.status == 422) {
+            return response
+        }
         if (response.status !== 200) {
             throw response
         }
-        console.log({ response });
-
-
         toast.success('Consumption sheet detail updated')
         return redirect('/consumption-sheets-detail')
     },

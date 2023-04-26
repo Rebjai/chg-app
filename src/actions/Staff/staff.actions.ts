@@ -15,9 +15,10 @@ const StaffActions = {
             second_surname: data.get('second_surname')!.toString(),
             date_of_birth: (new Date(data.get('date_of_birth')!.toString())).toISOString()
         }
-        console.log('asdasd');
-        const created = await fetch.post('/api/staff', sumbitData)
-
+        const response = await fetch.post('/api/staff', sumbitData)
+        if (response.status == 422) {
+            return response
+        }
         toast.success('Staff member created')
         return redirect('/staff')
 
@@ -34,6 +35,9 @@ const StaffActions = {
         }
         console.log({sumbitData});
         const response = await fetch.put('/api/staff/'+params.id, sumbitData)
+        if (response.status == 422) {
+            return response
+        }
         if (response.status !== 200) {
             throw response
         }

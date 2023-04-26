@@ -14,8 +14,10 @@ const ConsumptionSheetsActions = {
             room_id: parseInt(data.get('room_id')!.toString()),
             admission_date: data.get('admission_date')!.toString()
         }
-        const created = await fetch.post('/api/consumption-sheets', sumbitData)
-
+        const response = await fetch.post('/api/consumption-sheets', sumbitData)
+        if (response.status == 422) {
+            return response
+        }
         toast.success('Consumption sheet created')
         return redirect('/consumption-sheets')
 
@@ -38,6 +40,9 @@ const ConsumptionSheetsActions = {
             admission_date: data.get('admission_date')!.toString()
         }
         const response = await fetch.put('/api/consumption-sheets/' + params.id, sumbitData)
+        if (response.status == 422) {
+            return response
+        }
         if (response.status !== 200) {
             throw response
         }

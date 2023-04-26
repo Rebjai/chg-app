@@ -12,12 +12,13 @@ const ProductsActions = {
             price: parseFloat(data.get('price')!.toString()),
             category_id: parseInt(data.get('category_id')!.toString())
         }
-        console.log('asdasd');
-        const created = await fetch.post('/api/products', sumbitData)
+        const response = await fetch.post('/api/products', sumbitData)
+        if (response.status == 422) {
+            return response
+        }
         toast.success('Product created!')
+        // redirect to prev route if exist
         const prevRoute = data.get('prev-route')?.toString()
-        console.log({ prevRoute });
-
         return prevRoute ? redirect(prevRoute) : redirect('/products')
 
     },
@@ -38,13 +39,16 @@ const ProductsActions = {
         }
         console.log({ sumbitData });
         const response = await fetch.put('/api/products/' + params.id, sumbitData)
+
+        if (response.status == 422) {
+            return response
+        }
         if (response.status !== 200) {
             throw response
         }
         toast.success('Product updated!')
+        // route to prev route if passed
         const prevRoute = data.get('prev-route')?.toString()
-        console.log({ prevRoute });
-
         return prevRoute ? redirect(prevRoute) : redirect('/products')
     },
     getAll: async ({ params, request }: ActionFunctionArgs) => {

@@ -12,6 +12,9 @@ const AuthActions = {
             password: data.get('password')
         }
         const user = await fetch('/api/auth/login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(credentials) })
+        if (user.status == 422) {
+            return user
+        }
         if (user.status !== 201) {
             throw user
         }
