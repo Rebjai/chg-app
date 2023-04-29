@@ -15,26 +15,26 @@ function ConsumptionDetailTable({ consumptionDetails }: ConsumptionDetailTablePr
     return (
 
         <div className="bg-green-100 rounded p-5">
-            <table className="min-w-full">
+            <table className="min-w-full border-spacing-5">
                 <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Product</th>
-                        <th>quantity</th>
-                        {auth.user.role == '1' ? null : <th>price</th>}
-                        {auth.user.role == '1' ? null : <th>Actions</th>}
+                    <tr className="">
+                        <th className="px-3">Date</th>
+                        <th className="px-3">Product</th>
+                        <th className="px-3">quantity</th>
+                        {auth.user.role == '1' ? null : <th className="px-3">price</th>}
+                        {auth.user.role == '1' ? null : <th className="px-3">Actions</th>}
                     </tr>
                 </thead>
                 <tbody>
 
                     {consumptionDetails?.length ? consumptionDetails.map(detail => (
                         <tr key={detail.id}>
-                            <td>{detail.created_at?.toLocaleDateString()}</td>
-                            <td>{detail.product?.name}</td>
-                            <td>{detail.quantity}</td>
-                            {auth.user.role == '1' ? null : <td>{detail.total}</td>}
+                            <td className="px-2">{detail.created_at?.toLocaleString()}</td>
+                            <td className="px-2">{detail.product?.name}</td>
+                            <td className="px-2">{detail.quantity}</td>
+                            {auth.user.role == '1' ? null : <td className="px-2">{detail.total}</td>}
                             {auth.user.role == '1' ? null :
-                                <td>
+                                <td className="px-2">
                                     <fetcher.Form method="delete" action={"/consumption-sheet-details/" + detail.id} className="">
                                         <button type="submit" className="inline-block max-w-[100px] w-6/12">
                                             <img src={deleteIcon} alt={t('delete')!} />
