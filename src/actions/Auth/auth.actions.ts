@@ -35,19 +35,22 @@ const AuthActions = {
         console.log(data.entries());
         const submitData: Staff = {
             telephone_number: data.get('telephone_number')!.toString(),
-            job_title: data.get('job_title')?.toString()??'1',
+            job_title: data.get('job_title')?.toString() ?? '1',
             name: data.get('name')!.toString(),
             first_surname: data.get('first_surname')!.toString(),
             second_surname: data.get('second_surname')!.toString(),
             date_of_birth: (new Date(data.get('date_of_birth')!.toString())).toISOString()
         }
         console.log('sending');
-        const user = await fetch.put('/api/staff/profile', submitData)
-        toast.success('Profile updated!')
+        const profile = (await fetch.put('/api/staff/profile', submitData)).data
+        if (!profile.user_id) {
+            toast.error('Error updating profile')
+            return {}
+        } else {
+            toast.success('Profile updated!')
+        }
         const localuser = JSON.parse(localStorage.getItem('user')!)
-        console.log({localuser});
-        
-        localuser.user.profile = user.data
+        localuser.user.profile = profile.data
         localStorage.setItem('user', JSON.stringify(localuser))
         return redirect('/')
     },
@@ -57,7 +60,7 @@ const AuthActions = {
         const localuser = JSON.parse(localStorage.getItem('user')!)
         localuser.user.profile = response.data
         localStorage.setItem('user', JSON.stringify(localuser))
-        return  response.data
+        return response.data
     }
 }
 export default AuthActions

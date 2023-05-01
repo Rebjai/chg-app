@@ -24,7 +24,7 @@ function StaffForm(props?: StaffFormProps) {
     const createStaff = !!!props?.staff?.id
 
     
-    const [newStaff, setNewStaff] = useState<Staff>(props?.staff? props.staff:{
+    const [newStaff, setNewStaff] = useState<Staff>(props?.staff?.id? props.staff:{
         id: 0,
         name: '',
         telephone_number: '',
@@ -113,7 +113,7 @@ function StaffForm(props?: StaffFormProps) {
                         type="date"
                         name="date_of_birth"
                         id="date_of_birth"
-                        value={newStaff.date_of_birth}
+                        value={newStaff.date_of_birth?.split('T')[0]}
                         onChange={handleInputChange}
                         className="border border-gray-400 p-2"
                         required

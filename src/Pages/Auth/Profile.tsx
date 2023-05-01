@@ -5,15 +5,20 @@ import PrimaryButton from "../../Components/utils/PrimaryButton";
 import { useAuth } from "../../Utils/UseAuth";
 
 const Profile = () => {
-    const { auth, login } = useAuth()
+    const { auth, login, refresh} = useAuth()
     const navigate = useNavigate()
     const data = useActionData()
+    console.log({data});
+    useEffect(() => {
+        refresh!()
+    }, [null])
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem('user')!)
         if (!auth.user.profile && user.profile) {
             console.log({profile: user.profile});
             // TODO bugfix on update
-            login!(user)
+            refresh!()
+            // login!(user)
         }
     }, [data])
     return (<section>
