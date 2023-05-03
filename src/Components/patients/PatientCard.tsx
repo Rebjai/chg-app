@@ -31,7 +31,7 @@ function PatientCard({ patient }: PatientCardProps) {
                 <span className="inline-block rounded-full w-[20px] h-[20px] bg-green-400 max-w-[100px] mt-2 mx-2 mb-0">
                 </span>
                 <p className="italic font-light">
-                    {getStatusText(patient.status! )}
+                    {getStatusText(patient.active! )}
                 </p>
             </div>
             <div className="actions flex justify-end w-full ">
