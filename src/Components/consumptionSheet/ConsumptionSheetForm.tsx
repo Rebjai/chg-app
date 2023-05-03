@@ -166,7 +166,7 @@ function ConsumptionSheetForm(props?: ConsumptionSheetFormProps) {
                         {createConsumptionSheet ? t('create') : t('edit')} {t('consumption_sheet')}
                     </ PrimaryButton>}
 
-                    <button hidden={auth.user.role != '10' || !newConsumptionSheet.id || !!newConsumptionSheet.total}
+                    <button hidden={auth.user.role != '10' || !newConsumptionSheet.id || !!newConsumptionSheet.deleted_at}
                         type="button"
                         onClick={closeConsumptionSheet}
                         className="rounded bg-orange-500 py-2 px-4 font-bold text-zinc-200 hover:cursor-pointer hover:bg-orange-400">
