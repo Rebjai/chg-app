@@ -9,7 +9,7 @@ const PatientsActions = {
         const data = await request.formData()
         const sumbitData: Patient = {
             name: data.get('name')!.toString(),
-            status: parseInt(data.get('status')!.toString()),
+            active: parseInt(data.get('active')!.toString()),
             first_surname: data.get('first_surname')!.toString(),
             second_surname: data.get('second_surname')!.toString(),
             date_of_birth: (new Date(data.get('date_of_birth')!.toString())).toISOString()
@@ -34,7 +34,7 @@ const PatientsActions = {
         }
         const sumbitData: Patient = {
             name: data.get('name')!.toString(),
-            status: parseInt(data.get('status')!.toString()),
+            active: parseInt(data.get('active')!.toString()),
             first_surname: data.get('first_surname')!.toString(),
             second_surname: data.get('second_surname')!.toString(),
             date_of_birth: data.get('date_of_birth')!.toString()

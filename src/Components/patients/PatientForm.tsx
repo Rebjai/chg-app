@@ -30,7 +30,7 @@ function PatientForm(props?: PatientFormProps) {
         first_surname: '',
         second_surname: '',
         date_of_birth: '',
-        status: 1,
+        active: 1,
     });
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -115,7 +115,7 @@ function PatientForm(props?: PatientFormProps) {
                     <label htmlFor="type" className="mb-2 font-bold" hidden={!newPatient.id}>
                         {t('status')}
                     </label>
-                    <SelectInput options={statusOptions} onChange={handleTypeInputChange} value='1' name='status' hidden={!newPatient.id} />
+                    <SelectInput options={statusOptions} onChange={handleTypeInputChange} value='1' name='active' hidden={!newPatient.id} />
                 </div>
                 <PrimaryButton type="submit" onClick={() => console.log('submit')}>
                     {createPatient ? t('create') : t('edit')}

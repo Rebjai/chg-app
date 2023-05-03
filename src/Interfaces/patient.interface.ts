@@ -4,6 +4,6 @@ export default interface Patient {
     first_surname: string,
     second_surname: string,
     date_of_birth?: string,
-    status?: number,
+    active?: number,
     created_at?: Date,
 }
