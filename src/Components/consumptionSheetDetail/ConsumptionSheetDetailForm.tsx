@@ -75,7 +75,7 @@ function ConsumptionSheetDetailForm(props?: ConsumptionSheetDetailFormProps) {
             setProductOptions(v.data.items.map((el: any) => ({ value: el.id, label: `${el.name}` })))
         })
     }
-    const debouncedSearchTerm = useDebounce(searchTerm, 2000, filterProducts);
+    const debouncedSearchTerm = useDebounce(searchTerm, 700, filterProducts);
 
     useEffect(() => {
         fetch.get('/api/staff').then(v => {
@@ -116,7 +116,7 @@ function ConsumptionSheetDetailForm(props?: ConsumptionSheetDetailFormProps) {
                     <label htmlFor="product_id" className="mb-2 font-bold">
                         {t('product')}
                     </label>
-                    <input className="m-5 p-3 text-center" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} type="text" name="seach" id="search" placeholder={t('search') ?? 'search'} />
+                    <input className="m-5 p-3 text-center" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} onKeyDown={(e)=> e.key == 'Enter'? e.preventDefault(): e} type="text" name="seach" id="search" placeholder={t('search') ?? 'search'} />
                     <SelectInput options={productOptions} onChange={handleTypeInputChange} value={newConsumptionSheetDetail.product_id.toString()} name='product_id' />
                 </div>
                 <div className="flex flex-col mb-4">

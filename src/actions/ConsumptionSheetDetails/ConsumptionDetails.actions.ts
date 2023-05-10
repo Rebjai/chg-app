@@ -50,7 +50,7 @@ const ConsumptionSheetDetailsActions = {
         }
         toast.success('Consumption sheet detail created')
         return response
-
+        
     },
     update: async ({ request, params }: ActionFunctionArgs) => {
         const data = await request.formData()
@@ -61,9 +61,9 @@ const ConsumptionSheetDetailsActions = {
             const response = await fetch.delete('/api/consumption-details/' + params.id)
             return response
         }
-
+        
         const sumbitData: ConsumptionSheetDetail = {
-            // total: parseFloat(data.get('total')!.toString()),
+            total: parseFloat(data.get('total')!.toString()),
             quantity: parseFloat(data.get('quantity')!.toString()),
             product_id: parseInt(data.get('product_id')!.toString()),
             staff_id: parseInt(data.get('staff_id')!.toString()),
@@ -71,6 +71,8 @@ const ConsumptionSheetDetailsActions = {
             consumption_sheet_id: parseInt(data.get('consumption_sheet_id')!.toString())
         }
         console.log({ sumbitData });
+        // alert('updating')
+        // return 0
         const response = await fetch.put('/api/consumption-details/' + params.id, sumbitData)
         if (response.status == 422) {
             return response
@@ -79,7 +81,7 @@ const ConsumptionSheetDetailsActions = {
             throw response
         }
         toast.success('Consumption sheet detail updated')
-        return redirect('/consumption-sheets-detail')
+        return response
     },
     getAll: async () => {
         console.log('getall');
