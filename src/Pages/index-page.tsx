@@ -32,7 +32,7 @@ function IndexPage() {
                     </NavLink>
                 </li>
                 {auth.user.role == '1' ? null : <>
-                    <li>
+                    {/* <li>
                         <NavLink to={'consumption-sheet-details'}>
                             {({ isActive, isPending }) => (
                                 <button className={(isPending ? "bg-cyan-700 text-slate-200" : isActive ? "bg-cyan-500 text-slate-200" : "bg-cyan-400 text-slate-600") + " rounded p-3 drop-shadow-md font-bold tracking-widest"}>
@@ -40,7 +40,7 @@ function IndexPage() {
                                 </button>
                             )}
                         </NavLink>
-                    </li>
+                    </li> */}
                     <li>
                         <NavLink to={'patients'}>
                             {({ isActive, isPending }) => (
