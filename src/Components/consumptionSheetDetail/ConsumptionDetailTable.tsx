@@ -34,8 +34,8 @@ function ConsumptionDetailTable({ consumptionDetails }: ConsumptionDetailTablePr
                         <th className="px-3">Date</th>
                         <th className="px-3">Product</th>
                         <th className="px-3">quantity</th>
-                        {auth.user.role === "1" ? null : <th className="px-3">price</th>}
-                        {auth.user.role === "1" ? null : <th className="px-3 max-w-min">Actions</th>}
+                        {auth.user.role == "1" ? null : <th className="px-3">price</th>}
+                        {auth.user.role == "1" ? null : <th className="px-3 max-w-min">Actions</th>}
                     </tr>
                 </thead>
                 <tbody>
