@@ -114,14 +114,14 @@ function UserForm(props?: UserFormProps) {
                     <SelectInput options={roleOptions} onChange={handleRoleInputChange} value={newUser.role} name='role' />
                 </div>
 
-                {newUser.role == '1' && <div className="flex flex-col mb-4">
+                {(newUser.role == '1' || newUser.role == '2')  && <div className="flex flex-col mb-4">
                     <label htmlFor="new-account" className="mb-2 font-bold">
                         {t('new-profile')}
                     </label>
                     <input type="checkbox" name="new-account" id="new-account" checked={createAccount} onChange={() => setCreateAccount(!createAccount)} />
                 </div>}
 
-                {newUser.role == '1' && !createAccount && <div className="flex flex-col mb-4">
+                {(newUser.role == '1' || newUser.role == '2') && !createAccount && <div className="flex flex-col mb-4">
                     <label htmlFor="staff_id" className="mb-2 font-bold">
                         {t('staff_id')}
                     </label>

@@ -17,7 +17,7 @@ function PublicGuard() {
         return <Navigate to={'/auth/profile'}></Navigate>
     }
     // this good
-    if (auth && auth.user.role == '1' && location.pathname == '/auth/profile') {
+    if (auth && auth.user.role != '10' && location.pathname == '/auth/profile') {
         console.log('profile');
 
         return <Outlet></Outlet>

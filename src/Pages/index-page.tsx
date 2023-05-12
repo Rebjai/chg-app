@@ -87,7 +87,7 @@ function IndexPage() {
                         </NavLink>
                     </li>
                 </>
-                }{auth.user.role != '1' ? null : (
+                }{auth.user.role == '10' ? null : (
                     <li>
                         <NavLink to={'/auth/profile'}>
                             {({ isActive, isPending }) => (

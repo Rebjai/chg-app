@@ -31,7 +31,7 @@ const Profile = () => {
             </h1>
             <p>change your personal info</p>
         </div>
-        {auth?.user?.role == '1' ? <StaffForm staff={auth.user.profile} ></StaffForm> : null}
+        {auth?.user?.role != '10' ? <StaffForm staff={auth.user.profile} ></StaffForm> : null}
     </section>);
 }
 
