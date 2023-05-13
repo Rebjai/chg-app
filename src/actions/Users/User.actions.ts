@@ -65,6 +65,17 @@ const UsersActions = {
         }
         const users = response.data
         return users
+    },
+    getUser: async ({ params }: LoaderFunctionArgs) => {
+        const LoggedUserId = JSON.parse(localStorage.getItem('user')!).user.id
+        console.log({LoggedUserId});
+        
+        const response = await fetch.get('/api/users/' + LoggedUserId)
+        if (response.status !== 200) {
+            throw response;
+        }
+        const users = response.data
+        return users
     }
 
 

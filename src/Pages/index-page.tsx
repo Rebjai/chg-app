@@ -98,7 +98,15 @@ function IndexPage() {
                         </NavLink>
                     </li>
                 )}
-
+                <li>
+                    <NavLink to={'/users/account'}>
+                        {({ isActive, isPending }) => (
+                            <button className={(isPending ? "bg-cyan-700 text-slate-200" : isActive ? "bg-cyan-500 text-slate-200" : "bg-cyan-400 text-slate-600") + " rounded p-3 drop-shadow-md font-bold tracking-widest"}>
+                                {t('account')}
+                            </button>
+                        )}
+                    </NavLink>
+                </li>
 
                 <li>
                     <button className="bg-red-500 rounded p-3 drop-shadow-md text-slate-200 font-bold tracking-widest" onClick={handleLogout}>
