@@ -3,14 +3,17 @@ import { NavLink, useLoaderData, useLocation, useNavigate } from "react-router-d
 import ConsumptionSheetCard from "../../Components/consumptionSheet/ConsumptionSheetCard";
 import PrimaryButton from "../../Components/utils/PrimaryButton";
 import ConsumptionSheet from "../../Interfaces/consumptionSheet.interface";
+import { useAuth } from "../../Utils/UseAuth";
 
 function IndexConsumptionSheet() {
     const { t } = useTranslation()
+    const {auth} = useAuth()
     const path = useLocation()
     let navigate = useNavigate()
     const consumptionSheets: ConsumptionSheet[] = useLoaderData() as ConsumptionSheet[]
 
     return (<>
+        {auth.user.role != '1' && 
         <div className="flex text-center item gap-5 my-3">
             <NavLink 
                 className={({ isActive, isPending }) =>
@@ -26,6 +29,7 @@ function IndexConsumptionSheet() {
                 {t('closed')}</NavLink>
 
         </div>
+}
 
         <PrimaryButton onClick={() => {
             navigate('/consumption-sheets/create')
