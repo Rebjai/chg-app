@@ -68,15 +68,34 @@ const UsersActions = {
     },
     getUser: async ({ params }: LoaderFunctionArgs) => {
         const LoggedUserId = JSON.parse(localStorage.getItem('user')!).user.id
-        console.log({LoggedUserId});
-        
+        console.log({ LoggedUserId });
+
         const response = await fetch.get('/api/users/' + LoggedUserId)
         if (response.status !== 200) {
             throw response;
         }
         const users = response.data
         return users
-    }
+    },
+    updateAccount: async ({ request, params }: ActionFunctionArgs) => {
+        const LoggedUserId = JSON.parse(localStorage.getItem('user')!).user.id
+        const data = await request.formData()
+        const sumbitData: Partial<User> & { password?: string, password_confirmation?: string, current_password?: string} = {
+            email: data.get('email')!.toString(),
+            password: data.get('password')!.toString(),
+            password_confirmation: data.get('password_confirmation')?.toString(),
+            current_password: data.get('current_password')?.toString()
+        }
+        const response = await fetch.put('/api/users/' + LoggedUserId, sumbitData)
+        if (response.status == 422) {
+            return response
+        }
+        if (response.status !== 200) {
+            throw response
+        }
+        toast.success('User updated!')
+        return sumbitData
+    },
 
 
 

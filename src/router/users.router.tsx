@@ -20,7 +20,7 @@ const UsersRouter: RouteObject = {
             path: 'account',
             element: <EditUserAccount />,
             loader: UsersActions.getUser ,
-            action: UsersActions.update
+            action: UsersActions.updateAccount
             // index: true
             
         },

@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { Form, useParams } from "react-router-dom";
 import Staff from "../../Interfaces/staff.interface";
 import User from "../../Interfaces/user.interface";
+import { useAuth } from "../../Utils/UseAuth";
 import { useFetch } from "../../Utils/useFecth";
 import PrimaryButton from "../utils/PrimaryButton";
 import SelectInput from "../utils/SelectInput";
@@ -11,6 +12,7 @@ interface UserFormProps {
 }
 function UserForm(props?: UserFormProps) {
     const { t } = useTranslation()
+    const { auth } = useAuth()
     const fetch = useFetch()
     const roleOptions = [
         { value: '', label: 'Selecciona un elemento de la lista' },
@@ -30,6 +32,9 @@ function UserForm(props?: UserFormProps) {
         email: '',
         role: '',
     });
+    const [password, setPassword] = useState<string | null>(null)
+    const [passwordConfirmation, setPasswordConfirmation] = useState<string | null>(null)
+    const [currentPassword, setCurrentPassword] = useState<string | null>(null)
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = event.target;
@@ -93,40 +98,79 @@ function UserForm(props?: UserFormProps) {
                         required
                     />
                 </div>
-                {/* <div className="flex flex-col mb-4">
-                    <label htmlFor="role" className="mb-2 font-bold">
-                        Password
-                    </label>
-                    <input
-                        type="text"
-                        name="role"
-                        id="role"
-                        value={newUser.role}
-                        onChange={handleInputChange}
-                        className="border border-gray-400 p-2"
-                        required
-                    />
-                </div> */}
-                <div className="flex flex-col mb-4">
-                    <label htmlFor="role" className="mb-2 font-bold">
-                        {t('role')}
-                    </label>
-                    <SelectInput options={roleOptions} onChange={handleRoleInputChange} value={newUser.role} name='role' />
-                </div>
 
-                {(newUser.role == '1' || newUser.role == '2')  && <div className="flex flex-col mb-4">
+                {newUser.id == auth.user.id ?
+                    <div className="flex flex-col mb-4">
+                        <label htmlFor="current_password" className="mb-2 font-bold">
+                            Password
+                        </label>
+                        <input
+                            type="password"
+                            name="current_password"
+                            id="current_password"
+                            value={currentPassword!}
+                            onChange={(e) => setCurrentPassword(e.target.value)}
+                            className="border border-gray-400 p-2"
+                        />
+                    </div>
+                    : null
+                }
+                {newUser.id == auth.user.id ?
+                    <div className="flex flex-col mb-4">
+                        <label htmlFor="password" className="mb-2 font-bold">
+                            New Password
+                        </label>
+                        <input
+                            type="password"
+                            name="password"
+                            id="password"
+                            value={password!}
+                            onChange={(e) => setPassword(e.target.value)}
+                            className="border border-gray-400 p-2"
+                        />
+                    </div>
+                    : null
+                }
+                {newUser.id == auth.user.id ?
+                    <div className="flex flex-col mb-4">
+                        <label htmlFor="password_confirmation" className="mb-2 font-bold">
+                            Confirm Password
+                        </label>
+                        <input
+                            type="password"
+                            name="password_confirmation"
+                            id="password_confirmation"
+                            value={passwordConfirmation!}
+                            onChange={(e) => setPasswordConfirmation(e.target.value)}
+                            className="border border-gray-400 p-2"
+                        />
+                    </div>
+                    : null
+                }
+                {auth.user.id == newUser.id ? <input type="hidden" name="role" value={newUser.role} /> :
+                    <div className="flex flex-col mb-4">
+                        <label htmlFor="role" className="mb-2 font-bold">
+                            {t('role')}
+                        </label>
+                        <SelectInput options={roleOptions} onChange={handleRoleInputChange} value={newUser.role} name='role' />
+                    </div>
+                }
+
+
+                {(newUser.role == '1' || newUser.role == '2') && newUser.id != auth.user.id && <div className="flex flex-col mb-4">
                     <label htmlFor="new-account" className="mb-2 font-bold">
                         {t('new-profile')}
                     </label>
                     <input type="checkbox" name="new-account" id="new-account" checked={createAccount} onChange={() => setCreateAccount(!createAccount)} />
                 </div>}
 
-                {(newUser.role == '1' || newUser.role == '2') && !createAccount && <div className="flex flex-col mb-4">
+                {(newUser.role == '1' || newUser.role == '2') && !createAccount && newUser.id != auth.user.id ? <div className="flex flex-col mb-4">
                     <label htmlFor="staff_id" className="mb-2 font-bold">
                         {t('staff_id')}
                     </label>
                     <SelectInput options={staffOptions} onChange={handleStaffIdInputChange} value={newUser.staff_id?.toString()!} name='staff_id' />
-                </div>
+                </div> :
+                    <input type="hidden" name="staff_id" value={newUser.staff_id} />
                 }
 
                 <PrimaryButton type="submit" onClick={() => console.log('submit')}>
