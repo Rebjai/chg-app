@@ -36,7 +36,7 @@ function IndexConsumptionSheet() {
         }}>
             {t('create')} {t('consumption_sheet')}
         </PrimaryButton>
-        {t('list_of')} {t('consumption_sheets')}
+        <h2 className="text-xl font-bold py-3 mt-5">{t('list_of')} {t('consumption_sheets')}</h2>
         {consumptionSheets.map(consumptionSheet => <ConsumptionSheetCard consumptionSheet={consumptionSheet} key={consumptionSheet.id}></ConsumptionSheetCard>)}
     </>);
 }
