@@ -19,7 +19,7 @@ function ConsumptionSheetDetailsPage() {
         <div className="my-5">
             <ConsumptionSheetDetailForm consumptionSheetId={parseInt(consumptionSheetId!)} />
         </div>
-        <div className="my-5">
+        <div className="my-5 max-w-full">
 
             <h1 className="font-bold text-3xl m-2">
                 {t('consumption_details')}

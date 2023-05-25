@@ -10,7 +10,7 @@ function Login() {
       <div className="flex flex-col text-center items-center">
 
         <div className='flex justify-center'>
-          <a href="https://vitejs.dev" className='flex flex-col items-center' target="_blank">
+          <a href="https://clinicahospitalguadalupe.com" className='flex flex-col items-center' target="_blank">
             <img src={chgLogo} className="max-w-xs w-8/12" alt="CHG APP logo" />
             <h1 className='text-2xl font-bold text-purple-700'>CHG<br /> App</h1>
           </a>

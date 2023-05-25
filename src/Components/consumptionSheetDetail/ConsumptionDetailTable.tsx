@@ -27,7 +27,7 @@ function ConsumptionDetailTable({ consumptionDetails }: ConsumptionDetailTablePr
 
 
     return (
-        <div className="bg-green-100 rounded p-5">
+        <div className="bg-green-100 rounded p-5 max-w-full overflow-x-auto">
             <table className="min-w-full border-spacing-5">
                 <thead>
                     <tr className="">
