@@ -35,7 +35,7 @@ function ConsumptionDetailTable({ consumptionDetails }: ConsumptionDetailTablePr
                         <th className="px-3">Product</th>
                         <th className="px-3">quantity</th>
                         {auth.user.role == "1" ? null : <th className="px-3">price</th>}
-                        {auth.user.role == "1" ? null : <th className="px-3 max-w-min">Actions</th>}
+                        <th className="px-3 max-w-min">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -64,26 +64,28 @@ function ConsumptionDetailTable({ consumptionDetails }: ConsumptionDetailTablePr
                                     disabled={enabledInputsIndex !== index}
                                 />
                             }</td>}
-                            {auth.user.role == '1' ? null :
-                                <td className="">
-                                    <div className="flex">
-                                        {enabledInputsIndex === index ?
-                                            <fetcher.Form method="post" action={"/consumption-sheet-details/" + detail.id} className="flex m-auto justify-center" onSubmit={() => setEnabledInputsIndex(-1)}>
-                                                <input type="hidden" name="consumption_sheet_id" value={detail.consumption_sheet_id} />
-                                                <input type="hidden" name="product_id" value={detail.product_id} />
-                                                <input type="hidden" name="staff_id" value={detail.staff_id} />
-                                                <input type="hidden" name="user_id" value={detail.user_id} />
-                                                <input type="hidden" name="quantity" value={updatedQuantity} />
-                                                <input type="hidden" name="total" value={updatedTotal} />
-                                                <button type="submit" className="inline-block max-w-[100px] w-6/12">
-                                                    <img src={editIcon} alt={t('update')!} />
-                                                </button>
-                                            </fetcher.Form> :
-                                            <fetcher.Form method="delete" action={"/consumption-sheet-details/" + detail.id} className="flex m-auto justify-center">
-                                                <button type="submit" className="inline-block max-w-[100px] w-6/12">
-                                                    <img src={deleteIcon} alt={t('delete')!} />
-                                                </button>
-                                            </fetcher.Form>}
+                            <td className="">
+
+                                <div className="flex">
+                                    {enabledInputsIndex === index ?
+                                        <fetcher.Form method="post" action={"/consumption-sheet-details/" + detail.id} className="flex m-auto justify-center" onSubmit={() => setEnabledInputsIndex(-1)}>
+                                            <input type="hidden" name="consumption_sheet_id" value={detail.consumption_sheet_id} />
+                                            <input type="hidden" name="product_id" value={detail.product_id} />
+                                            <input type="hidden" name="staff_id" value={detail.staff_id} />
+                                            <input type="hidden" name="user_id" value={detail.user_id} />
+                                            <input type="hidden" name="quantity" value={updatedQuantity} />
+                                            <input type="hidden" name="total" value={updatedTotal} />
+                                            <button type="submit" className="inline-block max-w-[100px] w-6/12">
+                                                <img src={editIcon} alt={t('update')!} />
+                                            </button>
+                                        </fetcher.Form> :
+                                        <fetcher.Form method="delete" action={"/consumption-sheet-details/" + detail.id} className="flex m-auto justify-center">
+                                            <button type="submit" className="inline-block max-w-[100px] w-6/12">
+                                                <img src={deleteIcon} alt={t('delete')!} />
+                                            </button>
+                                        </fetcher.Form>}
+
+                                    {auth.user.role != '1' &&
 
 
                                         <div className="flex m-auto justify-center">
@@ -95,8 +97,10 @@ function ConsumptionDetailTable({ consumptionDetails }: ConsumptionDetailTablePr
                                                 )}
                                             </button>
                                         </div>
-                                    </div>
-                                </td>}
+                                    }
+                                </div>
+
+                            </td>
                         </tr>)
                     ) : (<tr>
                         <td colSpan={4} className="text-center">No data found</td>
