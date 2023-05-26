@@ -4,12 +4,14 @@ import { Link, useFetcher, useNavigate } from "react-router-dom";
 import deleteIcon from "../../assets/delete-icon.svg";
 import editIcon from "../../assets/edit-icon.svg";
 import Patient from "../../Interfaces/patient.interface";
+import { useAuth } from "../../Utils/UseAuth";
 interface PatientCardProps {
     patient: Patient
 }
 
 function PatientCard({ patient }: PatientCardProps) {
-    const {t} =useTranslation()
+    const { t } = useTranslation()
+    const { auth } = useAuth()
     const fetcher = useFetcher()
     const getStatusText = (status: number): string => {
         if (status == 0) {
@@ -23,7 +25,7 @@ function PatientCard({ patient }: PatientCardProps) {
         }
         return 'n/a'
     }
-    
+
     return (
         <div className="card rounded min-w-[200px] bg-cyan-200 my-2 p-3 drop-shadow-lg w-10/12">
             <h1 className="font-bold text-lg tracking-wider">{`${patient.name} ${patient.first_surname} ${patient.second_surname}`}</h1>
@@ -31,18 +33,21 @@ function PatientCard({ patient }: PatientCardProps) {
                 <span className="inline-block rounded-full w-[20px] h-[20px] bg-green-400 max-w-[100px] mt-2 mx-2 mb-0">
                 </span>
                 <p className="italic font-light">
-                    {getStatusText(patient.active! )}
+                    {getStatusText(patient.active!)}
                 </p>
             </div>
             <div className="actions flex justify-end w-full ">
-                <Link className="max-w-[100px] w-1/12 mx-3" to={''+patient.id} >
-                    <img src={editIcon} alt=""  />
+                <Link className="max-w-[100px] w-1/12 mx-3" to={'' + patient.id} >
+                    <img src={editIcon} alt="" />
                 </Link>
-                <fetcher.Form method="delete" action={"/patients/" + patient.id} className="max-w-[100px] w-1/12 mx-3">
-                    <button type="submit" className="max-w-[100px] w-full mx-3">
-                        <img src={deleteIcon} alt={t('delete')!} /> 
-                    </button>
-                </fetcher.Form>
+                {
+                    auth.user.role != '1' &&
+                    <fetcher.Form method="delete" action={"/patients/" + patient.id} className="max-w-[100px] w-1/12 mx-3">
+                        <button type="submit" className="max-w-[100px] w-full mx-3">
+                            <img src={deleteIcon} alt={t('delete')!} />
+                        </button>
+                    </fetcher.Form>
+                }
             </div>
 
         </div>);
