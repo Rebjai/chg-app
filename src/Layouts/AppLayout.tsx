@@ -1,9 +1,11 @@
 import { Suspense } from "react";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigation } from "react-router-dom";
 import chgLogo from '../assets/chg-app.svg'
 
-const pageTitle = location.pathname.slice(1);
 function AppLayout() {
+    const pageTitle = location.pathname.slice(1);
+    const navigation = useNavigation()
+    
     return (
         <div className="App">
             <header className="flex justify-center items-center gap-5">
