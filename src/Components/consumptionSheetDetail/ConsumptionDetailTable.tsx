@@ -31,11 +31,11 @@ function ConsumptionDetailTable({ consumptionDetails }: ConsumptionDetailTablePr
             <table className="min-w-full border-spacing-5">
                 <thead>
                     <tr className="">
-                        <th className="px-3">Date</th>
-                        <th className="px-3">Product</th>
-                        <th className="px-3">quantity</th>
-                        {auth.user.role == "1" ? null : <th className="px-3">price</th>}
-                        <th className="px-3 max-w-min">Actions</th>
+                        <th className="px-3">{t('date')}</th>
+                        <th className="px-3">{t('product')}</th>
+                        <th className="px-3">{t('quantity')}</th>
+                        {auth.user.role == "1" ? null : <th className="px-3">{t('price')}</th>}
+                        <th className="px-3 max-w-min">{t('actions')}</th>
                     </tr>
                 </thead>
                 <tbody>
