@@ -20,7 +20,7 @@ function ConsumptionSheetForm(props?: ConsumptionSheetFormProps) {
     const fetch = useFetch()
     const navigate = useNavigate()
     useEffect(() => {
-        fetch.get('/api/rooms?status=1').then(res => {
+        fetch.get('/api/rooms?status=1&include='+props?.consumptionSheet?.room_id).then(res => {
             return setRoomOptions(
                 res.data.items.map((el: Room) => ({ value: el.id, label: el.name })))
         })
