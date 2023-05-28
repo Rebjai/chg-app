@@ -22,11 +22,18 @@ function RoomForm(props: RoomFormProps) {
         { value: 2, label: 'Maintenance' },
         { value: 3, label: 'n/a' },
     ]
-
+    const areaOptions = [
+        { value: '', label: 'Selecciona un elemento de la lista' },
+        { value: 1, label: 'Main Floor'},
+        { value: 2, label: 'QX' },
+        { value: 3, label: 'Hospitalization'},
+        { value: 4, label: 'n/a' },
+    ]
     const [roomData, setRoomData] = useState<Room>(props.room? props.room :{
         name: '',
         type: 0,
         status: 1,
+        area_id: 1,
     });
     
 
@@ -35,6 +42,12 @@ function RoomForm(props: RoomFormProps) {
         setRoomData((prevNewRoom) => ({ ...prevNewRoom, [name]: value }));
     };
     const handleTypeInputChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        const { name, value } = event.target;
+        setRoomData((prevNewRoom) => {
+            return { ...prevNewRoom, [name]: value }
+        })
+    };
+    const handleAreaInputChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         const { name, value } = event.target;
         setRoomData((prevNewRoom) => {
             return { ...prevNewRoom, [name]: value }
@@ -66,6 +79,12 @@ function RoomForm(props: RoomFormProps) {
                         className="border border-gray-400 p-2"
                         required
                     />
+                </div>
+                <div className="flex flex-col mb-4">
+                    <label htmlFor="type" className="mb-2 font-bold">
+                    {t('area')}
+                    </label>
+                    <SelectInput options={areaOptions} onChange={handleAreaInputChange} value={roomData.area_id as unknown as string} name='area_id' />
                 </div>
                 <div className="flex flex-col mb-4">
                     <label htmlFor="type" className="mb-2 font-bold">

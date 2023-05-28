@@ -3,4 +3,5 @@ export default interface Room {
     name: string,
     type: number,
     status: number,
+    area_id: number,
 }

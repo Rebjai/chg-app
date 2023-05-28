@@ -11,6 +11,7 @@ const RoomsActions = {
             name: data.get('name')!.toString(),
             status: parseInt(data.get('status')!.toString()),
             type: parseInt(data.get('status')!.toString()),
+            area_id: parseInt(data.get('area_id')!.toString()),
         }
         const response = await fetch.post('/api/rooms', sumbitData)
         if (response.status == 422) {
@@ -26,6 +27,7 @@ const RoomsActions = {
             name: data.get('name')!.toString(),
             status: parseInt(data.get('status')!.toString()),
             type: parseInt(data.get('type')!.toString()),
+            area_id: parseInt(data.get('area_id')!.toString()),
         }
         console.log({sumbitData});
         const response = await fetch.put('/api/rooms/'+params.id, sumbitData)
