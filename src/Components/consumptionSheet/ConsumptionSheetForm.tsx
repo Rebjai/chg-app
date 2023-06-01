@@ -20,15 +20,27 @@ function ConsumptionSheetForm(props?: ConsumptionSheetFormProps) {
     const fetch = useFetch()
     const navigate = useNavigate()
     useEffect(() => {
-        fetch.get('/api/rooms?status=1&include='+props?.consumptionSheet?.room_id).then(res => {
-            return setRoomOptions(
-                res.data.items.map((el: Room) => ({ value: el.id, label: el.name })))
-        })
-        if (props?.consumptionSheet?.id) {
-            return setPatientOptions([{value: props.consumptionSheet.patient_id, label: `${props.consumptionSheet.patient?.name!} ${props.consumptionSheet.patient?.first_surname!} ${props.consumptionSheet.patient?.second_surname!}`}])
+        if (!props?.consumptionSheet?.id) {
+
+            fetch.get('/api/rooms?status=1').then(
+                res => {
+                    return setRoomOptions(
+                        res.data.items.map((el: Room) => ({ value: el.id, label: el.name })))
+                }
+            )
+
         }
-        fetch.get('/api/patients?with_consumption=false').then(res => setPatientOptions(!res.data.length? [{value: '', label: 'No se encontraron pacientes sin hoja de consumo'}]:res.data.map((el: Patient) => ({ value: el.id, label: `${el.name} ${el.first_surname} ${el.second_surname}` }))))
-        
+        if (props?.consumptionSheet?.id) {
+            fetch.get('/api/rooms?status=1&include=' + props?.consumptionSheet?.room_id).then(
+                res => {
+                    return setRoomOptions(
+                        res.data.items.map((el: Room) => ({ value: el.id, label: el.name })))
+                }
+            )
+            return setPatientOptions([{ value: props.consumptionSheet.patient_id, label: `${props.consumptionSheet.patient?.name!} ${props.consumptionSheet.patient?.first_surname!} ${props.consumptionSheet.patient?.second_surname!}` }])
+        }
+        fetch.get('/api/patients?with_consumption=false').then(res => setPatientOptions(!res.data.length ? [{ value: '', label: 'No se encontraron pacientes sin hoja de consumo' }] : res.data.map((el: Patient) => ({ value: el.id, label: `${el.name} ${el.first_surname} ${el.second_surname}` }))))
+
     }, [])
     console.log({ rooms: props?.roomOptions });
     const [patientOptions, setPatientOptions] = useState(props?.roomOptions ?? [
@@ -37,9 +49,7 @@ function ConsumptionSheetForm(props?: ConsumptionSheetFormProps) {
     ])
     const [roomOptions, setRoomOptions] = useState(props?.roomOptions ?? [
         { value: '', label: 'Selecciona un elemento de la lista' },
-        { value: 1, label: '201' },
-        { value: 2, label: 'ER' },
-        { value: 3, label: 'n/a' },
+        { value: 0, label: 'Espera mientras se obtienen los resultados' },
     ])
     const createConsumptionSheet = !!!props?.consumptionSheet?.id
 
