@@ -42,7 +42,7 @@ function ConsumptionDetailTable({ consumptionDetails }: ConsumptionDetailTablePr
                     {consumptionDetails?.length ? consumptionDetails.map((detail, index) => (
                         <tr key={detail.id}>
                             <td className="px-2">{detail.created_at?.toLocaleString()}</td>
-                            <td className="px-2">{detail.product?.name}</td>
+                            <td className="px-2">{detail.product?.name}{auth.user.role != '1' ? ' - ' + detail.product?.category?.code : ''}</td>
                             <td className="px-2">
                                 <input
                                     name="quantity"
