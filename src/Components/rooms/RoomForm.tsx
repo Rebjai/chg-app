@@ -1,13 +1,16 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Form, useLocation, useParams } from "react-router-dom";
 import Room from "../../Interfaces/room.interface";
+import SelectOption from "../../Interfaces/select-option.interface";
+import { useFetch } from "../../Utils/useFecth";
 import PrimaryButton from "../utils/PrimaryButton";
 import SelectInput from "../utils/SelectInput";
 interface RoomFormProps {
     room?: Room
 }
 function RoomForm(props: RoomFormProps) {
+    const fetch = useFetch()
     const {t} = useTranslation()
     const typeOptions = [
         { value: '', label: 'Selecciona un elemento de la lista' },
@@ -22,13 +25,9 @@ function RoomForm(props: RoomFormProps) {
         { value: 2, label: 'Maintenance' },
         { value: 3, label: 'n/a' },
     ]
-    const areaOptions = [
-        { value: '', label: 'Selecciona un elemento de la lista' },
-        { value: 1, label: 'Main Floor'},
-        { value: 2, label: 'QX' },
-        { value: 3, label: 'Hospitalization'},
-        { value: 4, label: 'n/a' },
-    ]
+    const [areaOptions, setAreaOptions] = useState<SelectOption[]>([
+        { value: '', label: 'Obteniendo elementos' },
+    ])
     const [roomData, setRoomData] = useState<Room>(props.room? props.room :{
         name: '',
         type: 0,
@@ -61,6 +60,16 @@ function RoomForm(props: RoomFormProps) {
         }
         console.log('New room:', roomData);
     };
+    useEffect(() => {
+        fetch.get('/api/areas').then(v => {
+            if (v.data.items.length) {
+                setAreaOptions([{value: '', label: 'Seleccione una opción...'}].concat(v.data.items.map((el: any) => ({ value: el.id, label: `${el.name}` }))))
+            }
+            else{
+                setAreaOptions([{value: '', label: 'No se encontraron áreas...'}])
+            }
+        })
+    }, [null])
 
     return (
         <div className="container mx-auto">
@@ -81,7 +90,7 @@ function RoomForm(props: RoomFormProps) {
                     />
                 </div>
                 <div className="flex flex-col mb-4">
-                    <label htmlFor="type" className="mb-2 font-bold">
+                    <label htmlFor="area_id" className="mb-2 font-bold">
                     {t('area')}
                     </label>
                     <SelectInput options={areaOptions} onChange={handleAreaInputChange} value={roomData.area_id as unknown as string} name='area_id' />
@@ -93,7 +102,7 @@ function RoomForm(props: RoomFormProps) {
                     <SelectInput options={typeOptions} onChange={handleTypeInputChange} value={roomData.type as unknown as string} name='type' />
                 </div>
                 <div className="flex flex-col mb-4">
-                    <label htmlFor="type" className="mb-2 font-bold">
+                    <label htmlFor="status" className="mb-2 font-bold">
                     {t('status')}
                     </label>
                     <SelectInput options={statusOptions} onChange={handleTypeInputChange} value={roomData.status as unknown as string} name='status' />

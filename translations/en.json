@@ -50,5 +50,7 @@
     "logout": "Logout",
     "profile": "Profile",
     "account": "Account",
-    "actions": "Actions"
+    "actions": "Actions",
+    "areas": "Areas",
+    "area": "Area"
 }

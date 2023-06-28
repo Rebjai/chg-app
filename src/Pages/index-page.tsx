@@ -51,6 +51,15 @@ function IndexPage() {
                 </li>
                 {auth.user.role == '1' ? null : <>
                     <li>
+                        <NavLink to={'areas'}>
+                            {({ isActive, isPending }) => (
+                                <button className={(isPending ? "bg-cyan-700 text-slate-200" : isActive ? "bg-cyan-500 text-slate-200" : "bg-cyan-400 text-slate-600") + " rounded p-3 drop-shadow-md font-bold tracking-widest"}>
+                                    {t('areas')}
+                                </button>
+                            )}
+                        </NavLink>
+                    </li>
+                    <li>
                         <NavLink to={'rooms'}>
                             {({ isActive, isPending }) => (
                                 <button className={(isPending ? "bg-cyan-700 text-slate-200" : isActive ? "bg-cyan-500 text-slate-200" : "bg-cyan-400 text-slate-600") + " rounded p-3 drop-shadow-md font-bold tracking-widest"}>

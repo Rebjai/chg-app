@@ -50,5 +50,7 @@
    "logout": "Salir",
    "profile": "Perfil",
    "account": "Cuenta",
-   "actions": "Acciones"
+   "actions": "Acciones",
+   "areas": "Áreas",
+   "area": "Área"
 }

@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { Form, useParams } from "react-router-dom";
 import ConsumptionSheet from "../../Interfaces/consumptionSheet.interface";
 import ConsumptionSheetDetail from "../../Interfaces/consumptionSheetDetail.interface";
+import SelectOption from "../../Interfaces/select-option.interface";
 import { useAuth } from "../../Utils/UseAuth";
 import { useDebounce } from "../../Utils/UseDebounce";
 import { useFetch } from "../../Utils/useFecth";
@@ -11,11 +12,6 @@ import SelectInput from "../utils/SelectInput";
 interface ConsumptionSheetDetailFormProps {
     consumptionSheetDetail?: ConsumptionSheetDetail,
     consumptionSheetId?: number
-}
-interface SelectOption {
-    value: string | number,
-    label: string,
-
 }
 
 function ConsumptionSheetDetailForm(props?: ConsumptionSheetDetailFormProps) {

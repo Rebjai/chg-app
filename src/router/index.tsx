@@ -6,6 +6,7 @@ import AuthProvider from "../Pages/Auth/AuthProvider";
 import ErrorPage from "../Pages/error-page";
 import IndexPage from "../Pages/index-page";
 import AuthRouter from "./auth.router";
+import AreasRouter from "./areas.router";
 import ConsumptionSheetDetailRouter from "./consumptionSheetDetails.router";
 import ConsumptionSheetRouter from "./consumptionSheets.router";
 import PatientRouter from "./patients.router";
@@ -26,6 +27,7 @@ const router = createBrowserRouter(
             errorElement: <ErrorPage />,
             children: [
               { path: '', element: <IndexPage /> },
+              { path: 'areas', children: [AreasRouter] },
               { path: 'rooms', children: [RoomRouter] },
               { path: 'patients', children: [PatientRouter] },
               { path: 'products', children: [ProductRouter] },
