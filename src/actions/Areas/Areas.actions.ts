@@ -19,6 +19,17 @@ const AreasActions = {
 
     },
     update: async ({ request, params }: ActionFunctionArgs) => {
+        if (request.method == 'DELETE') {
+            if (!confirm('Eliminar Área?')) {
+                return {}
+            }
+            const response = await fetch.delete('/api/areas/' + params.id)
+            if (response.status !== 200) {
+                throw response
+            }
+            toast.success('Area deleted!')
+            return response
+        }
         const data = await request.formData()
         const sumbitData: Area = {
             name: data.get('name')!.toString(),

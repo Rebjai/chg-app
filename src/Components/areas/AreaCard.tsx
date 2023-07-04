@@ -1,5 +1,6 @@
 import { useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import { Link, useFetcher, useNavigate } from "react-router-dom";
 import deleteIcon from "../../assets/delete-icon.svg";
 import editIcon from "../../assets/edit-icon.svg";
 import Area from "../../Interfaces/area.interface";
@@ -11,6 +12,8 @@ function AreaCard({ area }: AreaCardProps) {
     // useEffect(() => {
         
     // })
+    const {t} = useTranslation()
+    const fetcher = useFetcher()
     const navigate = useNavigate()
     const editArea = (id: number)=>{
         console.log('edit');
@@ -25,9 +28,11 @@ function AreaCard({ area }: AreaCardProps) {
                 <Link className="max-w-[100px] w-1/12 mx-3" to={''+area.id} >
                     <img src={editIcon} alt=""  />
                 </Link>
-                <button className="max-w-[100px] w-1/12 mx-3">
-                    <img src={deleteIcon} alt=""  />
-                </button>
+                <fetcher.Form method="delete" action={"/areas/" + area.id} className="max-w-[100px] w-1/12 mx-3">
+                    <button type="submit" className="inline-block max-w-[100px] w-full">
+                        <img src={deleteIcon} alt={t('delete')!} /> 
+                    </button>
+                </fetcher.Form>
             </div>
 
         </div>);
