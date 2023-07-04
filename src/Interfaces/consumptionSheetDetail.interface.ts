@@ -1,3 +1,4 @@
+import Area from "./area.interface";
 import ConsumptionSheet from "./consumptionSheet.interface";
 import Patient from "./patient.interface";
 import Product from "./product.interface";
@@ -11,6 +12,8 @@ export default interface ConsumptionSheetDetail {
     product?: Product,
     consumption_sheet_id: number,
     consumption_sheet?: ConsumptionSheet,
+    area?: Area,
+    area_id?: number,
     user_id: number,
     user?: User,
     staff_id: number,

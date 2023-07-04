@@ -41,6 +41,7 @@ const ConsumptionSheetDetailsActions = {
             product_id: parseInt(data.get('product_id')!.toString()),
             staff_id: parseInt(data.get('staff_id')?.toString()??'0'),
             user_id: parseInt(data.get('user_id')?.toString()??'0'),
+            area_id: data.get('area_id')?parseInt(data.get('area_id')?.toString()!):undefined,
             consumption_sheet_id: parseInt(data.get('consumption_sheet_id')!.toString())
         }
         console.log({ sumbitData });
@@ -68,6 +69,7 @@ const ConsumptionSheetDetailsActions = {
             product_id: parseInt(data.get('product_id')!.toString()),
             staff_id: parseInt(data.get('staff_id')!.toString()),
             user_id: parseInt(data.get('user_id')?.toString()??'0'),
+            area_id: data.get('area_id')?parseInt(data.get('area_id')?.toString()!):undefined,
             consumption_sheet_id: parseInt(data.get('consumption_sheet_id')!.toString())
         }
         console.log({ sumbitData });
