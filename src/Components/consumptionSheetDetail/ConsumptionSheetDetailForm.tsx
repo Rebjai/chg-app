@@ -84,7 +84,7 @@ function ConsumptionSheetDetailForm(props?: ConsumptionSheetDetailFormProps) {
             fetch.get('/api/consumption-sheets').then(v => {
                 setConsumptionSheetOptions(v.data.map((el: ConsumptionSheet) => ({ value: el.id, label: `${el.admission_date} - ${el.id}` })))
             })
-            setConsumptionSheetOptions([{value: props?.consumptionSheetId!, label: ''}])
+        setConsumptionSheetOptions([{ value: props?.consumptionSheetId!, label: '' }])
     }, [null])
     useEffect(() => {
         fetch.get('/api/products').then(v => {
@@ -92,14 +92,14 @@ function ConsumptionSheetDetailForm(props?: ConsumptionSheetDetailFormProps) {
         })
         fetch.get('/api/areas').then(v => {
             if (v.data.items.length) {
-                setAreaOptions([{value: '', label: 'Seleccione una opción...'}].concat(v.data.items.map((el: any) => ({ value: el.id, label: `${el.name}` }))))
+                setAreaOptions([{ value: '', label: 'Seleccione una opción...' }].concat(v.data.items.map((el: any) => ({ value: el.id, label: `${el.name}` }))))
             }
-            else{
-                setAreaOptions([{value: '', label: 'No se encontraron áreas...'}])
+            else {
+                setAreaOptions([{ value: '', label: 'No se encontraron áreas...' }])
             }
         })
     }, [null])
-    
+
 
     return (
         <div className="container mx-auto">
@@ -112,7 +112,7 @@ function ConsumptionSheetDetailForm(props?: ConsumptionSheetDetailFormProps) {
                     <label htmlFor="consumption_sheet_id" className="mb-2 font-bold">
                         {t('Consumption Sheet')}
                     </label>
-                    <SelectInput options={consumptionSheetOptions} hidden={!props?.consumptionSheetId} onChange={handleTypeInputChange} value={props?.consumptionSheetId?.toString()!} name='consumption_sheet_id'/>
+                    <SelectInput options={consumptionSheetOptions} hidden={!props?.consumptionSheetId} onChange={handleTypeInputChange} value={props?.consumptionSheetId?.toString()!} name='consumption_sheet_id' />
                 </div>
                 <div className={(auth.user.role == '1' ? 'hidden ' : '') + "flex flex-col mb-4"}>
                     <label htmlFor="staff_id" className="mb-2 font-bold" hidden={auth.user.role == '1'}>
@@ -124,7 +124,7 @@ function ConsumptionSheetDetailForm(props?: ConsumptionSheetDetailFormProps) {
                     <label htmlFor="product_id" className="mb-2 font-bold">
                         {t('product')}
                     </label>
-                    <input className="m-5 p-3 text-center" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} onKeyDown={(e)=> e.key == 'Enter'? e.preventDefault(): e} type="text" name="seach" id="search" placeholder={t('search') ?? 'search'} />
+                    <input className="m-5 p-3 text-center" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} onKeyDown={(e) => e.key == 'Enter' ? e.preventDefault() : e} type="text" name="seach" id="search" placeholder={t('search') ?? 'search'} />
                     <SelectInput options={productOptions} onChange={handleTypeInputChange} value={newConsumptionSheetDetail.product_id.toString()} name='product_id' />
                 </div>
                 <div className="flex flex-col mb-4">
@@ -142,12 +142,14 @@ function ConsumptionSheetDetailForm(props?: ConsumptionSheetDetailFormProps) {
                         required
                     />
                 </div>
-                <div className="flex flex-col mb-4">
-                    <label htmlFor="area_id" className="mb-2 font-bold">
-                    {t('area')}
-                    </label>
-                    <SelectInput options={areaOptions} onChange={handleTypeInputChange} value={(newConsumptionSheetDetail.area_id?.toString()??'1')} name='area_id' required/>
-                </div>
+                {areaOptions.length > 1 &&
+                    <div className="flex flex-col mb-4">
+                        <label htmlFor="area_id" className="mb-2 font-bold">
+                            {t('area')}
+                        </label>
+                        <SelectInput options={areaOptions} onChange={handleTypeInputChange} value={(newConsumptionSheetDetail.area_id?.toString() ?? '1')} name='area_id' required />
+                    </div>
+                }
                 {/* <div className="flex flex-col mb-4">
                     <label htmlFor="total" className="mb-2 font-bold">
                         total
