@@ -30,7 +30,7 @@ const LoginForm = () => {
 
   return (
     <Form
-      className="bg-white p-6 rounded-lg shadow-xl"
+      className="p-6 rounded-lg"
       method='post'
       onSubmit={handleSubmit}
     >

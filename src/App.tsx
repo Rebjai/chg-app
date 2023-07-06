@@ -7,7 +7,7 @@ function App() {
   const [count, setCount] = useState(0)
 
   return (
-    <div className="App">
+    <div className="App w-full h-full">
       <div className="flex flex-col text-center items-center">
 
         <div className='flex justify-center'>
