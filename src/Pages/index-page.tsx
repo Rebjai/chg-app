@@ -16,7 +16,7 @@ function IndexPage() {
         navigate('/')
     }
     const handleNavState = ({ isActive, isPending }: NavState) => {
-        return (isPending ? "bg-cyan-300" : isActive ? "bg-cyan-500" : "bg-cyan-400") + "bg-cyan-400 rounded py-3 px-4 drop-shadow-md text-slate-600 font-bold tracking-widest w-full"
+        return (isPending ? "bg-violet-300" : isActive ? "bg-violet-500" : "bg-green-600") + " rounded py-3 px-4 drop-shadow-md text-slate-200 font-bold tracking-widest w-full hover:bg-green-400"
     }
     return (
         <>
@@ -24,7 +24,7 @@ function IndexPage() {
                 <li>
                     <NavLink to={'consumption-sheets'}>
                         {({ isActive, isPending }) => (
-                            <button className={(isPending ? "bg-cyan-700 text-slate-200" : isActive ? "bg-cyan-500 text-slate-200" : "bg-cyan-400 text-slate-600") + " rounded py-3 px-4 drop-shadow-md font-bold tracking-widest w-full"}>
+                            <button className={handleNavState({isActive, isPending})}>
                                 {t('consumption_sheets')}
                             </button>
                         )}
@@ -34,7 +34,7 @@ function IndexPage() {
                 {/* <li>
                         <NavLink to={'consumption-sheet-details'}>
                         {({ isActive, isPending }) => (
-                            <button className={(isPending ? "bg-cyan-700 text-slate-200" : isActive ? "bg-cyan-500 text-slate-200" : "bg-cyan-400 text-slate-600") + " rounded py-3 px-4 drop-shadow-md font-bold tracking-widest w-full"}>
+                            <button className={(isPending ? "bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-slate-200" : isActive ? "bg-violet-500 text-slate-200" : "bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-slate-200") + " rounded py-3 px-4 drop-shadow-md font-bold tracking-widest w-full"}>
                             {t('consumption_details')}
                             </button>
                             )}
@@ -43,7 +43,7 @@ function IndexPage() {
                 <li>
                     <NavLink to={'patients'}>
                         {({ isActive, isPending }) => (
-                            <button className={(isPending ? "bg-cyan-700 text-slate-200" : isActive ? "bg-cyan-500 text-slate-200" : "bg-cyan-400 text-slate-600") + " rounded py-3 px-4 drop-shadow-md font-bold tracking-widest w-full"}>
+                            <button className={handleNavState({isActive, isPending})}>
                                 {t('patients')}
                             </button>
                         )}
@@ -53,7 +53,7 @@ function IndexPage() {
                     <li>
                         <NavLink to={'areas'}>
                             {({ isActive, isPending }) => (
-                                <button className={(isPending ? "bg-cyan-700 text-slate-200" : isActive ? "bg-cyan-500 text-slate-200" : "bg-cyan-400 text-slate-600") + " rounded py-3 px-4 drop-shadow-md font-bold tracking-widest w-full"}>
+                                <button className={handleNavState({isActive, isPending})}>
                                     {t('areas')}
                                 </button>
                             )}
@@ -62,7 +62,7 @@ function IndexPage() {
                     <li>
                         <NavLink to={'rooms'}>
                             {({ isActive, isPending }) => (
-                                <button className={(isPending ? "bg-cyan-700 text-slate-200" : isActive ? "bg-cyan-500 text-slate-200" : "bg-cyan-400 text-slate-600") + " rounded py-3 px-4 drop-shadow-md font-bold tracking-widest w-full"}>
+                                <button className={handleNavState({isActive, isPending})}>
                                     {t('rooms')}
                                 </button>
                             )}
@@ -71,7 +71,7 @@ function IndexPage() {
                     <li>
                         <NavLink to={'products'}>
                             {({ isActive, isPending }) => (
-                                <button className={(isPending ? "bg-cyan-700 text-slate-200" : isActive ? "bg-cyan-500 text-slate-200" : "bg-cyan-400 text-slate-600") + " rounded py-3 px-4 drop-shadow-md font-bold tracking-widest w-full"}>
+                                <button className={handleNavState({isActive, isPending})}>
                                     {t('products')}
                                 </button>
                             )}
@@ -80,16 +80,16 @@ function IndexPage() {
                     <li>
                         <NavLink to={'staff'}>
                             {({ isActive, isPending }) => (
-                                <button className={(isPending ? "bg-cyan-700 text-slate-200" : isActive ? "bg-cyan-500 text-slate-200" : "bg-cyan-400 text-slate-600") + " rounded py-3 px-4 drop-shadow-md font-bold tracking-widest w-full"}>
+                                <button className={handleNavState({isActive, isPending})}>
                                     {t('staff')}
                                 </button>
                             )}
                         </NavLink>
                     </li>
                     <li>
-                        <NavLink to={'users'}>
+                        <NavLink end to={'users'}>
                             {({ isActive, isPending }) => (
-                                <button className={(isPending ? "bg-cyan-700 text-slate-200" : isActive ? "bg-cyan-500 text-slate-200" : "bg-cyan-400 text-slate-600") + " rounded py-3 px-4 drop-shadow-md font-bold tracking-widest w-full"}>
+                                <button className={handleNavState({isActive, isPending})}>
                                     {t('users')}
                                 </button>
                             )}
@@ -100,7 +100,7 @@ function IndexPage() {
                     <li>
                         <NavLink to={'/auth/profile'}>
                             {({ isActive, isPending }) => (
-                                <button className={(isPending ? "bg-cyan-700 text-slate-200" : isActive ? "bg-cyan-500 text-slate-200" : "bg-cyan-400 text-slate-600") + " rounded py-3 px-4 drop-shadow-md font-bold tracking-widest w-full"}>
+                                <button className={(isPending ? "bg-cyan-400 text-slate-200" : isActive ? "bg-violet-500 text-slate-200" : "bg-cyan-500 text-slate-200") + " rounded py-3 px-4 drop-shadow-md font-bold tracking-widest w-full hover:bg-cyan-400"}>
                                     {t('profile')}
                                 </button>
                             )}
@@ -110,7 +110,7 @@ function IndexPage() {
                 <li>
                     <NavLink to={'/users/account'}>
                         {({ isActive, isPending }) => (
-                            <button className={(isPending ? "bg-cyan-700 text-slate-200" : isActive ? "bg-cyan-500 text-slate-200" : "bg-cyan-400 text-slate-600") + " rounded py-3 px-4 drop-shadow-md font-bold tracking-widest w-full"}>
+                            <button className={(isPending ? "bg-cyan-400 text-slate-200" : isActive ? "bg-violet-500 text-slate-200" : "bg-cyan-500 text-slate-200") + " rounded py-3 px-4 drop-shadow-md font-bold tracking-widest w-full hover:bg-cyan-400"}>
                                 {t('account')}
                             </button>
                         )}
@@ -118,7 +118,7 @@ function IndexPage() {
                 </li>
 
                 <li>
-                    <button className="bg-red-500 rounded py-3 px-4 drop-shadow-md text-slate-200 font-bold tracking-widest w-full" onClick={handleLogout}>
+                    <button className="bg-rose-600 hover:bg-rose-700 rounded py-3 px-4 drop-shadow-md text-slate-200 font-bold tracking-widest w-full" onClick={handleLogout}>
                         {t('logout')}
                     </button>
                 </li>
