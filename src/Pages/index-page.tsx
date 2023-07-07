@@ -16,7 +16,7 @@ function IndexPage() {
         navigate('/')
     }
     const handleNavState = ({ isActive, isPending }: NavState) => {
-        return (isPending ? "bg-violet-300" : isActive ? "bg-violet-500" : "bg-green-600") + " rounded py-3 px-4 drop-shadow-md text-slate-200 font-bold tracking-widest w-full hover:bg-green-400"
+        return (isPending ? "bg-violet-300" : isActive ? "bg-violet-500" : "bg-green-500") + " rounded py-3 px-4 drop-shadow-md text-slate-100 font-bold tracking-widest w-full hover:bg-green-400"
     }
     return (
         <>
