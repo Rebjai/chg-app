@@ -12,7 +12,7 @@ function AppLayout() {
 
                 <Link to={'/'} className="max-w-[100px] w-2/12" ><img src={chgLogo} className="w-full" alt="CHG APP logo" /></Link>
 
-                <h2 className="text-2xl font-bold text-purple-700 ml-4 mb-4">{!!pageTitle ? pageTitle : 'CHG-APP'}</h2>
+                <h2 className="text-2xl font-bold text-purple-700 mx-4 mb-6">{!!pageTitle ? pageTitle : 'CHG-APP'}</h2>
             </header>
             <Suspense fallback={<h1 className="text-center font-bold my-5">loading...</h1>}>
                 <div className="flex flex-col text-center items-center">
