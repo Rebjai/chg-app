@@ -22,7 +22,7 @@ function AreaCard({ area }: AreaCardProps) {
     }
     
     return (
-        <div className="card rounded min-w-[200px] bg-yellow-200 my-2 p-3 drop-shadow-lg w-10/12">
+                <div className="card rounded-lg min-w-[200px] border-transparent border-2 my-2 p-3 shadow-lg shadow-violet-900/70 w-10/12">
             <h1 className="font-bold text-lg tracking-wider">{area.name}</h1>
             <div className="actions flex justify-end w-full">
                 <Link className="max-w-[100px] w-1/12 mx-3" to={''+area.id} >

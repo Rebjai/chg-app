@@ -22,7 +22,7 @@ function StaffCard({ staff }: StaffCardProps) {
     }
     
     return (
-        <div className="card rounded min-w-[200px] bg-cyan-200 my-2 p-3 drop-shadow-lg w-10/12">
+                <div className="card rounded-lg min-w-[200px] border-transparent border-2 my-2 p-3 shadow-lg shadow-violet-900/70 w-10/12">
             <h1 className="font-bold text-lg tracking-wider">{`${staff.name} ${staff.first_surname} ${staff.second_surname}`}</h1>
             <div>
                 <span className="inline-block rounded-full w-[20px] h-[20px] bg-green-400 max-w-[100px] mt-2 mx-2 mb-0">

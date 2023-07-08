@@ -1,8 +1,14 @@
 @tailwind base;
+
 @tailwind components;
+
 @tailwind utilities;
 
-#root{
-    width: 100vw;
-    height: 100vh
+#root {
+  width: 100vw;
+  height: 100vh;
+}
+
+.card {
+  background: linear-gradient(white, white) padding-box, linear-gradient(to right,rgba(150, 62, 152, 1), rgba(86, 35, 87, 1)) border-box;
 }

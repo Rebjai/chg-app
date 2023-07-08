@@ -10,7 +10,7 @@ interface ConsumptionSheetDetailCardProps {
 function ConsumptionSheetDetailCard({ consumptionSheetDetail }: ConsumptionSheetDetailCardProps) {
     
     return (
-        <div className="card rounded min-w-[200px] bg-cyan-200 my-2 p-3 drop-shadow-lg w-10/12">
+                <div className="card rounded-lg min-w-[200px] border-transparent border-2 my-2 p-3 shadow-lg shadow-violet-900/70 w-10/12">
             <h1 className="font-bold text-lg tracking-wider">{`${consumptionSheetDetail.consumption_sheet?.id}`}</h1>
             <p className="text-sm traking-widest font bold">{consumptionSheetDetail.product?.name}</p>
             <p className="italic">{consumptionSheetDetail.total}</p>
