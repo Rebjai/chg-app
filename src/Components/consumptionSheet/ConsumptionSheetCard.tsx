@@ -16,7 +16,7 @@ function ConsumptionSheetCard({ consumptionSheet }: ConsumptionSheetCardProps) {
     const { t } = useTranslation()
 
     return (
-                <div className="card rounded-lg min-w-[200px] border-transparent border-2 my-4 p-3 shadow-lg shadow-violet-900/70 w-10/12">
+        <div className="card rounded-lg min-w-[200px] border-transparent border-2 my-4 p-3 shadow-lg shadow-cyan-900/50 w-10/12">
             <h1 className="font-bold text-xl tracking-wider">{`${consumptionSheet.room?.name}`}</h1>
             <p className="italic text-lg">{consumptionSheet.doctor}</p>
             <p className="italic text-sm traking-widest">{consumptionSheet.patient?.name} {consumptionSheet.patient?.first_surname[0]}. {consumptionSheet.patient?.second_surname[0]}.</p>

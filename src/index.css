@@ -10,5 +10,6 @@
 }
 
 .card {
-  background: linear-gradient(white, white) padding-box, linear-gradient(to right,rgba(150, 62, 152, 1), rgba(86, 35, 87, 1)) border-box;
+  background: linear-gradient( #ccfbf1, #ccfbf1) padding-box, linear-gradient(to right, #bae6fd, #bae6fd) border-box;
+  /* background: linear-gradient( #ccfbf1, #ccfbf1) padding-box, linear-gradient(to right, #94a3b8, #64748b) border-box; */
 }

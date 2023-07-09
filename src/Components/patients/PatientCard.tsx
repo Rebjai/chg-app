@@ -27,7 +27,7 @@ function PatientCard({ patient }: PatientCardProps) {
     }
 
     return (
-                <div className="card rounded-lg min-w-[200px] border-transparent border-2 my-2 p-3 shadow-lg shadow-violet-900/70 w-10/12">
+        <div className="card rounded-lg min-w-[200px] border-transparent border-2 my-4 p-3 shadow-lg shadow-cyan-900/50 w-10/12">
             <h1 className="font-bold text-lg tracking-wider">{`${patient.name} ${patient.first_surname} ${patient.second_surname}`}</h1>
             <div>
                 <span className="inline-block rounded-full w-[20px] h-[20px] bg-green-400 max-w-[100px] mt-2 mx-2 mb-0">
