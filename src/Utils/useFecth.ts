@@ -13,9 +13,34 @@ function useFetch() {
         get: request('GET'),
         post: request('POST'),
         put: request('PUT'),
-        delete: request('DELETE')
+        delete: request('DELETE'),
+        download: downloadRequest, 
     };
 
+    async function downloadRequest(url: string, filename: string) {
+        const requestOptions: RequestInit = {
+            method: 'GET',
+            headers: authHeader(url),
+        };
+
+        const response = await fetch(url, requestOptions);
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const contentType = response.headers.get('content-type');
+        const blob = await response.blob();
+
+        const file = window.URL.createObjectURL(blob);
+
+        const a = document.createElement('a');
+        a.href = file;
+        a.download = filename;
+        a.click();
+
+        window.URL.revokeObjectURL(url);
+    }
     function request(method: string) {
         return (url: string, body?: any) => {
             const requestOptions: RequestInit = {
@@ -32,6 +57,7 @@ function useFetch() {
             return fetch(url, requestOptions).then(handleResponse);
         }
     }
+    
 
     // helper functions
 

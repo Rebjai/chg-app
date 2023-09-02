@@ -4,18 +4,38 @@ import ConsumptionDetailTable from "../../Components/consumptionSheetDetail/Cons
 import ConsumptionSheetDetailForm from "../../Components/consumptionSheetDetail/ConsumptionSheetDetailForm";
 import PrimaryButton from "../../Components/utils/PrimaryButton";
 import ConsumptionSheetDetail from "../../Interfaces/consumptionSheetDetail.interface";
+import { useFetch } from "../../Utils/useFecth";
+import { useAuth } from "../../Utils/UseAuth";
+
 
 function ConsumptionSheetDetailsPage() {
-    const {t} = useTranslation()
+
+    const fetch = useFetch()
+    const {auth} = useAuth()
+    const { t } = useTranslation()
     const navigate = useNavigate()
     const consumptionSheetDetails: ConsumptionSheetDetail[] = useLoaderData() as ConsumptionSheetDetail[]
     console.log({ consumptionSheetDetails });
     const { consumptionSheetId } = useParams()
 
+    const downloadReport = async () => {
+        try {
+            const filename = 'reporte.xlsx'; // Set the desired filename
+
+            // Replace 'your_api_endpoint' with the actual endpoint for downloading the report.
+            await fetch.download(`/api/consumption-sheets/${consumptionSheetId}/report`, filename);
+        } catch (error) {
+            console.error('Error downloading the report:', error);
+        }
+    }
+
+
 
     return (<>
-
-        <PrimaryButton type="reset" onClick={() => { navigate('/consumption-sheets') }}>{t('back')}</PrimaryButton>
+        <div className="flex flex-col space-y-4">
+            <PrimaryButton type="reset" onClick={() => { navigate('/consumption-sheets') }}>{t('back')}</PrimaryButton>
+            {auth.user.role != '1'? <PrimaryButton type="button" onClick={downloadReport}>{t('download_report')}</PrimaryButton>: null}
+        </div>
         <div className="my-5">
             <ConsumptionSheetDetailForm consumptionSheetId={parseInt(consumptionSheetId!)} />
         </div>
