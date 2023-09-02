@@ -18,23 +18,13 @@ function ConsumptionSheetDetailsPage() {
     console.log({ consumptionSheetDetails });
     const { consumptionSheetId } = useParams()
 
-    const downloadReport = async () => {
-        try {
-            const filename = 'reporte.xlsx'; // Set the desired filename
-
-            // Replace 'your_api_endpoint' with the actual endpoint for downloading the report.
-            await fetch.download(`/api/consumption-sheets/${consumptionSheetId}/report`, filename);
-        } catch (error) {
-            console.error('Error downloading the report:', error);
-        }
-    }
+    
 
 
 
     return (<>
         <div className="flex flex-col space-y-4">
             <PrimaryButton type="reset" onClick={() => { navigate('/consumption-sheets') }}>{t('back')}</PrimaryButton>
-            {auth.user.role != '1'? <PrimaryButton type="button" onClick={downloadReport}>{t('download_report')}</PrimaryButton>: null}
         </div>
         <div className="my-5">
             <ConsumptionSheetDetailForm consumptionSheetId={parseInt(consumptionSheetId!)} />
