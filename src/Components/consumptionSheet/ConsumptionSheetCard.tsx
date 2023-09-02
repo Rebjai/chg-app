@@ -32,7 +32,7 @@ function ConsumptionSheetCard({ consumptionSheet }: ConsumptionSheetCardProps) {
 
                 }
                 {
-                    auth.user.role != '1' ?
+                    auth.user.role != '1' && auth.user.role != '2' ?
                         <fetcher.Form method="delete" action={"/consumption-sheets/" + consumptionSheet.id} className="max-w-[100px] w-1/12 mx-3">
                             <button type="submit" className="inline-block max-w-[100px] w-full">
                                 <img src={deleteIcon} alt={t('delete')!} />
