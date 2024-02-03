@@ -12,12 +12,12 @@ function PublicGuard() {
     const location = useLocation()
     console.log({ location });
 
-    if (auth && auth.user.role == '1' && !auth.user.profile && location.pathname !== '/auth/profile') {
+    if (auth.user && auth.user.role == '1' && !auth.user.profile && location.pathname !== '/auth/profile') {
         console.log('to profile');
         return <Navigate to={'/auth/profile'}></Navigate>
     }
     // this good
-    if (auth && auth.user.role != '10' && location.pathname == '/auth/profile') {
+    if (auth.user && auth.user.role != '10' && location.pathname == '/auth/profile') {
         console.log('profile');
 
         return <Outlet></Outlet>
