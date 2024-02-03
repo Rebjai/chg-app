@@ -47,6 +47,7 @@ const LoginForm = () => {
           id="email"
           name="email"
           value={email}
+          required
           onChange={(e) => setUsername(e.target.value)}
         />
       </div>
@@ -63,6 +64,7 @@ const LoginForm = () => {
           id="password"
           value={password}
           name="password"
+          required
           onChange={(e) => setPassword(e.target.value)}
         />
       </div>
