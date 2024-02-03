@@ -7,7 +7,7 @@ module.exports = {
   theme: {
     extend: {
       boxShadow: {
-        'inner': 'inset 5px -5px 20px 5px rgb(86 35 87 / 0.40)'
+        'inner': 'inset 2px -2px 10px 2px rgb(86 35 87 / 0.40)'
       }
     },
   },
