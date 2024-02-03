@@ -2,6 +2,7 @@ import { ActionFunctionArgs, LoaderFunctionArgs, redirect } from 'react-router-d
 import { toast } from 'react-toastify';
 import Staff from '../../Interfaces/staff.interface';
 import { useFetch } from '../../Utils/useFecth';
+import { t } from 'i18next';
 const AuthActions = {
     login: async ({ request }: ActionFunctionArgs) => {
         const data = await request.formData()
@@ -12,11 +13,21 @@ const AuthActions = {
             password: data.get('password')
         }
         const user = await fetch('/api/auth/login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(credentials) })
+        if (user.status == 401) {
+            const body: any = await user.text();
+            const error = JSON.parse(body);
+            toast.error(error.message)
+            return error
+        }
         if (user.status == 422) {
-            return user
+            const body: any = await user.text();
+            const error = JSON.parse(body);
+            toast.error(error.message)
+            return error;
         }
         if (user.status !== 201) {
-            throw user
+            const body = await user.text();
+            throw JSON.parse(body)
         }
         const userCreds = await user.json();
 
