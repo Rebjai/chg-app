@@ -25,20 +25,28 @@ const AuthActions = {
             toast.error(error.message)
             return error;
         }
+        if (user.status == 404){
+            const body: any = await user.text();
+            const error = JSON.parse(body);
+            toast.error('Invalid credentials');
+            return error;
+        }
+
         if (user.status !== 201) {
             const body = await user.text();
             throw JSON.parse(body)
         }
         const userCreds = await user.json();
-
-        console.log({ userCreds });
-
-        //store creds
         localStorage.setItem('token', userCreds.access_token);
-        localStorage.setItem('user', JSON.stringify({ user: userCreds.user }));
+        
+        
+        //store creds
+        const authFetch = useFetch()
+        const profile = await authFetch.get('/api/auth/profile')
+        localStorage.setItem('user', JSON.stringify({ user: profile }));
         toast('Welcome!', { autoClose: 1000 })
         // return redirect('/')
-        return userCreds
+        return { user: profile, token: userCreds.access_token }
     },
     updateProfile: async ({ request }: ActionFunctionArgs) => {
         const fetch = useFetch()

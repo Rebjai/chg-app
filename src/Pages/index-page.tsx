@@ -11,8 +11,8 @@ function IndexPage() {
     const { t } = useTranslation()
     const { auth, logout } = useAuth()
     const navigate = useNavigate()
-    const handleLogout = () => {
-        logout!()
+    const handleLogout = async() => {
+        await logout!()
         navigate('/')
     }
     const handleNavState = ({ isActive, isPending }: NavState) => {

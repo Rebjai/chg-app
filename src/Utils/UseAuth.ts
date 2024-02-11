@@ -6,8 +6,9 @@ interface Auth{
     }
     login?: Function
     logout?: Function
-    refresh?: Function
+    refresh?: Function,
+    isVerified: boolean
 }
-const AuthContext = createContext<Auth>({auth:{user:{}}, login: undefined, logout: undefined, refresh: undefined})
+const AuthContext = createContext<Auth>({auth:{user:{}}, login: undefined, logout: undefined, refresh: undefined, isVerified: false})
 const useAuth = () => useContext(AuthContext)
 export {AuthContext, useAuth}

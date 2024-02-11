@@ -24,8 +24,6 @@ const LoginForm = () => {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     // e.preventDefault();
     console.log(e);
-    console.log('Username:', email);
-    console.log('Password:', password);
   };
 
   return (
